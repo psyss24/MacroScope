@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MarketOverview.module.css';
 import apiService from '../services/api';
+import LoadingSpinner from './common/LoadingSpinner';
 
 const MarketOverview = () => {
   const [marketData, setMarketData] = useState(null);
@@ -32,7 +33,7 @@ const MarketOverview = () => {
     };
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading market data...</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading market data..." />;
   if (error) return <div className={styles.error}>Error: {error}</div>;
   if (!marketData) return <div className={styles.error}>No market data available</div>;
 

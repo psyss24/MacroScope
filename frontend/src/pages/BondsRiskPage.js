@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import apiService from '../services/api';
 import TimeSeriesChart from '../components/charts/TimeSeriesChart';
 import styles from './Pages.module.css';
-import ProgressBar from '../components/common/ProgressBar';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 import UnifiedCard from '../components/common/UnifiedCard';
 import CardSlider from '../components/common/CardSlider';
 import DashboardChart from '../components/charts/DashboardChart';
@@ -157,9 +157,7 @@ const BondsRiskPage = () => {
     return () => { isMounted = false; };
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading bonds and risk data...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (!marketData || !sentimentData) return <div className={styles.error}>No bonds and risk data available</div>;
+  if (loading || bondHistoryLoading) return <LoadingSpinner isLoading={true} message={loading ? "Loading bonds and risk data..." : "Loading bond time series..."} />;
 
   // Get selected region data
   const selectedRegion = BOND_REGIONS.find(r => r.key === selectedBondRegion);
@@ -283,21 +281,20 @@ const BondsRiskPage = () => {
 
   return (
     <div className={styles.page}>
-      <ProgressBar isLoading={loading || bondHistoryLoading} />
       <header className={styles.pageHeader}>
         <h1>Bonds & Risk Metrics</h1>
         <p className={styles.pageDescription}>
           Treasury yields, bond market data, and risk indicators
         </p>
         <div className={styles.timestamp}>
-          Last updated: {new Date(marketData.timestamp).toLocaleString()}
+          Last updated: {marketData?.timestamp ? new Date(marketData.timestamp).toLocaleString() : 'Loading...'}
         </div>
       </header>
 
       <section className={styles.section}>
         <h2>Risk Indicators</h2>
         <div className={styles.cardGrid}>
-          {sentimentData.indicators && Object.entries(sentimentData.indicators).map(([name, data]) => (
+          {sentimentData?.indicators && Object.entries(sentimentData.indicators).map(([name, data]) => (
             <UnifiedCard
               key={name}
               title={name}
@@ -313,84 +310,82 @@ const BondsRiskPage = () => {
 
       <section className={styles.section}>
         <h2>Treasury Yield Trends</h2>
-        <div className={styles.dashboardChartCard} style={{ position: 'relative' }}>
-          {/* Region button cards */}
-          <div style={{ display: 'flex', gap: 18, marginBottom: 18, justifyContent: 'flex-start' }}>
-            {BOND_REGIONS.map(region => (
-              <div
-                key={region.key}
-                className="buttonCard"
-                style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex' }}
-                onClick={() => setSelectedBondRegion(region.key)}
-                tabIndex={0}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedBondRegion(region.key); }}
-              >
-                <UnifiedCard
-                  title={<span style={{ fontSize: '0.97rem', fontWeight: 500, letterSpacing: '-0.01em', color: '#fff' }}>{region.label}</span>}
-                  className={"buttonCard"}
-                />
-              </div>
-            ))}
-          </div>
-          
-          {/* Chart with region switching */}
-          {bondHistoryLoading ? (
-            <div className={styles.loading}>Loading bond time series...</div>
-          ) : selectedBondData.length === 0 ? (
-            <div className={styles.error}>
-              No bond time series data available for {selectedRegion?.label}.
-              <br />
-              <small>Debug info: selectedBondData length: {selectedBondData.length}</small>
+        {/* Region button cards */}
+        <div style={{ display: 'flex', gap: 18, marginBottom: 18, justifyContent: 'flex-start' }}>
+          {BOND_REGIONS.map(region => (
+            <div
+              key={region.key}
+              className="buttonCard"
+              style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex' }}
+              onClick={() => setSelectedBondRegion(region.key)}
+              tabIndex={0}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedBondRegion(region.key); }}
+            >
+              <UnifiedCard
+                title={<span style={{ fontSize: '0.97rem', fontWeight: 500, letterSpacing: '-0.01em', color: '#fff' }}>{region.label}</span>}
+                className={"buttonCard"}
+              />
             </div>
-          ) : (
-            <DashboardChart
-              title={`${selectedRegion?.label} Treasury Yields`}
-              smartBaselineLabel={true}
-              showPricesOnHover={true}
-              enableModeToggle={true}
-              rawData={buildChartData(selectedRegion.symbols)}
-              charts={[{
-                layout: {
-                  height: 360,
-                  margin: { l: 0, r: 0, t: 24, b: 64 },
-                  plot_bgcolor: 'rgba(0,0,0,0)',
-                  paper_bgcolor: 'rgba(0,0,0,0)',
-                  xaxis: {
-                    showgrid: false,
-                    zeroline: false,
-                    showline: false,
-                    linecolor: 'rgba(0,0,0,0)',
-                    showticklabels: false,
-                    ticks: '',
-                    ticklen: 0,
-                    tickcolor: 'rgba(0,0,0,0)',
-                    title: '',
-                    automargin: true,
-                    tickfont: { style: 'normal', size: 14 },
-                    tickangle: 0,
-                    range: [xSeries[0], xSeries[xSeries.length - 1]],
-                  },
-                  yaxis: {
-                    showgrid: false,
-                    zeroline: false,
-                    showline: false,
-                    linecolor: 'rgba(0,0,0,0)',
-                    showticklabels: false,
-                    ticks: '',
-                    ticklen: 0,
-                    tickcolor: 'rgba(0,0,0,0)',
-                    title: '',
-                  },
-                  showlegend: false,
-                  legend: undefined,
-                  title: undefined
-                },
-                config: { displayModeBar: false }
-              }]}
-              xSeries={xSeries}
-            />
-          )}
+          ))}
         </div>
+        
+        {/* Chart with region switching */}
+        {bondHistoryLoading ? (
+          <div className={styles.loading}>Loading bond time series...</div>
+        ) : selectedBondData.length === 0 ? (
+          <div className={styles.error}>
+            No bond time series data available for {selectedRegion?.label}.
+            <br />
+            <small>Debug info: selectedBondData length: {selectedBondData.length}</small>
+          </div>
+        ) : (
+          <DashboardChart
+            title={`${selectedRegion?.label} Treasury Yields`}
+            smartBaselineLabel={true}
+            showPricesOnHover={true}
+            enableModeToggle={true}
+            rawData={buildChartData(selectedRegion.symbols)}
+            charts={[{
+              layout: {
+                height: 360,
+                margin: { l: 0, r: 0, t: 24, b: 64 },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                xaxis: {
+                  showgrid: false,
+                  zeroline: false,
+                  showline: false,
+                  linecolor: 'rgba(0,0,0,0)',
+                  showticklabels: false,
+                  ticks: '',
+                  ticklen: 0,
+                  tickcolor: 'rgba(0,0,0,0)',
+                  title: '',
+                  automargin: true,
+                  tickfont: { style: 'normal', size: 14 },
+                  tickangle: 0,
+                  range: [xSeries[0], xSeries[xSeries.length - 1]],
+                },
+                yaxis: {
+                  showgrid: false,
+                  zeroline: false,
+                  showline: false,
+                  linecolor: 'rgba(0,0,0,0)',
+                  showticklabels: false,
+                  ticks: '',
+                  ticklen: 0,
+                  tickcolor: 'rgba(0,0,0,0)',
+                  title: '',
+                },
+                showlegend: false,
+                legend: undefined,
+                title: undefined
+              },
+              config: { displayModeBar: false }
+            }]}
+            xSeries={xSeries}
+          />
+        )}
       </section>
 
       <section className={styles.section}>

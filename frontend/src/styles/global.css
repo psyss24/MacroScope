@@ -455,3 +455,42 @@ a:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--muted-text);
 }
+
+/* Button card styles - unified across all pages */
+.buttonCard {
+  min-height: 36px !important;
+  padding: 6px 14px !important;
+  font-size: 0.97rem !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.buttonCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background: var(--hover-bg);
+}
+
+.selectedCard {
+  background: var(--secondary-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.selectedCard:hover {
+  background: var(--hover-bg) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: var(--shadow-lg) !important;
+}

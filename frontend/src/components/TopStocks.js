@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TopStocks.module.css';
 import apiService from '../services/api';
+import LoadingSpinner from './common/LoadingSpinner';
 
 // Hardcoded list of popular stocks to display
 const POPULAR_STOCKS = [
@@ -46,7 +47,7 @@ const TopStocks = () => {
     };
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading stocks data...</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading stocks data..." />;
   if (error) return <div className={styles.error}>Error: {error}</div>;
   if (!stocksData) return null;
 

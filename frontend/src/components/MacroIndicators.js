@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MacroIndicators.module.css';
 import apiService from '../services/api';
+import LoadingSpinner from './common/LoadingSpinner';
 
 const MacroIndicators = () => {
   const [macroData, setMacroData] = useState(null);
@@ -32,7 +33,7 @@ const MacroIndicators = () => {
     };
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading macro data...</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading macro data..." />;
   if (error) return <div className={styles.error}>Error: {error}</div>;
   if (!macroData) return <div className={styles.error}>No macro data available</div>;
 

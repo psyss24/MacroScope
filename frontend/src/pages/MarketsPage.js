@@ -5,7 +5,7 @@ import styles from './Pages.module.css';
 import UnifiedCard from '../components/common/UnifiedCard';
 import CardSlider from '../components/common/CardSlider';
 import DashboardChart from '../components/charts/DashboardChart';
-import ProgressBar from '../components/common/ProgressBar';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 // Helper function to generate dates for charts
 const generateDates = (days) => {
@@ -62,9 +62,7 @@ const MarketsPage = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading market data...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (!marketData) return <div className={styles.error}>No market data available</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading market data..." />;
 
   // Group indices by region
   const US_INDICES = ['S&P 500', 'NASDAQ', 'Dow Jones', 'Russell 2000'];
@@ -146,7 +144,6 @@ const MarketsPage = () => {
 
   return (
     <div className={styles.page}>
-      <ProgressBar isLoading={loading} />
       <header className={styles.pageHeader}>
         <h1>Markets</h1>
         <p className={styles.pageDescription}>
@@ -159,260 +156,246 @@ const MarketsPage = () => {
       {/* Chart at the top */}
       <section className={styles.section}>
         <h2>Market Charts</h2>
-        {/* Market Chart Toggle Buttons and Single Chart */}
-        <div style={{ display: 'flex', gap: 18, marginBottom: 18, justifyContent: 'flex-start' }}>
+        {/* Market Chart Toggle Buttons - using Macro page style */}
+        <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
           {[
             { key: 'us', label: 'US Market Performance' },
             { key: 'global', label: 'Global Regions Performance' }
           ].map(btn => (
-            <div
+            <UnifiedCard
               key={btn.key}
-              className="buttonCard"
-              style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex' }}
+              className={selectedMarketChart === btn.key ? `selectedCard buttonCard` : `buttonCard`}
               onClick={() => setSelectedMarketChart(btn.key)}
-              tabIndex={0}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedMarketChart(btn.key); }}
+              style={{ cursor: 'pointer', minWidth: 90, textAlign: 'center', fontWeight: 600 }}
             >
-              <UnifiedCard
-                title={<span style={{ fontSize: '0.97rem', fontWeight: 500, letterSpacing: '-0.01em', color: '#fff' }}>{btn.label}</span>}
-                className={"buttonCard"}
-              />
-            </div>
+              {btn.label}
+            </UnifiedCard>
           ))}
         </div>
-        <div className={styles.dashboardChartCard} style={{ position: 'relative' }}>
-          <DashboardChart
-            title={selectedMarketChart === 'us' ? 'US Market Performance' : 'Global Regions Performance'}
-            smartBaselineLabel={true}
-            showPricesOnHover={true}
-            enableModeToggle={true}
-            rawData={
-              selectedMarketChart === 'us'
-                ? rawData
-                : ['S&P 500 ETF (SPY)', 'iShares MSCI Emerging Markets ETF (EEM)', 'SPDR Euro Stoxx 50 ETF (FEZ)', 'iShares MSCI Japan ETF (EWJ)'].map((key, i) => {
-                    const hist = marketData.etfs && marketData.etfs[key]?.history || [];
-                    const dateToClose = {};
-                    hist.forEach(d => { dateToClose[d.date] = d.close; });
-                    const colors = ['#1976d2', '#43a047', '#ffb74d', '#ba68c8'];
-                    const names = ['SPY (US)', 'EEM (Emerging Markets)', 'FEZ (Eurozone)', 'EWJ (Japan)'];
-                    return {
-                      x: xSeries,
-                      y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
-                      name: names[i],
-                      type: 'scatter',
-                      mode: 'lines',
-                      line: { color: colors[i], width: 3 },
-                      hoverinfo: 'x+y+name',
-                    };
-                  })
-            }
-            charts={[{
-              layout: {
-                height: 360,
-                margin: { l: 0, r: 0, t: 24, b: 64 },
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                xaxis: {
-                  showgrid: false,
-                  zeroline: false,
-                  showline: false,
-                  linecolor: 'rgba(0,0,0,0)',
-                  showticklabels: false,
-                  ticks: '',
-                  ticklen: 0,
-                  tickcolor: 'rgba(0,0,0,0)',
-                  title: '',
-                  automargin: true,
-                  tickfont: { style: 'normal', size: 14 },
-                  tickangle: 0,
-                  range: [xSeries[0], xSeries[xSeries.length - 1]],
-                },
-                yaxis: {
-                  showgrid: false,
-                  zeroline: false,
-                  showline: false,
-                  linecolor: 'rgba(0,0,0,0)',
-                  showticklabels: false,
-                  ticks: '',
-                  ticklen: 0,
-                  tickcolor: 'rgba(0,0,0,0)',
-                  title: '',
-                },
-                showlegend: false,
-                legend: undefined,
-                title: undefined
+        <DashboardChart
+          title={selectedMarketChart === 'us' ? 'US Market Performance' : 'Global Regions Performance'}
+          smartBaselineLabel={true}
+          showPricesOnHover={true}
+          enableModeToggle={true}
+          rawData={
+            selectedMarketChart === 'us'
+              ? rawData
+              : ['S&P 500 ETF (SPY)', 'iShares MSCI Emerging Markets ETF (EEM)', 'SPDR Euro Stoxx 50 ETF (FEZ)', 'iShares MSCI Japan ETF (EWJ)'].map((key, i) => {
+                  const hist = marketData.etfs && marketData.etfs[key]?.history || [];
+                  const dateToClose = {};
+                  hist.forEach(d => { dateToClose[d.date] = d.close; });
+                  const colors = ['#1976d2', '#43a047', '#ffb74d', '#ba68c8'];
+                  const names = ['SPY (US)', 'EEM (Emerging Markets)', 'FEZ (Eurozone)', 'EWJ (Japan)'];
+                  return {
+                    x: xSeries,
+                    y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
+                    name: names[i],
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: colors[i], width: 3 },
+                    hoverinfo: 'x+y+name',
+                  };
+                })
+          }
+          charts={[{
+            layout: {
+              height: 360,
+              margin: { l: 0, r: 0, t: 24, b: 64 },
+              plot_bgcolor: 'rgba(0,0,0,0)',
+              paper_bgcolor: 'rgba(0,0,0,0)',
+              xaxis: {
+                showgrid: false,
+                zeroline: false,
+                showline: false,
+                linecolor: 'rgba(0,0,0,0)',
+                showticklabels: false,
+                ticks: '',
+                ticklen: 0,
+                tickcolor: 'rgba(0,0,0,0)',
+                title: '',
+                automargin: true,
+                tickfont: { style: 'normal', size: 14 },
+                tickangle: 0,
+                range: [xSeries[0], xSeries[xSeries.length - 1]],
               },
-              config: { displayModeBar: false }
-            }]}
-            xSeries={xSeries}
-          />
-        </div>
+              yaxis: {
+                showgrid: false,
+                zeroline: false,
+                showline: false,
+                linecolor: 'rgba(0,0,0,0)',
+                showticklabels: false,
+                ticks: '',
+                ticklen: 0,
+                tickcolor: 'rgba(0,0,0,0)',
+                title: '',
+              },
+              showlegend: false,
+              legend: undefined,
+              title: undefined
+            },
+            config: { displayModeBar: false }
+          }]}
+          xSeries={xSeries}
+        />
       </section>
 
       {/* Thematic ETF charts section */}
       <section className={styles.section}>
         <h2>Thematic ETF charts</h2>
-        <div className={styles.dashboardChartCard} style={{ position: 'relative' }}>
-          {/* Card-style toggle buttons using UnifiedCard */}
-          <div style={{ display: 'flex', gap: 18, marginBottom: 18, justifyContent: 'flex-start' }}>
-            {[
-              { key: 'tech', label: 'Tech & Innovation' },
-              { key: 'defensive', label: 'Defensive vs Speculative' },
-              { key: 'global', label: 'Global Markets' },
-              { key: 'biotech', label: 'Biotech & Healthcare' }
-            ].map(btn => (
-              <div
-                key={btn.key}
-                className="buttonCard"
-                style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex' }}
-                onClick={() => setSelectedEtfChart(btn.key)}
-                tabIndex={0}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedEtfChart(btn.key); }}
-              >
-                <UnifiedCard
-                  title={<span style={{ fontSize: '0.97rem', fontWeight: 500, letterSpacing: '-0.01em', color: '#fff' }}>{btn.label}</span>}
-                  className={"buttonCard"}
-                />
-              </div>
-            ))}
-          </div>
-          {/* Chart switching logic remains unchanged */}
-          <DashboardChart
-            title={
-              selectedEtfChart === 'tech' ? 'Tech & Innovation'
-              : selectedEtfChart === 'defensive' ? 'Defensive vs Speculative'
-              : selectedEtfChart === 'global' ? 'Global Markets'
-              : 'Biotech & Healthcare'
-            }
-            smartBaselineLabel={true}
-            showPricesOnHover={true}
-            enableModeToggle={true}
-            rawData={
-              selectedEtfChart === 'tech'
-                ? ['Nasdaq ETF (QQQ)', 'Semiconductor ETF (SMH)', 'ARK Innovation ETF (ARKK)', 'Robotics & AI ETF (BOTZ)'].map((key, i) => {
-                    const hist = marketData.etfs && marketData.etfs[key]?.history || [];
-                    const dateToClose = {};
-                    hist.forEach(d => { dateToClose[d.date] = d.close; });
-                    const colors = ['#1976d2', '#ba68c8', '#43a047', '#ffb74d'];
-                    return {
-                      x: xSeries,
-                      y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
-                      name: key,
-                      type: 'scatter',
-                      mode: 'lines',
-                      line: { color: colors[i], width: 3 },
-                      hoverinfo: 'x+y+name',
-                    };
-                  })
-                : selectedEtfChart === 'defensive'
-                ? ['Consumer Staples ETF (XLP)', 'Health Care ETF (XLV)', 'ARK Innovation ETF (ARKK)', 'Russell 2000 ETF (IWM)'].map((key, i) => {
-                    const hist = marketData.etfs && marketData.etfs[key]?.history || [];
-                    const dateToClose = {};
-                    hist.forEach(d => { dateToClose[d.date] = d.close; });
-                    const colors = ['#1976d2', '#43a047', '#ba68c8', '#ffb74d'];
-                    return {
-                      x: xSeries,
-                      y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
-                      name: key,
-                      type: 'scatter',
-                      mode: 'lines',
-                      line: { color: colors[i], width: 3 },
-                      hoverinfo: 'x+y+name',
-                    };
-                  })
-                : selectedEtfChart === 'global'
-                ? ['S&P 500 ETF (SPY)', 'iShares MSCI Emerging Markets ETF (EEM)', 'iShares MSCI Japan ETF (EWJ)', 'iShares China Large-Cap ETF (FXI)'].map((key, i) => {
-                    const hist = marketData.etfs && marketData.etfs[key]?.history || [];
-                    const dateToClose = {};
-                    hist.forEach(d => { dateToClose[d.date] = d.close; });
-                    const colors = ['#1976d2', '#43a047', '#ba68c8', '#ffb74d'];
-                    return {
-                      x: xSeries,
-                      y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
-                      name: key,
-                      type: 'scatter',
-                      mode: 'lines',
-                      line: { color: colors[i], width: 3 },
-                      hoverinfo: 'x+y+name',
-                    };
-                  })
-                : ['iShares Nasdaq Biotechnology ETF (IBB)', 'SPDR S&P Biotech ETF (XBI)', 'Health Care ETF (XLV)', 'Invesco Dynamic Biotechnology & Genome ETF (PBE)'].map((key, i) => {
-                    const hist = marketData.etfs && marketData.etfs[key]?.history || [];
-                    const dateToClose = {};
-                    hist.forEach(d => { dateToClose[d.date] = d.close; });
-                    const colors = ['#1976d2', '#43a047', '#ba68c8', '#ffb74d'];
-                    return {
-                      x: xSeries,
-                      y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
-                      name: key,
-                      type: 'scatter',
-                      mode: 'lines',
-                      line: { color: colors[i], width: 3 },
-                      hoverinfo: 'x+y+name',
-                    };
-                  })
-            }
-            charts={[{
-              layout: {
-                height: 360,
-                margin: { l: 0, r: 0, t: 24, b: 64 },
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                xaxis: {
-                  showgrid: false,
-                  zeroline: false,
-                  showline: false,
-                  linecolor: 'rgba(0,0,0,0)',
-                  showticklabels: false,
-                  ticks: '',
-                  ticklen: 0,
-                  tickcolor: 'rgba(0,0,0,0)',
-                  title: '',
-                  automargin: true,
-                  tickfont: { style: 'normal', size: 14 },
-                  tickangle: 0,
-                  range: [xSeries[0], xSeries[xSeries.length - 1]],
-                },
-                yaxis: {
-                  showgrid: false,
-                  zeroline: false,
-                  showline: false,
-                  linecolor: 'rgba(0,0,0,0)',
-                  showticklabels: false,
-                  ticks: '',
-                  ticklen: 0,
-                  tickcolor: 'rgba(0,0,0,0)',
-                  title: '',
-                },
-                showlegend: false,
-                legend: undefined,
-                title: undefined
-              },
-              config: { displayModeBar: false }
-            }]}
-            xSeries={xSeries}
-          />
-          {selectedEtfChart === 'tech' && (!marketData.etfs || !marketData.etfs['Nasdaq ETF (QQQ)'] || !marketData.etfs['Semiconductor ETF (SMH)'] || !marketData.etfs['ARK Innovation ETF (ARKK)'] || !marketData.etfs['Robotics & AI ETF (BOTZ)']) && (
-            <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
-              Some ETF data is missing. Chart will update when data is available.
-            </div>
-          )}
-          {selectedEtfChart === 'defensive' && (!marketData.etfs || !marketData.etfs['Consumer Staples ETF (XLP)'] || !marketData.etfs['Health Care ETF (XLV)'] || !marketData.etfs['ARK Innovation ETF (ARKK)'] || !marketData.etfs['Russell 2000 ETF (IWM)']) && (
-            <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
-              Some ETF data is missing. Chart will update when data is available.
-            </div>
-          )}
-         {selectedEtfChart === 'global' && (!marketData.etfs || !marketData.etfs['S&P 500 ETF (SPY)'] || !marketData.etfs['iShares MSCI Emerging Markets ETF (EEM)'] || !marketData.etfs['iShares MSCI Japan ETF (EWJ)'] || !marketData.etfs['iShares China Large-Cap ETF (FXI)']) && (
-            <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
-              Some ETF data is missing. Chart will update when data is available.
-            </div>
-          )}
-         {selectedEtfChart === 'biotech' && (!marketData.etfs || !marketData.etfs['iShares Nasdaq Biotechnology ETF (IBB)'] || !marketData.etfs['SPDR S&P Biotech ETF (XBI)'] || !marketData.etfs['Health Care ETF (XLV)'] || !marketData.etfs['Invesco Dynamic Biotechnology & Genome ETF (PBE)']) && (
-            <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
-              Some ETF data is missing. Chart will update when data is available.
-            </div>
-          )}
+        {/* ETF Chart Toggle Buttons - using Macro page style */}
+        <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
+          {[
+            { key: 'tech', label: 'Tech & Innovation' },
+            { key: 'defensive', label: 'Defensive vs Speculative' },
+            { key: 'global', label: 'Global Markets' },
+            { key: 'biotech', label: 'Biotech & Healthcare' }
+          ].map(btn => (
+            <UnifiedCard
+              key={btn.key}
+              className={selectedEtfChart === btn.key ? `selectedCard buttonCard` : `buttonCard`}
+              onClick={() => setSelectedEtfChart(btn.key)}
+              style={{ cursor: 'pointer', minWidth: 90, textAlign: 'center', fontWeight: 600 }}
+            >
+              {btn.label}
+            </UnifiedCard>
+          ))}
         </div>
+        {/* Chart switching logic remains unchanged */}
+        <DashboardChart
+          title={
+            selectedEtfChart === 'tech' ? 'Tech & Innovation'
+            : selectedEtfChart === 'defensive' ? 'Defensive vs Speculative'
+            : selectedEtfChart === 'global' ? 'Global Markets'
+            : 'Biotech & Healthcare'
+          }
+          smartBaselineLabel={true}
+          showPricesOnHover={true}
+          enableModeToggle={true}
+          rawData={
+            selectedEtfChart === 'tech'
+              ? ['Nasdaq ETF (QQQ)', 'Semiconductor ETF (SMH)', 'ARK Innovation ETF (ARKK)', 'Robotics & AI ETF (BOTZ)'].map((key, i) => {
+                  const hist = marketData.etfs && marketData.etfs[key]?.history || [];
+                  const dateToClose = {};
+                  hist.forEach(d => { dateToClose[d.date] = d.close; });
+                  const colors = ['#1976d2', '#ba68c8', '#43a047', '#ffb74d'];
+                  return {
+                    x: xSeries,
+                    y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
+                    name: key,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: colors[i], width: 3 },
+                    hoverinfo: 'x+y+name',
+                  };
+                })
+              : selectedEtfChart === 'defensive'
+              ? ['Consumer Staples ETF (XLP)', 'Health Care ETF (XLV)', 'ARK Innovation ETF (ARKK)', 'Russell 2000 ETF (IWM)'].map((key, i) => {
+                  const hist = marketData.etfs && marketData.etfs[key]?.history || [];
+                  const dateToClose = {};
+                  hist.forEach(d => { dateToClose[d.date] = d.close; });
+                  const colors = ['#1976d2', '#43a047', '#ba68c8', '#ffb74d'];
+                  return {
+                    x: xSeries,
+                    y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
+                    name: key,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: colors[i], width: 3 },
+                    hoverinfo: 'x+y+name',
+                  };
+                })
+              : selectedEtfChart === 'global'
+              ? ['S&P 500 ETF (SPY)', 'iShares MSCI Emerging Markets ETF (EEM)', 'iShares MSCI Japan ETF (EWJ)', 'iShares China Large-Cap ETF (FXI)'].map((key, i) => {
+                  const hist = marketData.etfs && marketData.etfs[key]?.history || [];
+                  const dateToClose = {};
+                  hist.forEach(d => { dateToClose[d.date] = d.close; });
+                  const colors = ['#1976d2', '#43a047', '#ba68c8', '#ffb74d'];
+                  return {
+                    x: xSeries,
+                    y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
+                    name: key,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: colors[i], width: 3 },
+                    hoverinfo: 'x+y+name',
+                  };
+                })
+              : ['iShares Nasdaq Biotechnology ETF (IBB)', 'SPDR S&P Biotech ETF (XBI)', 'Health Care ETF (XLV)', 'Invesco Dynamic Biotechnology & Genome ETF (PBE)'].map((key, i) => {
+                  const hist = marketData.etfs && marketData.etfs[key]?.history || [];
+                  const dateToClose = {};
+                  hist.forEach(d => { dateToClose[d.date] = d.close; });
+                  const colors = ['#1976d2', '#43a047', '#ba68c8', '#ffb74d'];
+                  return {
+                    x: xSeries,
+                    y: xSeries.map(date => dateToClose[date] != null ? dateToClose[date] : null),
+                    name: key,
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: colors[i], width: 3 },
+                    hoverinfo: 'x+y+name',
+                  };
+                })
+          }
+          charts={[{
+            layout: {
+              height: 360,
+              margin: { l: 0, r: 0, t: 24, b: 64 },
+              plot_bgcolor: 'rgba(0,0,0,0)',
+              paper_bgcolor: 'rgba(0,0,0,0)',
+              xaxis: {
+                showgrid: false,
+                zeroline: false,
+                showline: false,
+                linecolor: 'rgba(0,0,0,0)',
+                showticklabels: false,
+                ticks: '',
+                ticklen: 0,
+                tickcolor: 'rgba(0,0,0,0)',
+                title: '',
+                automargin: true,
+                tickfont: { style: 'normal', size: 14 },
+                tickangle: 0,
+                range: [xSeries[0], xSeries[xSeries.length - 1]],
+              },
+              yaxis: {
+                showgrid: false,
+                zeroline: false,
+                showline: false,
+                linecolor: 'rgba(0,0,0,0)',
+                showticklabels: false,
+                ticks: '',
+                ticklen: 0,
+                tickcolor: 'rgba(0,0,0,0)',
+                title: '',
+              },
+              showlegend: false,
+              legend: undefined,
+              title: undefined
+            },
+            config: { displayModeBar: false }
+          }]}
+          xSeries={xSeries}
+        />
+        {selectedEtfChart === 'tech' && (!marketData.etfs || !marketData.etfs['Nasdaq ETF (QQQ)'] || !marketData.etfs['Semiconductor ETF (SMH)'] || !marketData.etfs['ARK Innovation ETF (ARKK)'] || !marketData.etfs['Robotics & AI ETF (BOTZ)']) && (
+          <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
+            Some ETF data is missing. Chart will update when data is available.
+          </div>
+        )}
+        {selectedEtfChart === 'defensive' && (!marketData.etfs || !marketData.etfs['Consumer Staples ETF (XLP)'] || !marketData.etfs['Health Care ETF (XLV)'] || !marketData.etfs['ARK Innovation ETF (ARKK)'] || !marketData.etfs['Russell 2000 ETF (IWM)']) && (
+          <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
+            Some ETF data is missing. Chart will update when data is available.
+          </div>
+        )}
+        {selectedEtfChart === 'global' && (!marketData.etfs || !marketData.etfs['S&P 500 ETF (SPY)'] || !marketData.etfs['iShares MSCI Emerging Markets ETF (EEM)'] || !marketData.etfs['iShares MSCI Japan ETF (EWJ)'] || !marketData.etfs['iShares China Large-Cap ETF (FXI)']) && (
+          <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
+            Some ETF data is missing. Chart will update when data is available.
+          </div>
+        )}
+        {selectedEtfChart === 'biotech' && (!marketData.etfs || !marketData.etfs['iShares Nasdaq Biotechnology ETF (IBB)'] || !marketData.etfs['SPDR S&P Biotech ETF (XBI)'] || !marketData.etfs['Health Care ETF (XLV)'] || !marketData.etfs['Invesco Dynamic Biotechnology & Genome ETF (PBE)']) && (
+          <div style={{ color: 'var(--muted-text)', textAlign: 'center', marginTop: 24 }}>
+            Some ETF data is missing. Chart will update when data is available.
+          </div>
+        )}
       </section>
 
       <section className={styles.section}>

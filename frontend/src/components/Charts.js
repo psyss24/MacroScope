@@ -14,6 +14,7 @@ import {
 import { Line, Bar } from 'react-chartjs-2';
 import styles from './Charts.module.css';
 import apiService from '../services/api';
+import LoadingSpinner from './common/LoadingSpinner';
 
 // Register Chart.js components
 ChartJS.register(
@@ -58,7 +59,7 @@ const Charts = () => {
     };
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading charts...</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading charts..." />;
   if (!marketData) return <div className={styles.error}>No data available</div>;
 
   const marketChartData = {

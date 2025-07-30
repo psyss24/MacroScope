@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './OverviewCards.module.css';
 import apiService from '../services/api';
 import { Link } from 'react-router-dom';
+import { SkeletonCard } from './common/LoadingSpinner';
 
 const STOCK_SYMBOLS = [
   { symbol: 'AAPL', label: 'Apple' },
@@ -41,9 +42,27 @@ const OverviewCards = () => {
     };
   }, []);
 
-  if (loading) return <div className={styles.loading}>Loading market data...</div>;
-  if (error) return <div className={styles.error}>Error: {error}</div>;
-  if (!dashboardData) return <div className={styles.error}>No dashboard data available</div>;
+  // Show skeleton cards when loading
+  if (loading) {
+    return (
+      <div className={styles.overviewGrid}>
+        {[1, 2, 3, 4, 5, 6].map((index) => (
+          <SkeletonCard key={index} />
+        ))}
+      </div>
+    );
+  }
+
+  // Show skeleton cards if there's an error or no data
+  if (error || !dashboardData) {
+    return (
+      <div className={styles.overviewGrid}>
+        {[1, 2, 3, 4, 5, 6].map((index) => (
+          <SkeletonCard key={index} />
+        ))}
+      </div>
+    );
+  }
 
   // Helper function to safely format change percentages
   const formatChangePercent = (changePercent) => {

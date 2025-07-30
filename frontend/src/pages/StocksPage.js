@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import StockSearch from '../components/stocks/StockSearch';
 import apiService from '../services/api';
 import styles from './Pages.module.css';
 import stockStyles from '../components/stocks/Stocks.module.css';
+import UnifiedCard from '../components/common/UnifiedCard';
+import CardSlider from '../components/common/CardSlider';
 import FeaturedStockCard from '../components/stocks/FeaturedStockCard';
-import ProgressBar from '../components/common/ProgressBar';
+import StockSearch from '../components/stocks/StockSearch';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 /**
  * StocksPage component for displaying stock search and popular stocks
@@ -94,9 +96,10 @@ const StocksPage = () => {
     };
   }, []);
 
+  if (loading) return <LoadingSpinner isLoading={loading} message="Loading stocks data..." />;
+  
   return (
     <div className={styles.page}>
-      <ProgressBar isLoading={loading} />
       <header className={styles.pageHeader}>
         <h1>Stocks</h1>
         <p className={styles.pageDescription}>
@@ -111,93 +114,84 @@ const StocksPage = () => {
 
       <section className={styles.section}>
         <h2>Popular Stocks</h2>
-        {loading ? (
-          <div className="loading">Loading popular stocks...</div>
-        ) : error ? (
-          <div className="error">{error}</div>
-        ) : (
-          <>
-            {/* Alternating layout: featured card, then 3 small cards, repeat */}
-            {(() => {
-              const groups = [];
-              const n = popularStocks.length;
-              let i = 0;
-              while (i < n) {
-                // Featured card (with details if available)
-                const featured = featuredStocks.find(f => f && f.symbol?.toUpperCase() === popularStocks[i].symbol?.toUpperCase()) || popularStocks[i];
-                groups.push(
-                  <div key={`featured-${popularStocks[i].symbol || i}`} style={{ marginBottom: 24 }}>
-                    <FeaturedStockCard stock={featured} />
-                  </div>
-                );
-                // 3 small cards
-                const smalls = popularStocks.slice(i + 1, i + 4);
-                if (smalls.length > 0) {
-                  groups.push(
-                    <div key={`smalls-${i}`} className={styles.cardGrid} style={{ marginBottom: 32 }}>
-                      {smalls.map((stock) => (
-                        <div key={stock.symbol} className={stockStyles.mainPageCard}>
-                          <div className={stockStyles.cardHeader}>
-                            <div className={stockStyles.cardTitle}>
-                  <h3>{stock.symbol}</h3>
-                              <p>{stock.name}</p>
-                            </div>
-                            {stock.sector && (
-                              <div className={stockStyles.featuredIndustryTag}>{stock.sector}</div>
-                            )}
-                </div>
-                          <div className={stockStyles.cardMetrics}>
-                            <div className={stockStyles.metric}>
-                              <div className={stockStyles.metricLabel}>Price</div>
-                              <div className={stockStyles.metricValue}>
-                                {(() => {
-                                  const percent = stock.changePercent;
-                                  let valueClass = stockStyles.valueNeutral;
-                                  if (typeof percent === 'number') {
-                                    if (percent > 0) valueClass = stockStyles.valuePositive;
-                                    else if (percent < 0) valueClass = stockStyles.valueNegative;
-                                  }
-                                  return (
-                                    <>
-                                      <span className={`${stockStyles.value} ${valueClass}`}>${typeof stock.price === 'number' ? stock.price.toFixed(2) : 'N/A'}</span>
-                                      <span className={`${stockStyles.change} ${percent >= 0 ? stockStyles.positive : stockStyles.negative}`}>{percent >= 0 ? '+' : ''}{percent.toFixed(2)}%</span>
-                                    </>
-                                  );
-                                })()}
-                    </div>
-                  </div>
-                            <div className={stockStyles.metric}>
-                              <div className={stockStyles.metricLabel}>Market Cap</div>
-                              <div className={stockStyles.metricValue}>{stock.marketCap}</div>
-                    </div>
-                            <div className={stockStyles.metric}>
-                              <div className={stockStyles.metricLabel}>Volume</div>
-                              <div className={stockStyles.metricValue}>{stock.volume}</div>
-                    </div>
-                            <div className={stockStyles.metric}>
-                              <div className={stockStyles.metricLabel}>P/E Ratio</div>
-                              <div className={stockStyles.metricValue}>{stock.pe}</div>
-                    </div>
-                  </div>
-                          <div className={stockStyles.mainPageCardFooter}>
-                            <a href={`/stocks/${stock.symbol}`} className={stockStyles.mainPageViewMore}>
-                    View Details
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="m9 18 6-6-6-6"/>
-                    </svg>
-                  </a>
-                </div>
+        {(() => {
+          const groups = [];
+          const n = popularStocks.length;
+          let i = 0;
+          while (i < n) {
+            // Featured card (with details if available)
+            const featured = featuredStocks.find(f => f && f.symbol?.toUpperCase() === popularStocks[i].symbol?.toUpperCase()) || popularStocks[i];
+            groups.push(
+              <div key={`featured-${popularStocks[i].symbol || i}`} style={{ marginBottom: 24 }}>
+                <FeaturedStockCard stock={featured} />
               </div>
-            ))}
-          </div>
-                  );
-                }
-                i += 4;
-              }
-              return groups;
-            })()}
-          </>
-        )}
+            );
+            // 3 small cards
+            const smalls = popularStocks.slice(i + 1, i + 4);
+            if (smalls.length > 0) {
+              groups.push(
+                <div key={`smalls-${i}`} className={styles.cardGrid} style={{ marginBottom: 32 }}>
+                  {smalls.map((stock) => (
+                    <div key={stock.symbol} className={stockStyles.mainPageCard}>
+                      <div className={stockStyles.cardHeader}>
+                        <div className={stockStyles.cardTitle}>
+                          <h3>{stock.symbol}</h3>
+                          <p>{stock.name}</p>
+                        </div>
+                        {stock.sector && (
+                          <div className={stockStyles.featuredIndustryTag}>{stock.sector}</div>
+                        )}
+                      </div>
+                      <div className={stockStyles.cardMetrics}>
+                        <div className={stockStyles.metric}>
+                          <div className={stockStyles.metricLabel}>Price</div>
+                          <div className={stockStyles.metricValue}>
+                            {(() => {
+                              const percent = stock.changePercent;
+                              let valueClass = stockStyles.valueNeutral;
+                              if (typeof percent === 'number') {
+                                if (percent > 0) valueClass = stockStyles.valuePositive;
+                                else if (percent < 0) valueClass = stockStyles.valueNegative;
+                              }
+                              return (
+                                <>
+                                  <span className={`${stockStyles.value} ${valueClass}`}>${typeof stock.price === 'number' ? stock.price.toFixed(2) : 'N/A'}</span>
+                                  <span className={`${stockStyles.change} ${percent >= 0 ? stockStyles.positive : stockStyles.negative}`}>{percent >= 0 ? '+' : ''}{percent.toFixed(2)}%</span>
+                                </>
+                              );
+                            })()}
+                          </div>
+                        </div>
+                        <div className={stockStyles.metric}>
+                          <div className={stockStyles.metricLabel}>Market Cap</div>
+                          <div className={stockStyles.metricValue}>{stock.marketCap}</div>
+                        </div>
+                        <div className={stockStyles.metric}>
+                          <div className={stockStyles.metricLabel}>Volume</div>
+                          <div className={stockStyles.metricValue}>{stock.volume}</div>
+                        </div>
+                        <div className={stockStyles.metric}>
+                          <div className={stockStyles.metricLabel}>P/E Ratio</div>
+                          <div className={stockStyles.metricValue}>{stock.pe}</div>
+                        </div>
+                      </div>
+                      <div className={stockStyles.mainPageCardFooter}>
+                        <a href={`/stocks/${stock.symbol}`} className={stockStyles.mainPageViewMore}>
+                          View Details
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="m9 18 6-6-6-6"/>
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+            i += 4;
+          }
+          return groups;
+        })()}
       </section>
     </div>
   );

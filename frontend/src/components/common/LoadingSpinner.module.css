@@ -1,0 +1,715 @@
+/* Original LoadingSpinner styles */
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.loadingContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 48px;
+  background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(33, 150, 243, 0.2);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(33, 150, 243, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  animation: slideUp 0.4s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.loadingContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #2196f3, transparent);
+  animation: shimmer 2s infinite;
+}
+
+.spinner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.spinnerRing {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid rgba(33, 150, 243, 0.1);
+  border-top: 3px solid #2196f3;
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+.spinnerRing:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.spinnerRing:nth-child(2) {
+  width: 70%;
+  height: 70%;
+  top: 15%;
+  left: 15%;
+  border-top-color: #64b5f6;
+  animation-delay: -0.5s;
+  animation-duration: 1.2s;
+}
+
+.spinnerRing:nth-child(3) {
+  width: 40%;
+  height: 40%;
+  top: 30%;
+  left: 30%;
+  border-top-color: #90caf9;
+  animation-delay: -1s;
+  animation-duration: 0.9s;
+}
+
+.loadingText {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin: 0;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Skeleton Card Styles - matches actual dashboard cards 1:1 */
+.skeletonCard {
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  transition: all var(--transition-normal);
+}
+
+.skeletonCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: var(--spacing-lg);
+  padding-left: 0;
+}
+
+.skeletonIcon {
+  width: 2rem;
+  height: 2rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonTitle {
+  flex: 1;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.skeletonTitleText {
+  height: 1.25rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  margin-bottom: var(--spacing-xs);
+  width: 60%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonDescription {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 80%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.skeletonMetric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.skeletonMetric:last-child {
+  border-bottom: none;
+}
+
+.skeletonMetricLabel {
+  height: 0.85rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 40%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonMetricValue {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.skeletonValue {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 60px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonChange {
+  height: 0.75rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 40px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.skeletonButton {
+  height: 0.85rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 80px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Market Overview Skeleton */
+.skeletonMarketOverview {
+  padding: 20px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.skeletonSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.skeletonSectionTitle {
+  height: 1.5rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 200px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonTimestamp {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 150px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.skeletonSection h3 {
+  margin: 0 0 15px 0;
+  height: 1.1rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 120px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonIndicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.skeletonIndexCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 15px;
+  text-align: center;
+}
+
+.skeletonSymbol {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 60px;
+  margin: 0 auto 5px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonPrice {
+  height: 1.2rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 80px;
+  margin: 0 auto 5px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonSectorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.skeletonSectorCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.skeletonSectorName {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 70px;
+  margin: 0 auto 3px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonSectorSymbol {
+  height: 0.8rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 50px;
+  margin: 0 auto 5px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonSectorChange {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 40px;
+  margin: 0 auto;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Macro Indicators Skeleton */
+.skeletonMacroIndicators {
+  padding: 20px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.skeletonIndicatorsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.skeletonIndicatorCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 15px;
+  text-align: center;
+}
+
+.skeletonIndicatorLabel {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 80%;
+  margin: 0 auto 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonIndicatorValue {
+  height: 1.3rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 60px;
+  margin: 0 auto 5px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonIndicatorChange {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 50px;
+  margin: 0 auto 5px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonLastUpdated {
+  height: 0.8rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 70px;
+  margin: 0 auto;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Top Stocks Skeleton */
+.skeletonTopStocks {
+  padding: var(--spacing-xl) 0;
+}
+
+.skeletonControls {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.skeletonStocksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.skeletonStockCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.skeletonStockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.skeletonStockSymbol {
+  height: 1.2rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 60px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonStockSector {
+  height: 0.8rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 40px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonStockName {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 80%;
+  margin-bottom: var(--spacing-md);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonStockPrice {
+  margin-bottom: var(--spacing-lg);
+}
+
+.skeletonStockMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.skeletonStockMetric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.skeletonStockMetric:last-child {
+  border-bottom: none;
+}
+
+.skeletonStockFooter {
+  display: flex;
+  justify-content: center;
+}
+
+.skeletonViewDetails {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 100px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Charts Skeleton */
+.skeletonCharts {
+  padding: var(--spacing-xl) 0;
+}
+
+.skeletonChartsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.skeletonChartsTitle {
+  height: 2rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 250px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonChartTabs {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.skeletonChartTab {
+  height: 2.5rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 120px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonChartContent {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.skeletonChartWrapper {
+  padding: var(--spacing-xl);
+}
+
+.skeletonChartHeader {
+  margin-bottom: var(--spacing-xl);
+}
+
+.skeletonChartTitle {
+  height: 1.5rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 200px;
+  margin-bottom: var(--spacing-sm);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonChartDescription {
+  height: 0.9rem;
+  background: var(--border-color);
+  border-radius: 4px;
+  width: 300px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonChart {
+  height: 400px;
+  background: var(--border-color);
+  border-radius: 4px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .loadingContent {
+    padding: 40px 32px;
+    gap: 28px;
+  }
+  
+  .spinner {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .loadingText {
+    font-size: 1rem;
+  }
+  
+  .skeletonGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .skeletonIndicesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .skeletonSectorGrid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  
+  .skeletonStocksGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .skeletonChartsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .skeletonChartsTitle {
+    width: 200px;
+  }
+  
+  .skeletonChartTabs {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .skeletonChartTab {
+    flex: 1;
+    min-width: 80px;
+  }
+  
+  .skeletonChartWrapper {
+    padding: var(--spacing-lg);
+  }
+  
+  .skeletonChart {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loadingContent {
+    padding: 32px 24px;
+    gap: 24px;
+  }
+  
+  .spinner {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .loadingText {
+    font-size: 0.95rem;
+  }
+  
+  .skeletonChartTabs {
+    flex-direction: column;
+  }
+  
+  .skeletonChartTab {
+    flex: none;
+  }
+  
+  .skeletonChart {
+    height: 250px;
+  }
+} 
+ 

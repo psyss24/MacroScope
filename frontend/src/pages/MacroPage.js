@@ -5,7 +5,7 @@ import BarChart from '../components/charts/BarChart';
 import styles from './Pages.module.css';
 import UnifiedCard from '../components/common/UnifiedCard';
 import DashboardChart from '../components/charts/DashboardChart';
-import ProgressBar from '../components/common/ProgressBar';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 import ChartCarousel from '../components/charts/ChartCarousel';
 
 // Helper function to generate dates for charts
@@ -204,9 +204,7 @@ const MacroPage = () => {
     }];
   }, [macroData, selectedRegion, selectedMacroChart]);
 
-  if (loading) return <div className={styles.loading}>Loading macroeconomic data...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (!macroData[selectedRegion]) return <div className={styles.error}>No macroeconomic data available</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading macroeconomic data..." />;
 
   const regionData = macroData[selectedRegion] || {};
   // Extra logging for debugging interest rate data
@@ -255,7 +253,6 @@ const MacroPage = () => {
 
   return (
     <div className={styles.page}>
-      <ProgressBar isLoading={loading} />
       <header className={styles.pageHeader}>
         <h1>Macroeconomic Indicators</h1>
         <p className={styles.pageDescription}>
@@ -266,7 +263,7 @@ const MacroPage = () => {
         {MACRO_REGIONS.map(region => (
           <UnifiedCard
             key={region.key}
-            className={selectedRegion === region.key ? `${styles.selectedCard} ${styles.buttonCard}` : styles.buttonCard}
+            className={selectedRegion === region.key ? `selectedCard buttonCard` : `buttonCard`}
             onClick={() => {
               console.log(`Frontend: Region button clicked: ${region.key}`);
               setSelectedRegion(region.key);
@@ -349,11 +346,16 @@ const MacroPage = () => {
           const currentYearValue = getCurrentYearValue(opt.key);
           const selectedOption = MACRO_CHART_OPTIONS.find(option => option.key === opt.key);
           
+          // Format the value to 2 decimal places
+          const formattedValue = currentYearValue != null && typeof currentYearValue === 'number' 
+            ? currentYearValue.toFixed(2) 
+            : currentYearValue;
+          
           return (
-            <UnifiedCard key={opt.key} className={styles.buttonCard} style={{ minWidth: 180, maxWidth: 220 }}>
+            <UnifiedCard key={opt.key} className="buttonCard" style={{ minWidth: 180, maxWidth: 220 }}>
               <div style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: 4 }}>{opt.label}</div>
               <div style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--accent-color)' }}>
-                {currentYearValue != null ? currentYearValue : 'N/A'}
+                {formattedValue != null ? formattedValue : 'N/A'}
                 {selectedOption?.unit ? ` ${selectedOption.unit}` : ''}
               </div>
               <div style={{ fontSize: '0.95rem', color: 'var(--muted-text)', marginTop: 2 }}>
@@ -362,10 +364,6 @@ const MacroPage = () => {
             </UnifiedCard>
           );
         })}
-      </div>
-      {/* Note about projections */}
-      <div style={{ marginTop: 36, fontSize: '0.98rem', color: 'var(--muted-text)', textAlign: 'center' }}>
-        <em>Note: Figures beyond the current year are IMF projections (WEO).</em>
       </div>
     </div>
   );

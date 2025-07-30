@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import apiService from '../../services/api';
 import TimeSeriesChart from '../charts/TimeSeriesChart';
 import styles from './Stocks.module.css';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 /**
  * StockDetailPage component for displaying detailed information about a stock
@@ -116,7 +117,7 @@ const StockDetailPage = () => {
     );
   };
 
-  if (loading) return <div className="loading">Loading stock details...</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading stock details..." />;
   if (error) return <div className="error">{error}</div>;
   if (!stockData) return <div className="error">Stock not found</div>;
 

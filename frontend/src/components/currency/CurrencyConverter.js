@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import apiService from '../../services/api';
 import styles from './Currency.module.css';
+import apiService from '../../services/api';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 /**
  * CurrencyConverter component for converting between currencies
@@ -236,7 +237,7 @@ const CurrencyConverter = () => {
           
           <div className={styles.conversionResult}>
             {loading ? (
-              <div className={styles.loading}>Loading exchange rates...</div>
+              <LoadingSpinner isLoading={true} message="Loading exchange rates..." />
             ) : (
               <>
                 <div className={styles.conversionAmount}>

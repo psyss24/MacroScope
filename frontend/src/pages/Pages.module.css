@@ -334,14 +334,17 @@
 }
 
 .selectedCard {
-  background: var(--accent-color) !important;
-  color: #000 !important;
-  border-color: var(--accent-color) !important;
+  background: var(--secondary-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-md) !important;
 }
 
 .selectedCard:hover {
-  background: var(--accent-color) !important;
+  background: var(--hover-bg) !important;
   transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-md) !important;
 }
 
 /* Responsive styles */

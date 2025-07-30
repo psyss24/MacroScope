@@ -7,7 +7,7 @@ import UnifiedCard from '../components/common/UnifiedCard';
 import CardSlider from '../components/common/CardSlider';
 import ViewDetailsButton from '../components/common/ViewDetailsButton';
 import DashboardChart from '../components/charts/DashboardChart';
-import ProgressBar from '../components/common/ProgressBar';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 import Plot from 'react-plotly.js';
 
 const containerStyle = {
@@ -116,9 +116,7 @@ const CommoditiesPage = () => {
   // Use marketData.commodities['Gold'].history and marketData.commodities['Silver'].history directly
 
   const [goldSilverMode, setGoldSilverMode] = useState('normalised');
-  if (loading) return <div className={styles.loading}>Loading commodities data...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-  if (!marketData || !marketData.commodities) return <div className={styles.error}>No commodities data available</div>;
+  if (loading) return <LoadingSpinner isLoading={true} message="Loading commodities data..." />;
 
   // Helper for metrics (remove 'Unit')
   const getMetrics = (data, type) => {
@@ -285,7 +283,7 @@ const CommoditiesPage = () => {
 
   return (
     <div style={containerStyle}>
-      <ProgressBar isLoading={loading} />
+      <LoadingSpinner isLoading={loading} message="Loading commodities data..." />
       <header className={styles.pageHeader} style={{ paddingTop: 24, paddingBottom: 12, marginBottom: 20 }}>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--accent-color)', marginBottom: 12, letterSpacing: '-0.03em' }}>Commodities</h1>
         <p className={styles.pageDescription} style={{ fontSize: '1.15rem', color: 'var(--muted-text)', marginBottom: 16, maxWidth: 700 }}>

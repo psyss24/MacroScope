@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import CurrencyConverter from '../components/currency/CurrencyConverter';
 import apiService from '../services/api';
 import styles from './Pages.module.css';
-import ProgressBar from '../components/common/ProgressBar';
+import UnifiedCard from '../components/common/UnifiedCard';
+import CardSlider from '../components/common/CardSlider';
+import CurrencyConverter from '../components/currency/CurrencyConverter';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 /**
  * CurrencyPage component for displaying currency converter and exchange rates
@@ -149,9 +151,10 @@ const CurrencyPage = () => {
     return rate.toFixed(4);
   };
 
+  if (loading) return <LoadingSpinner isLoading={loading} message="Loading currency data..." />;
+  
   return (
     <div className={styles.page}>
-      <ProgressBar isLoading={loading} />
       <header className={styles.pageHeader}>
         <h1>Currency Exchange</h1>
         <p className={styles.pageDescription}>
@@ -166,12 +169,7 @@ const CurrencyPage = () => {
 
       <section className={styles.section}>
         <h2>Exchange Rates</h2>
-        {loading ? (
-          <div className="loading">Loading exchange rates...</div>
-        ) : error ? (
-          <div className="error">{error}</div>
-        ) : (
-          <div className={styles.currencyRatesContainer}>
+        <div className={styles.currencyRatesContainer}>
             <div className={styles.baseCurrencySelector}>
               <label htmlFor="baseCurrency">Base Currency:</label>
               <select
@@ -228,7 +226,6 @@ const CurrencyPage = () => {
               </tbody>
             </table>
           </div>
-        )}
       </section>
       <div style={{ textAlign: 'right', color: 'var(--muted-text)', fontSize: '0.95rem', marginTop: 32 }}>
         Last updated: {exchangeRates?.timestamp ? new Date(exchangeRates.timestamp).toLocaleString() : 'N/A'}
