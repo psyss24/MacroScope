@@ -27,16 +27,11 @@ deploy_backend() {
 
 # Function to deploy frontend to GitHub Pages
 deploy_frontend() {
-    echo "🌐 Deploying frontend to GitHub Pages..."
+    echo "🌐 Deploying frontend to GitHub Pages from main branch..."
     cd frontend
     
-    # Build the production version
-    echo "📦 Building production version..."
-    npm run build
-    
-    # Deploy to GitHub Pages
-    echo "🚀 Deploying to GitHub Pages..."
-    npm run deploy
+    # Use the main branch deployment script
+    ./deploy-main.sh
     
     cd ..
     echo "✅ Frontend deployed to GitHub Pages"

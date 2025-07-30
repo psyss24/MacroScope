@@ -11,8 +11,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "deploy:prod": "npm run build && gh-pages -d build"
+    "deploy": "npm run build && git add build && git commit -m 'Deploy to GitHub Pages' && git push",
+    "deploy:prod": "npm run build && git add build && git commit -m 'Deploy to GitHub Pages' && git push"
   },
   "repository": {
     "type": "git",
@@ -48,8 +48,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "gh-pages": "^5.0.0"
+    "@testing-library/user-event": "^13.5.0"
   },
   "eslintConfig": {
     "extends": [
