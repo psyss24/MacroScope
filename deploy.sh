@@ -1,89 +1,95 @@
 #!/bin/bash
 
-# MacroScope Deployment Script
-# This script helps deploy both frontend and backend
+# Deployment script for MacroScope
+# This script helps deploy both backend and frontend
 
-set -e
+echo "🚀 MacroScope Deployment Script"
+echo "================================"
 
-echo "🚀 Starting MacroScope deployment..."
-
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
-
-# Function to print colored output
-print_status() {
-    echo -e "${GREEN}[INFO]${NC} $1"
-}
-
-print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-# Check if we're in the right directory
-if [ ! -f "frontend/package.json" ] || [ ! -f "backend/requirements.txt" ]; then
-    print_error "Please run this script from the project root directory"
-    exit 1
-fi
-
-# Function to deploy frontend
-deploy_frontend() {
-    print_status "Deploying frontend to GitHub Pages..."
+# Function to deploy backend to Railway
+deploy_backend() {
+    echo "📦 Deploying backend to Railway..."
+    cd backend
     
-    cd frontend
-    
-    # Install dependencies if needed
-    if [ ! -d "node_modules" ]; then
-        print_status "Installing frontend dependencies..."
-        npm install
+    # Check if Railway CLI is installed
+    if ! command -v railway &> /dev/null; then
+        echo "❌ Railway CLI not found. Please install it first:"
+        echo "   npm install -g @railway/cli"
+        echo "   railway login"
+        exit 1
     fi
     
-    # Build and deploy
-    print_status "Building and deploying frontend..."
-    npm run deploy:prod
+    # Deploy to Railway
+    railway up
+    cd ..
+    echo "✅ Backend deployed to Railway"
+}
+
+# Function to deploy frontend to GitHub Pages
+deploy_frontend() {
+    echo "🌐 Deploying frontend to GitHub Pages..."
+    cd frontend
+    
+    # Build the production version
+    echo "📦 Building production version..."
+    npm run build
+    
+    # Deploy to GitHub Pages
+    echo "🚀 Deploying to GitHub Pages..."
+    npm run deploy
     
     cd ..
-    print_status "Frontend deployed successfully!"
+    echo "✅ Frontend deployed to GitHub Pages"
 }
 
-# Function to deploy backend
-deploy_backend() {
-    print_status "Backend should be deployed to Railway separately."
-    print_status "Please follow these steps:"
-    echo "1. Go to https://railway.app"
-    echo "2. Create a new project"
-    echo "3. Connect your GitHub repository"
-    echo "4. Set the root directory to 'backend'"
-    echo "5. Add environment variables from backend/env.example"
-    echo "6. Deploy!"
+# Function to deploy both
+deploy_all() {
+    echo "🔄 Deploying both backend and frontend..."
+    deploy_backend
+    deploy_frontend
+    echo "🎉 Deployment complete!"
 }
 
-# Main deployment logic
-case "${1:-all}" in
-    "frontend")
-        deploy_frontend
-        ;;
+# Function to check deployment status
+check_status() {
+    echo "🔍 Checking deployment status..."
+    
+    # Check backend health
+    echo "Backend health check:"
+    curl -s https://macroscope-backend.railway.internal/api/health || echo "❌ Backend not responding"
+    
+    # Check frontend
+    echo "Frontend status:"
+    curl -s https://saadsaqib.dev/macroscope | head -5 || echo "❌ Frontend not responding"
+}
+
+# Main script logic
+case "${1:-help}" in
     "backend")
         deploy_backend
         ;;
-    "all")
-        print_status "Deploying both frontend and backend..."
+    "frontend")
         deploy_frontend
-        echo
-        deploy_backend
         ;;
-    *)
-        print_error "Usage: $0 [frontend|backend|all]"
-        exit 1
+    "all")
+        deploy_all
         ;;
-esac
-
-print_status "Deployment process completed!"
-print_status "Frontend will be available at: https://saadsaqib.dev/macroscope"
-print_status "Backend will be available at: https://your-railway-app.up.railway.app" 
+    "status")
+        check_status
+        ;;
+    "help"|*)
+        echo "Usage: $0 [backend|frontend|all|status|help]"
+        echo ""
+        echo "Commands:"
+        echo "  backend  - Deploy only the backend to Railway"
+        echo "  frontend - Deploy only the frontend to GitHub Pages"
+        echo "  all      - Deploy both backend and frontend"
+        echo "  status   - Check deployment status"
+        echo "  help     - Show this help message"
+        echo ""
+        echo "Examples:"
+        echo "  $0 backend   # Deploy backend only"
+        echo "  $0 all       # Deploy both"
+        echo "  $0 status    # Check status"
+        ;;
+esac 

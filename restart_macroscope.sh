@@ -55,7 +55,7 @@ RETRY_COUNT=0
 API_READY=false
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
     echo "Checking if API is ready (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)..."
-    if curl -s "http://localhost:8000/api/health" | grep -q "ok"; then
+    if curl -s "http://localhost:8000/api/health" | grep -q "healthy"; then
         echo "API is ready!"
         API_READY=true
         break

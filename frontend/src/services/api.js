@@ -2,14 +2,9 @@
  * API service for interacting with the MacroScope backend
  */
 
-// Determine API base URL based on environment
-const isDevelopment = process.env.NODE_ENV === 'development';
-const API_BASE_URL = isDevelopment 
-  ? '/api' 
-  : 'https://macroscope-backend-production.up.railway.app/api'; // REPLACE WITH YOUR ACTUAL RAILWAY URL
+import config from '../config';
 
-// TODO: Replace with your actual Railway app name
-// Example: 'macroscope-backend-production.up.railway.app'
+const API_BASE_URL = config.apiBaseUrl;
 
 /**
  * Fetch data from the API with error handling
