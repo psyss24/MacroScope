@@ -310,22 +310,17 @@ const BondsRiskPage = () => {
 
       <section className={styles.section}>
         <h2>Treasury Yield Trends</h2>
-        {/* Region button cards */}
-        <div style={{ display: 'flex', gap: 18, marginBottom: 18, justifyContent: 'flex-start' }}>
+        {/* Region button cards - using proper pattern */}
+        <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
           {BOND_REGIONS.map(region => (
-            <div
+            <UnifiedCard
               key={region.key}
-              className="buttonCard"
-              style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex' }}
+              className={selectedBondRegion === region.key ? `selectedCard buttonCard` : `buttonCard`}
               onClick={() => setSelectedBondRegion(region.key)}
-              tabIndex={0}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedBondRegion(region.key); }}
+              style={{ cursor: 'pointer', minWidth: 90, textAlign: 'center', fontWeight: 600 }}
             >
-              <UnifiedCard
-                title={<span style={{ fontSize: '0.97rem', fontWeight: 500, letterSpacing: '-0.01em', color: '#fff' }}>{region.label}</span>}
-                className={"buttonCard"}
-              />
-            </div>
+              {region.label}
+            </UnifiedCard>
           ))}
         </div>
         
@@ -371,10 +366,6 @@ const BondsRiskPage = () => {
                   zeroline: false,
                   showline: false,
                   linecolor: 'rgba(0,0,0,0)',
-                  showticklabels: false,
-                  ticks: '',
-                  ticklen: 0,
-                  tickcolor: 'rgba(0,0,0,0)',
                   title: '',
                 },
                 showlegend: false,

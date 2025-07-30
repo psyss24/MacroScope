@@ -8,10 +8,40 @@ const LoadingSpinner = ({ isLoading, message = 'Loading...' }) => {
   return (
     <div className={styles.loadingOverlay}>
       <div className={styles.loadingContent}>
-        <div className={styles.spinner}>
-          <div className={styles.spinnerRing}></div>
-          <div className={styles.spinnerRing}></div>
-          <div className={styles.spinnerRing}></div>
+        <div className={styles.chartContainer}>
+          {/* Chart Grid Lines */}
+          <div className={styles.chartGrid}>
+            <div className={`${styles.chartGridLine} ${styles.horizontal}`}></div>
+            <div className={`${styles.chartGridLine} ${styles.horizontal}`}></div>
+            <div className={`${styles.chartGridLine} ${styles.horizontal}`}></div>
+            <div className={`${styles.chartGridLine} ${styles.vertical}`}></div>
+            <div className={`${styles.chartGridLine} ${styles.vertical}`}></div>
+            <div className={`${styles.chartGridLine} ${styles.vertical}`}></div>
+          </div>
+          
+          {/* Chart Line Animation */}
+          <svg className={styles.chartLine} viewBox="0 0 120 80" preserveAspectRatio="none">
+            <path 
+              className={styles.chartPath}
+              d="M 10 64 L 30 56 L 48 60 L 66 44 L 84 48 L 102 32"
+              fill="none"
+              stroke="#2196f3"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          
+          {/* Chart Data Points */}
+          <div className={styles.chartPoint}></div>
+          <div className={styles.chartPoint}></div>
+          <div className={styles.chartPoint}></div>
+          <div className={styles.chartPoint}></div>
+          <div className={styles.chartPoint}></div>
+          <div className={styles.chartPoint}></div>
+          
+          {/* Chart Pulse Effect */}
+          <div className={styles.chartPulse}></div>
         </div>
         <div className={styles.loadingText}>{message}</div>
       </div>

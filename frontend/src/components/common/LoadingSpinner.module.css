@@ -25,7 +25,6 @@
   border: 1px solid rgba(33, 150, 243, 0.2);
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(33, 150, 243, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   animation: slideUp 0.4s ease-out;
@@ -33,55 +32,101 @@
   overflow: hidden;
 }
 
-.loadingContent::before {
-  content: '';
+/* Chart Animation Container */
+.chartContainer {
+  position: relative;
+  width: 120px;
+  height: 80px;
+  background: rgba(33, 150, 243, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(33, 150, 243, 0.2);
+  overflow: hidden;
+}
+
+/* Chart Grid Lines */
+.chartGrid {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #2196f3, transparent);
-  animation: shimmer 2s infinite;
-}
-
-.spinner {
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-
-.spinnerRing {
-  position: absolute;
   width: 100%;
   height: 100%;
-  border: 3px solid rgba(33, 150, 243, 0.1);
-  border-top: 3px solid #2196f3;
+  opacity: 0.3;
+}
+
+.chartGridLine {
+  position: absolute;
+  background: rgba(33, 150, 243, 0.2);
+  animation: fadeInGrid 0.5s ease-out;
+}
+
+.chartGridLine.horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.chartGridLine.vertical {
+  width: 1px;
+  height: 100%;
+}
+
+.chartGridLine:nth-child(1) { top: 25%; animation-delay: 0.1s; }
+.chartGridLine:nth-child(2) { top: 50%; animation-delay: 0.2s; }
+.chartGridLine:nth-child(3) { top: 75%; animation-delay: 0.3s; }
+.chartGridLine:nth-child(4) { left: 25%; animation-delay: 0.4s; }
+.chartGridLine:nth-child(5) { left: 50%; animation-delay: 0.5s; }
+.chartGridLine:nth-child(6) { left: 75%; animation-delay: 0.6s; }
+
+/* Chart Line Animation */
+.chartLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #2196f3;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(33, 150, 243, 0.5));
+}
+
+.chartPath {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawChart 2s ease-in-out infinite;
+}
+
+/* Chart Data Points */
+.chartPoint {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #2196f3;
   border-radius: 50%;
-  animation: spin 1.5s linear infinite;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.6);
+  animation: fadeInPoint 0.3s ease-out;
 }
 
-.spinnerRing:nth-child(1) {
-  animation-delay: 0s;
-}
+.chartPoint:nth-child(1) { top: 20%; left: 10%; animation-delay: 0.8s; }
+.chartPoint:nth-child(2) { top: 35%; left: 25%; animation-delay: 1.0s; }
+.chartPoint:nth-child(3) { top: 25%; left: 40%; animation-delay: 1.2s; }
+.chartPoint:nth-child(4) { top: 45%; left: 55%; animation-delay: 1.4s; }
+.chartPoint:nth-child(5) { top: 30%; left: 70%; animation-delay: 1.6s; }
+.chartPoint:nth-child(6) { top: 15%; left: 85%; animation-delay: 1.8s; }
 
-.spinnerRing:nth-child(2) {
-  width: 70%;
-  height: 70%;
-  top: 15%;
-  left: 15%;
-  border-top-color: #64b5f6;
-  animation-delay: -0.5s;
-  animation-duration: 1.2s;
-}
-
-.spinnerRing:nth-child(3) {
-  width: 40%;
-  height: 40%;
-  top: 30%;
-  left: 30%;
-  border-top-color: #90caf9;
-  animation-delay: -1s;
-  animation-duration: 0.9s;
+/* Chart Pulse Effect */
+.chartPulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: #2196f3;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: chartPulse 2s ease-in-out infinite;
 }
 
 .loadingText {
@@ -93,6 +138,50 @@
   margin: 0;
   opacity: 0.9;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Chart Animation Keyframes */
+@keyframes drawChart {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+  }
+}
+
+@keyframes fadeInGrid {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+@keyframes fadeInPoint {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes chartPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
 }
 
 /* Skeleton Card Styles - matches actual dashboard cards 1:1 */
@@ -593,15 +682,6 @@
   }
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -629,8 +709,8 @@
     gap: 28px;
   }
   
-  .spinner {
-    width: 70px;
+  .chartContainer {
+    width: 100px;
     height: 70px;
   }
   
@@ -691,8 +771,8 @@
     gap: 24px;
   }
   
-  .spinner {
-    width: 60px;
+  .chartContainer {
+    width: 80px;
     height: 60px;
   }
   
