@@ -63,8 +63,8 @@ const BondsRiskPage = () => {
         setError(null);
       } catch (err) {
         if (err.name !== 'AbortError') {
-          console.error('Error fetching bonds and risk data:', err);
-          setError('Failed to load bonds and risk data. Please try again later.');
+        console.error('Error fetching bonds and risk data:', err);
+        setError('Failed to load bonds and risk data. Please try again later.');
         }
       } finally {
         setLoading(false);
@@ -143,7 +143,7 @@ const BondsRiskPage = () => {
   const twoYearBonds = BOND_SYMBOLS.filter(b => b.symbol.endsWith('2Y')).map(b => bondHistories[b.symbol]).filter(Boolean);
   const fiveYearBonds = BOND_SYMBOLS.filter(b => b.symbol.endsWith('5Y')).map(b => bondHistories[b.symbol]).filter(Boolean);
   const tenYearBonds = BOND_SYMBOLS.filter(b => b.symbol.endsWith('10Y')).map(b => bondHistories[b.symbol]).filter(Boolean);
-
+  
   // Only show bonds with at least 2 data points in the chart
   const chartBonds = Object.values(bondHistories).filter(b => 
     b && 
@@ -224,13 +224,13 @@ const BondsRiskPage = () => {
             <small>Debug info: chartBonds length: {chartBonds.length}</small>
           </div>
         ) : (
-          <TimeSeriesChart
+        <TimeSeriesChart 
             data={chartBonds}
             title="Treasury Yields - Historical"
-            xAxisTitle="Date"
-            yAxisTitle="Yield (%)"
-            height={450}
-          />
+          xAxisTitle="Date"
+          yAxisTitle="Yield (%)"
+          height={450}
+        />
         )}
       </section>
 
@@ -260,7 +260,7 @@ const BondsRiskPage = () => {
                     { label: 'Change (1d)', value: change != null ? `${change >= 0 ? '+' : ''}${change.toFixed(2)}%` : 'N/A', valueClass: getPriceClass(change) },
                     { label: 'Date', value: bond.x && bond.x.length > 0 ? bond.x[0] : 'N/A', valueClass: 'valueNeutral' }
                   ]}
-                />
+        />
               );
             })
           )}
@@ -289,7 +289,7 @@ const BondsRiskPage = () => {
                     { label: 'Change (1d)', value: change != null ? `${change >= 0 ? '+' : ''}${change.toFixed(2)}%` : 'N/A', valueClass: getPriceClass(change) },
                     { label: 'Date', value: bond.x && bond.x.length > 0 ? bond.x[0] : 'N/A', valueClass: 'valueNeutral' }
                   ]}
-                />
+        />
               );
             })
           )}
@@ -308,7 +308,7 @@ const BondsRiskPage = () => {
                   change = ((curr - prev) / prev) * 100;
                 }
               }
-              return (
+          return (
                 <UnifiedCard
                   key={bond.name}
                   title={bond.name}
@@ -318,8 +318,8 @@ const BondsRiskPage = () => {
                     { label: 'Change (1d)', value: change != null ? `${change >= 0 ? '+' : ''}${change.toFixed(2)}%` : 'N/A', valueClass: getPriceClass(change) },
                     { label: 'Date', value: bond.x && bond.x.length > 0 ? bond.x[0] : 'N/A', valueClass: 'valueNeutral' }
                   ]}
-                />
-              );
+            />
+          );
             })
           )}
         </CardSlider>

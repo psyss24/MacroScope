@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styles from './TopStocks.module.css';
 import apiService from '../services/api';
 
+// Hardcoded list of popular stocks to display
+const POPULAR_STOCKS = [
+  'AAPL',  // Apple Inc.
+  'MSFT',  // Microsoft Corp.
+  'GOOGL', // Alphabet Inc.
+  'AMZN',  // Amazon.com Inc.
+  'TSLA',  // Tesla Inc.
+  'META',  // Meta Platforms Inc.
+  'NVDA',  // NVIDIA Corp.
+  'NFLX'   // Netflix Inc.
+];
+
 const TopStocks = () => {
   const [stocksData, setStocksData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +28,7 @@ const TopStocks = () => {
     const fetchStocksData = async () => {
       try {
         // Fetch stocks data from the backend API
-        const data = await apiService.getStocksData({ signal });
+        const data = await apiService.getStocksData(POPULAR_STOCKS, { signal });
         setStocksData(data);
       } catch (err) {
         if (err.name !== 'AbortError') {

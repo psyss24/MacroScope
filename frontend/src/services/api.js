@@ -98,10 +98,15 @@ const apiService = {
   
   /**
    * Get top stocks data
+   * @param {Array<string>} symbols - Optional list of stock symbols to fetch
    * @returns {Promise<Object>} - Stocks data
    */
-  getStocksData: (options = {}) => {
-    return fetchFromAPI('/stocks', options);
+  getStocksData: (symbols = null, options = {}) => {
+    let endpoint = '/stocks';
+    if (symbols && symbols.length > 0) {
+      endpoint += `?symbols=${symbols.join(',')}`;
+    }
+    return fetchFromAPI(endpoint, options);
   },
   
   /**

@@ -9,6 +9,19 @@ import ProgressBar from '../components/common/ProgressBar';
 /**
  * StocksPage component for displaying stock search and popular stocks
  */
+
+// Hardcoded list of popular stocks to display
+const POPULAR_STOCKS = [
+  'AAPL',  // Apple Inc.
+  'MSFT',  // Microsoft Corp.
+  'GOOGL', // Alphabet Inc.
+  'AMZN',  // Amazon.com Inc.
+  'TSLA',  // Tesla Inc.
+  'META',  // Meta Platforms Inc.
+  'NVDA',  // NVIDIA Corp.
+  'NFLX'   // Netflix Inc.
+];
+
 // Utility function to determine featured symbols
 function getFeaturedSymbols(popularStocks) {
   // Example: every 4th stock is featured (0, 4, 8, ...)
@@ -33,7 +46,7 @@ const StocksPage = () => {
     const fetchPopularStocks = async () => {
       try {
         setLoading(true);
-        const data = await apiService.getStocksData({ signal });
+        const data = await apiService.getStocksData(POPULAR_STOCKS, { signal });
         const stocksArr = Object.entries(data.topStocks || {}).map(([symbol, stock]) => ({
           symbol,
           ...stock

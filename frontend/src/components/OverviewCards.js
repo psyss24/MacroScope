@@ -23,7 +23,7 @@ const OverviewCards = () => {
         // Use only the optimized dashboard endpoint
         const data = await apiService.getDashboardData({ signal });
         setDashboardData(data);
-        
+
         // Set loading to false immediately since we have all the data we need
         setLoading(false);
       } catch (err) {
