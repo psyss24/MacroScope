@@ -5,6 +5,7 @@ import styles from './Pages.module.css';
 import ProgressBar from '../components/common/ProgressBar';
 import UnifiedCard from '../components/common/UnifiedCard';
 import CardSlider from '../components/common/CardSlider';
+import DashboardChart from '../components/charts/DashboardChart';
 
 const BOND_SYMBOLS = [
   { symbol: 'US2Y', name: 'US 2Y Treasury' },
@@ -19,6 +20,14 @@ const BOND_SYMBOLS = [
   { symbol: 'FR2Y', name: 'France 2Y OAT' },
   { symbol: 'FR5Y', name: 'France 5Y OAT' },
   { symbol: 'FR10Y', name: 'France 10Y OAT' },
+];
+
+// Define bond regions for button cards
+const BOND_REGIONS = [
+  { key: 'us', label: 'United States', symbols: ['US2Y', 'US5Y', 'US10Y'] },
+  { key: 'germany', label: 'Germany', symbols: ['DE2Y', 'DE5Y', 'DE10Y'] },
+  { key: 'uk', label: 'United Kingdom', symbols: ['GB2Y', 'GB5Y', 'GB10Y'] },
+  { key: 'france', label: 'France', symbols: ['FR2Y', 'FR5Y', 'FR10Y'] },
 ];
 
 const getPriceClass = (changePercent) => {
@@ -47,6 +56,7 @@ const BondsRiskPage = () => {
   const [error, setError] = useState(null);
   const [bondHistories, setBondHistories] = useState({});
   const [bondHistoryLoading, setBondHistoryLoading] = useState(true);
+  const [selectedBondRegion, setSelectedBondRegion] = useState('us'); // Default to US
 
   useEffect(() => {
     const controller = new AbortController();
@@ -104,19 +114,31 @@ const BondsRiskPage = () => {
               // Convert date format from "Sep 30, 2024" to ISO format
               try {
                 const date = new Date(item.x);
+                // Check if date is valid
+                if (isNaN(date.getTime())) {
+                  console.warn(`Invalid date for ${symbol}: ${item.x}`);
+                  return null;
+                }
                 return date.toISOString().split('T')[0]; // Convert to YYYY-MM-DD format
               } catch (e) {
-                console.warn(`Could not parse date: ${item.x}`);
-                return item.x;
+                console.warn(`Could not parse date for ${symbol}: ${item.x}`, e);
+                return null;
               }
-            });
-            const yValues = arr.map(item => item.y);
+            }).filter(date => date !== null); // Remove invalid dates
+            
+            const yValues = arr.map((item, index) => {
+              // Only include yield if we have a valid date
+              return xValues[index] !== null ? item.y : null;
+            }).filter(yieldValue => yieldValue !== null); // Remove yields for invalid dates
+            
+            // Ensure x and y arrays have same length
+            const minLength = Math.min(xValues.length, yValues.length);
             histories[symbol] = { 
-              x: xValues, 
-              y: yValues, 
+              x: xValues.slice(0, minLength), 
+              y: yValues.slice(0, minLength), 
               name 
             };
-            console.log(`Processed ${symbol}: ${xValues.length} data points`);
+            console.log(`Processed ${symbol}: ${minLength} data points`);
           } else {
             console.log(`No data for ${symbol}`);
           }
@@ -138,6 +160,84 @@ const BondsRiskPage = () => {
   if (loading) return <div className={styles.loading}>Loading bonds and risk data...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
   if (!marketData || !sentimentData) return <div className={styles.error}>No bonds and risk data available</div>;
+
+  // Get selected region data
+  const selectedRegion = BOND_REGIONS.find(r => r.key === selectedBondRegion);
+  const selectedBondData = selectedRegion ? selectedRegion.symbols.map(symbol => bondHistories[symbol]).filter(Boolean) : [];
+
+  // Generate 6 months of dates for chart alignment
+  const today = new Date();
+  const start = new Date(today);
+  start.setMonth(today.getMonth() - 6);
+  const xSeries = [];
+  for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
+    xSeries.push(d.toISOString().split('T')[0]);
+  }
+
+  // Build chart data for selected region
+  const buildChartData = (regionSymbols) => {
+    return regionSymbols.map((symbol, i) => {
+      const bondData = bondHistories[symbol];
+      if (!bondData || !bondData.x || !bondData.y) return null;
+      
+      // Debug logging for UK 5Y specifically
+      if (symbol === 'GB5Y') {
+        console.log('UK 5Y Debug:', {
+          totalDataPoints: bondData.x.length,
+          dateRange: bondData.x.length > 0 ? `${bondData.x[0]} to ${bondData.x[bondData.x.length - 1]}` : 'none',
+          sampleYields: bondData.y.slice(0, 5),
+          latestYield: bondData.y[0],
+          latestDate: bondData.x[0]
+        });
+      }
+      
+      // Map date to yield for fast lookup
+      const dateToYield = {};
+      bondData.x.forEach((date, index) => {
+        dateToYield[date] = bondData.y[index];
+      });
+      
+      const colors = ['#1976d2', '#43a047', '#ba68c8'];
+      const names = ['2Y', '5Y', '10Y'];
+      
+      // Build y-values with proper gap handling
+      const yValues = xSeries.map(date => {
+        const yieldValue = dateToYield[date];
+        // Return null for missing data points to create gaps in the line
+        return yieldValue != null ? yieldValue : null;
+      });
+      
+      // Check if we have enough data points to show the line
+      const validDataPoints = yValues.filter(y => y != null).length;
+      if (validDataPoints < 2) {
+        console.warn(`Insufficient data for ${symbol}: only ${validDataPoints} valid points`);
+        return null;
+      }
+      
+      // Debug logging for UK 5Y chart data
+      if (symbol === 'GB5Y') {
+        console.log('UK 5Y Chart Data:', {
+          xSeriesLength: xSeries.length,
+          yValuesLength: yValues.length,
+          validDataPoints,
+          firstValidIndex: yValues.findIndex(y => y != null),
+          lastValidIndex: yValues.lastIndexOf(yValues.find(y => y != null)),
+          sampleYValues: yValues.filter(y => y != null).slice(0, 5)
+        });
+      }
+      
+      return {
+        x: xSeries,
+        y: yValues,
+        name: `${selectedRegion.label} ${names[i]}`,
+        type: 'scatter',
+        mode: 'lines',
+        line: { color: colors[i], width: 3 },
+        hoverinfo: 'x+y+name',
+        connectgaps: false, // Don't connect gaps to show data breaks clearly
+      };
+    }).filter(Boolean);
+  };
 
   // Filter for only US, Germany, UK bonds
   const twoYearBonds = BOND_SYMBOLS.filter(b => b.symbol.endsWith('2Y')).map(b => bondHistories[b.symbol]).filter(Boolean);
@@ -213,25 +313,84 @@ const BondsRiskPage = () => {
 
       <section className={styles.section}>
         <h2>Treasury Yield Trends</h2>
-        {bondHistoryLoading ? (
-          <div className={styles.loading}>Loading bond time series...</div>
-        ) : chartBonds.length === 0 ? (
-          <div className={styles.error}>
-            No bond time series data available.
-            <br />
-            <small>Debug info: bondHistories keys: {Object.keys(bondHistories).join(', ')}</small>
-            <br />
-            <small>Debug info: chartBonds length: {chartBonds.length}</small>
+        <div className={styles.dashboardChartCard} style={{ position: 'relative' }}>
+          {/* Region button cards */}
+          <div style={{ display: 'flex', gap: 18, marginBottom: 18, justifyContent: 'flex-start' }}>
+            {BOND_REGIONS.map(region => (
+              <div
+                key={region.key}
+                className="buttonCard"
+                style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex' }}
+                onClick={() => setSelectedBondRegion(region.key)}
+                tabIndex={0}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setSelectedBondRegion(region.key); }}
+              >
+                <UnifiedCard
+                  title={<span style={{ fontSize: '0.97rem', fontWeight: 500, letterSpacing: '-0.01em', color: '#fff' }}>{region.label}</span>}
+                  className={"buttonCard"}
+                />
+              </div>
+            ))}
           </div>
-        ) : (
-        <TimeSeriesChart 
-            data={chartBonds}
-            title="Treasury Yields - Historical"
-          xAxisTitle="Date"
-          yAxisTitle="Yield (%)"
-          height={450}
-        />
-        )}
+          
+          {/* Chart with region switching */}
+          {bondHistoryLoading ? (
+            <div className={styles.loading}>Loading bond time series...</div>
+          ) : selectedBondData.length === 0 ? (
+            <div className={styles.error}>
+              No bond time series data available for {selectedRegion?.label}.
+              <br />
+              <small>Debug info: selectedBondData length: {selectedBondData.length}</small>
+            </div>
+          ) : (
+            <DashboardChart
+              title={`${selectedRegion?.label} Treasury Yields`}
+              smartBaselineLabel={true}
+              showPricesOnHover={true}
+              enableModeToggle={true}
+              rawData={buildChartData(selectedRegion.symbols)}
+              charts={[{
+                layout: {
+                  height: 360,
+                  margin: { l: 0, r: 0, t: 24, b: 64 },
+                  plot_bgcolor: 'rgba(0,0,0,0)',
+                  paper_bgcolor: 'rgba(0,0,0,0)',
+                  xaxis: {
+                    showgrid: false,
+                    zeroline: false,
+                    showline: false,
+                    linecolor: 'rgba(0,0,0,0)',
+                    showticklabels: false,
+                    ticks: '',
+                    ticklen: 0,
+                    tickcolor: 'rgba(0,0,0,0)',
+                    title: '',
+                    automargin: true,
+                    tickfont: { style: 'normal', size: 14 },
+                    tickangle: 0,
+                    range: [xSeries[0], xSeries[xSeries.length - 1]],
+                  },
+                  yaxis: {
+                    showgrid: false,
+                    zeroline: false,
+                    showline: false,
+                    linecolor: 'rgba(0,0,0,0)',
+                    showticklabels: false,
+                    ticks: '',
+                    ticklen: 0,
+                    tickcolor: 'rgba(0,0,0,0)',
+                    title: '',
+                  },
+                  showlegend: false,
+                  legend: undefined,
+                  title: undefined
+                },
+                config: { displayModeBar: false }
+              }]}
+              xSeries={xSeries}
+            />
+          )}
+        </div>
       </section>
 
       <section className={styles.section}>
