@@ -6,9 +6,9 @@
 const isDevelopment = process.env.NODE_ENV === 'development';
 const API_BASE_URL = isDevelopment 
   ? '/api' 
-  : 'https://YOUR_RAILWAY_APP.up.railway.app/api'; // REPLACE WITH YOUR ACTUAL RAILWAY URL
+  : 'https://macroscope-backend-production.up.railway.app/api'; // REPLACE WITH YOUR ACTUAL RAILWAY URL
 
-// TODO: Replace 'YOUR_RAILWAY_APP' with your actual Railway app name
+// TODO: Replace with your actual Railway app name
 // Example: 'macroscope-backend-production.up.railway.app'
 
 /**

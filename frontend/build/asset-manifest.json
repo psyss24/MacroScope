@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.58df6e03.css",
-    "main.js": "/static/js/main.48ea2b66.js",
-    "index.html": "/index.html"
+    "main.css": "/macroscope/static/css/main.087b24e5.css",
+    "main.js": "/macroscope/static/js/main.1591f6f8.js",
+    "index.html": "/macroscope/index.html"
   },
   "entrypoints": [
-    "static/css/main.58df6e03.css",
-    "static/js/main.48ea2b66.js"
+    "static/css/main.087b24e5.css",
+    "static/js/main.1591f6f8.js"
   ]
 }
