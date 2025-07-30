@@ -1,0 +1,139 @@
+.marketOverview {
+  padding: 20px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+}
+
+.timestamp {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.section h3 {
+  margin: 0 0 15px 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+.indicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.indexCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 15px;
+  text-align: center;
+}
+
+.symbol {
+  font-weight: bold;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 5px;
+}
+
+.change {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.positive {
+  color: var(--color-success);
+}
+
+.negative {
+  color: var(--color-error);
+}
+
+.sectorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.sectorCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.sectorName {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  margin-bottom: 3px;
+}
+
+.sectorSymbol {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.sectorChange {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+.error {
+  color: var(--color-error);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .indicesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .sectorGrid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+  }
+}

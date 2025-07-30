@@ -1,0 +1,47 @@
+{
+  "advanceDecline": {
+    "advancing": 13,
+    "declining": 19,
+    "unchanged": 0,
+    "advancingVolume": 394578500,
+    "decliningVolume": 461325000,
+    "adLine": -6,
+    "adRatio": 0.68
+  },
+  "volumeBySector": {
+    "volumes": {
+      "Technology": "348.1M",
+      "Consumer Discretionary": "172.8M",
+      "Financials": "97.6M",
+      "Healthcare": "103.8M",
+      "Communication Services": "124.5M",
+      "Consumer Staples": "64.7M",
+      "Energy": "145.0M",
+      "Industrials": "38.9M",
+      "Utilities": "37.3M",
+      "Materials": "47.5M",
+      "Real Estate": "19.7M"
+    },
+    "priceChanges": {
+      "Technology": 0.12,
+      "Consumer Discretionary": 0.57,
+      "Financials": -0.06,
+      "Healthcare": -0.01,
+      "Communication Services": -0.04,
+      "Consumer Staples": -0.28,
+      "Energy": -1.99,
+      "Industrials": -0.32,
+      "Utilities": 1.11,
+      "Materials": 0.51,
+      "Real Estate": 0.56
+    }
+  },
+  "breadthIndicators": {
+    "percentAdvancing": 40.62,
+    "percentDeclining": 59.38,
+    "breadthThrust": 40.62,
+    "mcclellansOscillator": -3.0,
+    "armsIndex": 0.8
+  },
+  "timestamp": "2025-07-20T17:16:19.824264"
+}

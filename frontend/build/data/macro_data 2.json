@@ -1,0 +1,47 @@
+{
+  "indicators": {
+    "GDP Growth": {
+      "value": 2.5,
+      "unit": "%",
+      "change": -0.1,
+      "trend": "down",
+      "lastUpdate": "2025-07-16"
+    },
+    "Inflation Rate": {
+      "value": 3.1,
+      "unit": "%",
+      "change": 0.0,
+      "trend": "up",
+      "lastUpdate": "2025-07-16"
+    },
+    "Unemployment Rate": {
+      "value": 3.8,
+      "unit": "%",
+      "change": 0.0,
+      "trend": "up",
+      "lastUpdate": "2025-07-16"
+    },
+    "Interest Rate": {
+      "value": 5.25,
+      "unit": "%",
+      "change": 0.0,
+      "trend": "stable",
+      "lastUpdate": "2025-07-16"
+    },
+    "Consumer Confidence": {
+      "value": 106.7,
+      "unit": "Index",
+      "change": -0.5,
+      "trend": "down",
+      "lastUpdate": "2025-07-16"
+    },
+    "Manufacturing PMI": {
+      "value": 51.5,
+      "unit": "Index",
+      "change": -0.3,
+      "trend": "down",
+      "lastUpdate": "2025-07-16"
+    }
+  },
+  "timestamp": "2025-07-16T20:30:53.252556"
+}

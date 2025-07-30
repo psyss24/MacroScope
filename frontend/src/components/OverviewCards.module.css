@@ -1,0 +1,268 @@
+.overviewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.card {
+    background: linear-gradient(135deg, var(--secondary-bg) 0%, #ffffff 100%);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+:global(.dark-mode) .card {
+    background: var(--secondary-bg);
+}
+
+.card::before {
+    content: none;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card:hover::before {
+    opacity: 0;
+}
+
+/* Color variants */
+.card.markets::before {
+    background: var(--markets-color);
+}
+
+.card.macro::before {
+    background: var(--macro-color);
+}
+
+.card.commodities::before {
+    background: var(--commodities-color);
+}
+
+.card.bonds::before {
+    background: var(--bonds-color);
+}
+
+.card.risk::before {
+    background: var(--risk-color);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: var(--spacing-lg);
+    padding-left: 0;
+}
+
+.cardIcon {
+    font-size: 2rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.cardTitle {
+    padding-left: 0;
+    margin-left: 0;
+    text-align: left;
+    width: 100%;
+}
+
+.cardTitle h3 {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.2;
+    margin-left: 0;
+    padding-left: 0;
+    text-align: left;
+}
+
+.cardTitle p {
+    font-size: 0.9rem;
+    color: var(--muted-text);
+    line-height: 1.4;
+    margin: 0;
+    margin-left: 0;
+    padding-left: 0;
+    text-align: left;
+}
+
+.cardMetrics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.metric:last-child {
+    border-bottom: none;
+}
+
+.metricLabel {
+    font-size: 0.85rem;
+    color: var(--muted-text);
+    font-weight: 500;
+}
+
+.metricValue {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.value {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.change {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    background: var(--hover-bg);
+}
+
+.change.positive {
+    color: var(--markets-color);
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.change.negative {
+    color: var(--risk-color);
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.change.neutral {
+    color: var(--muted-text);
+    background: var(--hover-bg);
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.viewMore {
+    background: none;
+    border: none;
+    color: var(--muted-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.viewMore:hover {
+    color: var(--accent-color);
+    background: var(--hover-bg);
+}
+
+.viewMore svg {
+    transition: transform var(--transition-fast);
+}
+
+.viewMore:hover svg {
+    transform: translateX(2px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .overviewGrid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .card {
+        padding: var(--spacing-md);
+    }
+    
+    .cardHeader {
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .cardIcon {
+        font-size: 1.5rem;
+    }
+    
+    .cardTitle h3 {
+        font-size: 1.1rem;
+    }
+    
+    .cardTitle p {
+        font-size: 0.85rem;
+    }
+    
+    .cardMetrics {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .metricLabel {
+        font-size: 0.8rem;
+    }
+    
+    .value {
+        font-size: 0.85rem;
+    }
+    
+    .change {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .overviewGrid {
+        gap: var(--spacing-sm);
+    }
+    
+    .card {
+        padding: var(--spacing-sm);
+    }
+    
+    .cardHeader {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .cardIcon {
+        font-size: 1.75rem;
+    }
+    
+    .metric {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        align-items: flex-start;
+    }
+    
+    .metricValue {
+        align-self: flex-end;
+    }
+}

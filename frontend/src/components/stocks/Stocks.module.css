@@ -1,0 +1,1005 @@
+:root {
+  --card-fade-mask-rgb: 255,255,255;
+}
+body.dark-mode {
+  --card-fade-mask-rgb: 17,17,17;
+}
+
+/* Stock search styles */
+.stockSearch {
+  width: 100%;
+  position: relative;
+  margin-bottom: var(--spacing-lg);
+}
+
+.searchContainer {
+  position: relative;
+  width: 100%;
+}
+
+.searchInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  padding-right: calc(var(--spacing-lg) * 2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(60, 64, 67, 0.1);
+}
+
+.searchIcon {
+  position: absolute;
+  right: var(--spacing-md);
+  color: var(--muted-text);
+  pointer-events: none;
+}
+
+.clearButton {
+  position: absolute;
+  right: calc(var(--spacing-md) + 24px);
+  background: none;
+  border: none;
+  color: var(--muted-text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.clearButton:hover {
+  color: var(--text-color);
+  background-color: var(--hover-bg);
+}
+
+.resultsContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+  background: var(--card-gradient);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  margin-top: var(--spacing-xs);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.loadingResults,
+.errorResults,
+.noResults {
+  padding: var(--spacing-md);
+  text-align: center;
+  color: var(--muted-text);
+  font-style: italic;
+}
+
+.errorResults {
+  color: var(--risk-color);
+}
+
+.resultsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resultItem {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.resultItem:last-child {
+  border-bottom: none;
+}
+
+.resultLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  text-decoration: none;
+  color: var(--text-color);
+  transition: background-color var(--transition-fast);
+}
+
+.resultLink:hover {
+  background-color: var(--hover-bg);
+}
+
+.stockInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.stockSymbol {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--accent-color);
+}
+
+.stockName {
+  font-size: 0.9rem;
+}
+
+.stockExchange {
+  font-size: 0.8rem;
+  color: var(--muted-text);
+}
+
+.priceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.price {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.change {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.positive {
+  color: var(--markets-color);
+}
+
+.negative {
+  color: var(--risk-color);
+}
+
+/* Stock detail page styles */
+.stockDetailPage {
+  padding: var(--spacing-lg) 0;
+}
+
+.stockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+  padding: 0 var(--spacing-lg);
+}
+
+.stockHeaderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.stockHeaderRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.stockTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stockCompanyName {
+  font-size: 1.2rem;
+  color: var(--muted-text);
+  margin: 0;
+}
+
+.stockDetailPrice {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.stockDetailChange {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.stockMetaInfo {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+.stockMetaItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.9rem;
+  color: var(--muted-text);
+}
+
+.stockSection {
+  margin-bottom: var(--spacing-xl);
+  padding: 0 var(--spacing-lg);
+}
+
+.stockSectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  padding-bottom: var(--spacing-xs);
+}
+
+.stockSectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+.stockChartContainer {
+  height: 500px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.stockTimeRanges {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.timeRangeButton {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--secondary-bg);
+  color: var(--text-color);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.timeRangeButton:hover {
+  background: var(--hover-bg);
+}
+
+.timeRangeButton.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.stockDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.stockDetailCard {
+  background: #111;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-md);
+  transition: all var(--transition-normal);
+}
+
+.stockDetailCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stockDetailCardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  color: var(--muted-text);
+}
+
+.stockDetailCardValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.stockDescription {
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Featured Stock Card Styles */
+/* THEME-AWARE FEATURED CARD STYLES */
+.featuredCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 420px;
+  height: 420px;
+  background: #111; /* Flat black background */
+  border-radius: 18px;
+  box-shadow: var(--card-shadow);
+  padding: 18px 24px 6px 18px;
+  overflow: visible;
+  border: 1px solid var(--border-color); /* Outer outline */
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  position: relative;
+  z-index: 100; /* Ensure it's above most elements */
+}
+
+.featuredCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--muted-text);
+}
+
+.card {
+  background: #111;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  border: none;
+  min-height: 260px;
+}
+
+.card:hover {
+  /* border-color: var(--muted-text) !important; */
+}
+
+.featuredCardHorizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+}
+
+.featuredCardChartLeft {
+  flex: 0 0 55%;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  max-width: 60%;
+  height: 100%;
+  padding: 0;
+}
+
+.featuredCardRight {
+  flex: 0 0 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #111;
+  padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
+  min-width: 220px;
+  max-width: 45%;
+  height: 100%;
+}
+
+.featuredCardHeader {
+  margin-bottom: var(--spacing-md);
+}
+
+.featuredSymbol {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: 1px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.featuredName {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-xs);
+}
+
+.featuredPriceRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
+}
+
+.featuredPrice {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--markets-color);
+}
+
+.featuredMetricsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm) var(--spacing-lg);
+  font-size: 1rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--muted-text);
+}
+
+.featuredMetricsGrid > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.featuredDescriptionSmall {
+  font-size: 0.92rem;
+  color: var(--muted-text);
+  line-height: 1.5;
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid #222;
+  max-height: 3.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.featuredCardHeaderRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.featuredSymbolTickerInline {
+  font-size: 0.95rem;
+  color: var(--muted-text);
+  font-weight: 500;
+  margin-left: 0.3em;
+}
+
+.featuredPriceRowSmall {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.featuredPriceSmall {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--markets-color);
+}
+
+.featuredHeaderRowFlex {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.noChartData {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-text);
+  font-size: 1rem;
+  background: transparent;
+}
+
+/* Flipped horizontal layout: info left (60%), chart right (40%) */
+.featuredCardHorizontalFlipped {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+  padding: 8px 18px 14px 18px;
+  box-sizing: border-box;
+  gap: 0;
+  position: relative;
+}
+
+.featuredCardLeftInfo {
+  flex: 0 0 60%;
+  max-width: 60%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  opacity: 0.98;
+  z-index: 4;
+  padding-right: 24px;
+  box-sizing: border-box;
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+/* Remove the constant semi-opaque background from the info section. If you want a gradient fade, use the following instead: */
+.featuredCardLeftInfo::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to right, #111 70%, rgba(17,17,17,0.0) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.featuredCardChartRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 220px;
+  width: 60%;
+  z-index: 1;
+  min-width: 0;
+  overflow: visible;
+  display: flex;
+  align-items: stretch;
+  background: #111;
+}
+
+/* Remove any hardcoded black/white overlays or bottom masks */
+/* If you have a .featuredCardBottomMask or similar, remove or update it to use theme variables or delete it */
+
+/* Larger text and more padding */
+.featuredHeaderRowFlexSmall {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.featuredNameSmall {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  padding-right: 12px;
+  padding-bottom: 4px;
+}
+
+.featuredSymbolTickerInlineSmall {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.featuredPriceRowTiny {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.featuredPriceTiny {
+  font-size: 1.45rem;
+  font-weight: 800;
+  padding: 0 2px;
+}
+
+.featuredMetricsGridSmall {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem 2.2rem;
+  margin: 18px 0 0 0;
+  font-size: 1.13rem;
+}
+
+.featuredMetricsGridSmall span {
+  font-size: 1.05rem;
+  color: var(--muted-text);
+}
+
+.featuredDescriptionEllipsis {
+  flex: 1 1 auto;
+  display: block;
+  overflow: hidden;
+  font-size: 0.92rem;
+  color: var(--muted-text);
+  line-height: 1.35;
+  margin-top: 16px;
+  white-space: normal;
+  word-break: break-word;
+  max-height: unset;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  height: 162px; /* Adjust as needed for your card */
+}
+
+.featuredDescriptionInner {
+  transition: transform 0.5s;
+  will-change: transform;
+}
+
+.featuredDescriptionInner.scrollingDown {
+  animation: scroll-description 28s linear normal 1;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes scroll-description {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(0); }
+  80% { transform: translateY(calc(-1 * var(--scroll-amount, 0px))); }
+  100% { transform: translateY(calc(-1 * var(--scroll-amount, 0px))); }
+}
+
+.featuredHeaderRowFlexSmall .featuredPriceBlurBg {
+  margin-left: 18px;
+}
+
+.featuredChartMask {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(90deg,
+    rgba(var(--card-fade-mask-rgb),1) 10%,
+    rgba(var(--card-fade-mask-rgb),0.8) 45%,
+    rgba(var(--card-fade-mask-rgb),0.6) 42%,
+    rgba(var(--card-fade-mask-rgb),0.4) 56%,
+    rgba(var(--card-fade-mask-rgb),0.2) 60%
+  );
+  /* No border-radius, no margin, no padding */
+}
+
+.featuredNameAndIndustry {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7em;
+}
+
+.featuredIndustryTag {
+  background: #222;
+  color: var(--muted-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 2px 10px;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.featuredSymbolTickerInlineSmall {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-left: 0.5em;
+}
+
+.featuredTickerBelowName {
+  color: var(--accent-color);
+  font-family: var(--font-mono);
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  letter-spacing: 0.01em;
+}
+
+.featuredCardBottomRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 18px;
+  width: 100%;
+}
+
+.featuredViewDetailsBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: var(--secondary-bg, #222);
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 1.08rem;
+  border: none;
+  border-radius: 7px;
+  padding: 7px 18px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+  box-shadow: none;
+}
+.featuredViewDetailsBtn:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+.card .viewMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  justify-content: flex-end;
+  width: 100%;
+  text-align: right;
+  margin-top: 12px;
+}
+
+.symbol {
+  display: inline-block;
+  border: 1px solid var(--border-color);
+  background: var(--secondary-bg);
+  color: var(--muted-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 2px 10px;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+.mainPageCard {
+  background: linear-gradient(135deg, var(--secondary-bg) 0%, #ffffff 100%);
+  /* border: 1px solid var(--border-color); */
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+:global(.dark-mode) .mainPageCard {
+  background: var(--secondary-bg);
+}
+
+.mainPageCard::before {
+  /* Removed colored top accent line */
+  content: none;
+}
+
+.mainPageCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  /* border-color: var(--muted-text); */
+}
+
+.mainPageCard:hover::before {
+  /* No accent line on hover */
+  opacity: 0;
+}
+
+.mainPageCardFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mainPageViewMore {
+  background: none;
+  border: none;
+  color: var(--muted-text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.mainPageViewMore:hover {
+  color: var(--accent-color);
+  background: var(--hover-bg);
+}
+
+.mainPageViewMore svg {
+  transition: transform var(--transition-fast);
+  stroke: #181c24 !important;
+}
+
+.mainPageViewMore:hover svg {
+  transform: translateX(2px);
+  stroke: #181c24 !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .stockHeader {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .stockHeaderRight {
+    align-items: flex-start;
+  }
+  
+  .stockDetailsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .stockTitle {
+    font-size: 1.5rem;
+  }
+  
+  .stockCompanyName {
+    font-size: 1rem;
+  }
+  
+  .stockDetailPrice {
+    font-size: 1.5rem;
+  }
+  
+  .stockDetailChange {
+    font-size: 1rem;
+  }
+  
+  .stockMetaInfo {
+    flex-wrap: wrap;
+  }
+  
+  .stockDetailsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stockChartContainer {
+    height: 300px;
+  }
+}
+
+@media (max-width: 900px) {
+  .featuredCardHorizontalFlipped {
+    flex-direction: column;
+    padding: 14px 8px 10px 8px;
+  }
+  .featuredCardLeftInfo, .featuredCardChartRight {
+    flex: 1 1 100%;
+    min-width: 0;
+    padding: 0;
+    height: auto;
+    max-width: none;
+    position: static;
+    z-index: auto;
+  }
+  .featuredCardChartRight {
+    margin-left: 0;
+    margin-top: 10px;
+    max-width: none;
+    width: 100%;
+    right: 0;
+    top: auto;
+    position: static;
+  }
+  .featuredCardChartRight .featuredPriceBlurBg {
+    position: static;
+    margin: 10px 0 0 0;
+    top: auto;
+    right: auto;
+    min-width: 0;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .featuredCard {
+    min-height: 280px;
+    height: 280px;
+  }
+  .featuredCardChartLeft, .featuredCardRight {
+    padding: var(--spacing-md);
+  }
+  .featuredMetricsGrid {
+    font-size: 0.95rem;
+  }
+  .featuredDescriptionSmall {
+    font-size: 0.85rem;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  padding-left: 0;
+}
+
+.cardTitle {
+  padding-left: 0;
+  margin-left: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.cardTitle h3 {
+  margin-left: 0;
+  padding-left: 0;
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.cardTitle p {
+  margin-left: 0;
+  padding-left: 0;
+  text-align: left;
+  font-size: 0.98rem;
+  color: var(--muted-text);
+  margin-bottom: 0;
+}
+
+.cardMetrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metricLabel {
+  font-size: 0.92rem;
+  color: var(--muted-text);
+  font-weight: 500;
+}
+
+.metricValue {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.value {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+.valuePositive {
+  color: var(--markets-color);
+}
+.valueNegative {
+  color: var(--risk-color);
+}
+.valueNeutral {
+  color: #fff;
+}

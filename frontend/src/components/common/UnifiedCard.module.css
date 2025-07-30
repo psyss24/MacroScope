@@ -1,0 +1,233 @@
+.card {
+  background: #111;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.cardTag {
+  background: #222;
+  color: var(--muted-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 2px 10px;
+  margin-left: 0.5em;
+  display: inline-block;
+}
+
+.cardMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid #222;
+}
+
+.metric:last-child {
+  border-bottom: none;
+}
+
+.metricLabel {
+  font-size: 0.95rem;
+  color: var(--muted-text);
+  font-weight: 500;
+}
+
+.metricValue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.metricValue.metricValueMetric {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: normal;
+  line-height: 1.2;
+  max-height: 3em;
+  overflow: visible;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  margin-left: 16px;
+  padding-left: 48px;
+}
+
+.valuePositive {
+  color: var(--markets-color);
+}
+.valueNegative {
+  color: var(--risk-color);
+}
+.valueNeutral {
+  color: #fff;
+}
+.valueExtremeGreed {
+  color: #43a047;
+  font-weight: 700;
+}
+.valueGreed {
+  color: #66bb6a;
+  font-weight: 700;
+}
+.valueNeutralSentiment {
+  color: #ffeb3b;
+  font-weight: 700;
+}
+.valueFear {
+  color: #ff9800;
+  font-weight: 700;
+}
+.valueExtremeFear {
+  color: #ef5350;
+  font-weight: 700;
+}
+
+.cardDescription {
+  color: var(--muted-text);
+  font-size: 0.98rem;
+  margin-bottom: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+}
+
+.viewMore {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.viewMore:hover {
+  color: #fff;
+  background: var(--accent-color);
+}
+
+.buttonCard {
+  min-height: 36px !important;
+  padding: 6px 14px !important;
+  font-size: 0.97rem !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card.buttonCard {
+  min-height: 36px !important;
+  padding: 6px 14px 6px 14px !important;
+  font-size: 0.97rem !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+  box-shadow: var(--shadow-sm) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  height: 36px !important;
+  line-height: 1.1 !important;
+  cursor: pointer !important;
+  transition: all var(--transition-normal) !important;
+}
+
+.card.buttonCard:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Remove margin from cardHeader for buttonCard */
+.card.buttonCard .cardHeader {
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+}
+/* Remove margin from cardTitle for buttonCard */
+.card.buttonCard .cardTitle {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.metricBracket {
+  font-size: 0.68rem;
+  color: var(--muted-text);
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.metricMainRight {
+  display: block;
+  text-align: right;
+  width: 100%;
+}
+
+.metricBracketRight {
+  display: block;
+  text-align: right;
+  width: 100%;
+  padding-right: 12px;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: var(--spacing-md);
+    min-height: 160px;
+  }
+  .cardTitle {
+    font-size: 1.05rem;
+  }
+  .metricLabel, .metricValue {
+    font-size: 0.95rem;
+  }
+} 

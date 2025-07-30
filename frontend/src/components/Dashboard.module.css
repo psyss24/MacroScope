@@ -1,0 +1,184 @@
+.dashboard {
+    min-height: 100vh;
+    padding: var(--spacing-xl) 0;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+    padding: var(--spacing-xl) 0;
+}
+
+.heroContent {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.title {
+    font-family: var(--font-headline);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--muted-text);
+    font-family: var(--font-body);
+    letter-spacing: 0.02em;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.overviewSection {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.macroSection {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.comingSoonSection {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.stocksSection {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.chartsSection {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.comingSoon {
+    text-align: center;
+    padding: var(--spacing-xxl) var(--spacing-xl);
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(76, 175, 80, 0.05) 100%);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.comingSoon h2 {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.comingSoon p {
+    font-size: 1.1rem;
+    color: var(--muted-text);
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.heroCard {
+  background: #111;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.18s cubic-bezier(0.4,0,0.2,1), transform 0.18s cubic-bezier(0.4,0,0.2,1);
+  padding: 48px 0 40px 0;
+  margin-bottom: var(--spacing-xxl);
+  text-align: center;
+  position: relative;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.heroCard:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Remove gradient background from .hero */
+.hero::before {
+  display: none !important;
+}
+
+/* Remove border, accent lines, and keep everything flat by default */
+.heroCard, .heroCard:before, .heroCard:after {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .dashboard {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .hero {
+        margin-bottom: var(--spacing-xl);
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .title {
+        font-size: 2.2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .description {
+        font-size: 1rem;
+    }
+    
+    .overviewSection,
+    .macroSection,
+    .comingSoonSection {
+        margin-bottom: var(--spacing-xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .description {
+        font-size: 0.9rem;
+    }
+    
+    .hero {
+        padding: var(--spacing-md) 0;
+    }
+}
+
+.updateInfo {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    display: inline-block;
+}
+
+.updateText {
+    font-size: 0.9rem;
+    color: var(--muted-text);
+    font-family: var(--font-mono);
+}

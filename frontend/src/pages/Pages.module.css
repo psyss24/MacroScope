@@ -1,0 +1,394 @@
+/* Page layout styles */
+.page {
+  padding: var(--spacing-lg) 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pageHeader {
+  /* Remove sticky positioning */
+  /* position: sticky; */
+  /* top: 0; */
+  /* z-index: 2000; */
+  background: #111;
+  margin-bottom: var(--spacing-xl);
+  padding: 0 var(--spacing-lg);
+}
+
+.pageHeader h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent-color);
+}
+
+.pageDescription {
+  font-size: 1.1rem;
+  color: var(--muted-text);
+  margin-bottom: var(--spacing-md);
+  max-width: 800px;
+}
+
+.timestamp {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  font-family: var(--font-mono);
+}
+
+/* Section styles */
+.section {
+  margin-bottom: var(--spacing-xxl);
+  padding: 0 var(--spacing-lg);
+}
+
+.section h2 {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-lg);
+  color: var(--accent-color);
+  position: relative;
+  padding-bottom: var(--spacing-sm);
+}
+
+.section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--markets-color);
+  border-radius: 2px;
+}
+
+/* Card grid layout */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  align-items: stretch;
+  grid-auto-rows: minmax(260px, auto);
+}
+
+/* Country grid layout */
+.countryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* Card styles */
+.card {
+  background: #111;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  border: 1px solid var(--border-color);
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.cardHeader {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.symbol, .unit, .sentiment {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted-text);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--hover-bg);
+  border-radius: var(--radius-sm);
+}
+
+.sentiment {
+  text-transform: capitalize;
+}
+
+.cardBody {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  flex: 1 1 auto;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  font-family: var(--font-ui);
+}
+
+.change {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  font-family: var(--font-ui);
+}
+
+.positive {
+  color: var(--markets-color);
+}
+
+.negative {
+  color: var(--risk-color);
+}
+
+.neutral {
+  color: var(--muted-text);
+}
+
+.details {
+  margin-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--spacing-md);
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.9rem;
+}
+
+.label {
+  color: var(--muted-text);
+}
+
+.value {
+  font-weight: 500;
+}
+
+/* Country card specific styles */
+.countryCard {
+  background: var(--card-gradient);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.countryHeader {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--hover-bg);
+}
+
+.countryHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.countryBody {
+  padding: var(--spacing-md);
+}
+
+.indicatorRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.indicatorRow:last-child {
+  border-bottom: none;
+}
+
+.indicatorName {
+  font-weight: 500;
+}
+
+.indicatorValue {
+  text-align: right;
+  font-weight: 600;
+}
+
+.indicatorChange {
+  text-align: right;
+  font-weight: 500;
+}
+
+/* Fear & Greed Index styles */
+.sentimentAnalysis {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+}
+
+.fearGreedCard {
+  background: var(--card-gradient);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-xl);
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid var(--border-color);
+}
+
+.fearGreedCard h3 {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.fearGreedMeter {
+  height: 30px;
+  background: linear-gradient(to right, #ef5350, #ff9800, #ffeb3b, #66bb6a, #43a047);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.fearGreedIndicator {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fearGreedIndicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: white;
+}
+
+.fearGreedValue {
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.fearGreedLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+  font-size: 0.85rem;
+  color: var(--muted-text);
+}
+
+.overallSentiment {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: var(--spacing-lg);
+}
+
+.overallSentiment strong {
+  text-transform: capitalize;
+}
+
+/* Chart container styles */
+.chartContainer {
+  background: var(--card-gradient);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartPlaceholder {
+  text-align: center;
+  color: var(--muted-text);
+  font-style: italic;
+}
+
+/* Loading and error states */
+.loading, .error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  font-size: 1.1rem;
+}
+
+.error {
+  color: var(--error-color);
+}
+
+.selectedCard {
+  background: var(--accent-color) !important;
+  color: #000 !important;
+  border-color: var(--accent-color) !important;
+}
+
+.selectedCard:hover {
+  background: var(--accent-color) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .cardGrid, .countryGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .pageHeader h1 {
+    font-size: 2rem;
+  }
+  
+  .section h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cardGrid, .countryGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .pageHeader h1 {
+    font-size: 1.8rem;
+  }
+  
+  .pageDescription {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .cardGrid, .countryGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .indicatorRow {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .indicatorName {
+    grid-column: 1 / -1;
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .fearGreedLabels {
+    font-size: 0.7rem;
+  }
+}
