@@ -4,13 +4,15 @@
   "version": "1.0.0",
   "description": "Comprehensive financial analysis platform frontend",
   "main": "src/index.js",
+  "homepage": "https://saadsaqib.dev/macroscope",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy:prod": "npm run build && gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -41,8 +43,7 @@
     "react-dom": "^18.2.0",
     "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.8.0",
-    "react-scripts": "5.0.1",
-    "homepage": "https://saadsaqib.dev"
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
