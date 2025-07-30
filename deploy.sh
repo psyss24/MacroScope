@@ -51,7 +51,7 @@ check_status() {
     
     # Check backend health
     echo "Backend health check:"
-    curl -s https://macroscope-backend.railway.internal/api/health || echo "❌ Backend not responding"
+    curl -s https://macroscope-backend-production.up.railway.app:8080/api/health || echo "❌ Backend not responding"
     
     # Check frontend
     echo "Frontend status:"

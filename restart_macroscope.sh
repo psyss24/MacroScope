@@ -3,6 +3,10 @@
 # restart script used for local dev
 # stops any ports running macrosocpe servers, then starts both backend and frontend
 
+# Clean environment for virtual environment
+unset CONDA_DEFAULT_ENV
+unset CONDA_PREFIX
+
 cd "$(dirname "$0")"
 
 # kill a process by PID file
@@ -30,20 +34,15 @@ lsof -ti:3000 | xargs kill -9 2>/dev/null || true
 echo "Killing any process on port 3001 (alt frontend)..."
 lsof -ti:3001 | xargs kill -9 2>/dev/null || true
 
-# check / install (if required) dependencies
-if ! python3 -c "import flask" &> /dev/null; then
-    echo "Flask is not installed. Installing Flask and Flask-CORS..."
-    pip3 install flask flask-cors
-fi
-if ! python3 -c "import yfinance" &> /dev/null; then
-    echo "yfinance is not installed. Installing yfinance..."
-    pip3 install yfinance
-fi
+# Use virtual environment for backend
+echo "Activating virtual environment..."
+source venv/bin/activate
 
 # start backend
 echo "Starting the backend API server..."
 cd backend
-python3 api/api_server.py &
+source ../venv/bin/activate
+python api/api_server.py &
 BACKEND_PID=$!
 echo $BACKEND_PID > backend.pid
 cd ..

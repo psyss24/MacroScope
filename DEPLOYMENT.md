@@ -93,7 +93,7 @@ cd frontend && npm start
 The app automatically detects the environment:
 
 - **Development**: Uses `http://localhost:8000/api`
-- **Production**: Uses `https://macroscope-backend.railway.internal/api`
+- **Production**: Uses `https://macroscope-backend-production.up.railway.app:8080/api`
 
 ### CORS Configuration
 
@@ -107,7 +107,7 @@ The backend allows requests from:
 ## 📊 Monitoring
 
 ### Health Checks
-- **Backend**: `https://macroscope-backend.railway.internal/api/health`
+- **Backend**: `https://macroscope-backend-production.up.railway.app:8080/api/health`
 - **Frontend**: `https://saadsaqib.dev/macroscope`
 
 ### Railway Monitoring
@@ -143,7 +143,7 @@ The backend allows requests from:
 ### Backend Issues
 - Check Railway logs: `railway logs`
 - Verify environment variables in Railway dashboard
-- Test health endpoint: `curl https://macroscope-backend.railway.internal/api/health`
+- Test health endpoint: `curl https://macroscope-backend-production.up.railway.app:8080/api/health`
 
 ### Frontend Issues
 - Check build output: `npm run build`
@@ -167,6 +167,6 @@ The backend allows requests from:
 ## 🔗 URLs
 
 - **Production Frontend**: https://saadsaqib.dev/macroscope
-- **Production Backend**: https://macroscope-backend.railway.internal
+- **Production Backend**: https://macroscope-backend-production.up.railway.app:8080
 - **Local Development**: http://localhost:3000
 - **Local API**: http://localhost:8000 
