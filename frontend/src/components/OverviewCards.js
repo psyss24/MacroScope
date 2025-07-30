@@ -10,11 +10,7 @@ const STOCK_SYMBOLS = [
 ];
 
 const OverviewCards = () => {
-  const [marketData, setMarketData] = useState(null);
-  const [macroData, setMacroData] = useState(null);
-  const [overviewData, setOverviewData] = useState(null);
-  const [stocksData, setStocksData] = useState(null);
-  const [realtimeStocks, setRealtimeStocks] = useState({});
+  const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,41 +20,16 @@ const OverviewCards = () => {
 
     const fetchData = async () => {
       try {
-        // Fetch only dashboard-specific data
-        const [marketData, macroData, overviewData, stocksData] = await Promise.all([
-          apiService.getMarketData('indices,commodities,crypto,currencies', true, { signal }),
-          apiService.getMacroData(null, true, { signal }),
-          apiService.getOverviewData({ signal }),
-          apiService.getStocksData({ signal })
-        ]);
-
-        setMarketData(marketData);
-        setMacroData(macroData);
-        setOverviewData(overviewData);
-        setStocksData(stocksData);
-
-        // Fetch real-time stock data for the main stocks
-        const realtimeResults = await Promise.all(
-          STOCK_SYMBOLS.map(async ({ symbol }) => {
-            try {
-              const details = await apiService.getTickerDetails(symbol, { signal });
-              return { symbol, details };
-            } catch (err) {
-              // fallback to cached data if available
-              return { symbol, details: stocksData?.topStocks?.[symbol] || null };
-            }
-          })
-        );
-        const realtimeMap = {};
-        for (const { symbol, details } of realtimeResults) {
-          if (details) realtimeMap[symbol] = details;
-        }
-        setRealtimeStocks(realtimeMap);
+        // Use only the optimized dashboard endpoint
+        const data = await apiService.getDashboardData({ signal });
+        setDashboardData(data);
+        
+        // Set loading to false immediately since we have all the data we need
+        setLoading(false);
       } catch (err) {
         if (err.name !== 'AbortError') {
           setError(err.message);
         }
-      } finally {
         setLoading(false);
       }
     };
@@ -72,36 +43,14 @@ const OverviewCards = () => {
 
   if (loading) return <div className={styles.loading}>Loading market data...</div>;
   if (error) return <div className={styles.error}>Error: {error}</div>;
-  if (!marketData || !macroData || !overviewData) return null;
+  if (!dashboardData) return <div className={styles.error}>No dashboard data available</div>;
 
-  // Helper function to safely access nested properties
-  const safeAccess = (obj, path, defaultValue = 'N/A') => {
-    try {
-      const result = path.split('.').reduce((o, key) => o && o[key], obj);
-      return result !== undefined ? result : defaultValue;
-    } catch (e) {
-      return defaultValue;
+  // Helper function to safely format change percentages
+  const formatChangePercent = (changePercent) => {
+    if (changePercent != null && typeof changePercent === 'number' && !isNaN(changePercent)) {
+      return `${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
     }
-  };
-
-  // Helper function to format indicator values
-  const formatIndicator = (data, indicator, unit = '%') => {
-    // Check if data has the new structure (countries.United States.indicator)
-    if (data?.countries?.['United States']?.[indicator]) {
-      const indicatorData = data.countries['United States'][indicator];
-      const value = `${safeAccess(indicatorData, 'value', 0)}${unit}`;
-      const change = indicatorData.change || 0;
-      const changeStr = `${change > 0 ? '+' : ''}${change}${unit}`;
-      return { value, change: changeStr };
-    }
-    // Fallback to old structure (data.indicators[indicator])
-    if (data?.indicators?.[indicator]) {
-    const value = `${safeAccess(data.indicators[indicator], 'value', 0)}${unit}`;
-    const change = data.indicators[indicator].change || 0;
-    const changeStr = `${change > 0 ? '+' : ''}${change}${unit}`;
-    return { value, change: changeStr };
-    }
-    return { value: `N/A`, change: `0.00${unit}` };
+    return '0.00%';
   };
 
   const cards = [
@@ -113,18 +62,18 @@ const OverviewCards = () => {
       metrics: [
         { 
           label: 'S&P 500', 
-          value: safeAccess(marketData, 'indices.S&P 500.price', 0).toLocaleString(), 
-          change: `${safeAccess(marketData, 'indices.S&P 500.change', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'indices.S&P 500.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.markets?.['S&P 500']?.price?.toLocaleString() || 'N/A', 
+          change: formatChangePercent(dashboardData?.markets?.['S&P 500']?.changePercent) || '0.00%' 
         },
         { 
           label: 'NASDAQ', 
-          value: safeAccess(marketData, 'indices.NASDAQ.price', 0).toLocaleString(), 
-          change: `${safeAccess(marketData, 'indices.NASDAQ.change', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'indices.NASDAQ.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.markets?.NASDAQ?.price?.toLocaleString() || 'N/A', 
+          change: formatChangePercent(dashboardData?.markets?.NASDAQ?.changePercent) || '0.00%' 
         },
         { 
           label: 'Dow Jones', 
-          value: safeAccess(marketData, 'indices.Dow Jones.price', 0).toLocaleString(), 
-          change: `${safeAccess(marketData, 'indices.Dow Jones.change', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'indices.Dow Jones.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.markets?.['Dow Jones']?.price?.toLocaleString() || 'N/A', 
+          change: formatChangePercent(dashboardData?.markets?.['Dow Jones']?.changePercent) || '0.00%' 
         }
       ]
     },
@@ -136,15 +85,30 @@ const OverviewCards = () => {
       metrics: [
         {
           label: 'US Inflation Rate (CPI, YoY)',
-          ...formatIndicator(macroData, 'Inflation')
+          value: dashboardData?.macro?.inflation?.value != null 
+            ? `${dashboardData.macro.inflation.value.toFixed(2)}%`
+            : 'N/A',
+          change: dashboardData?.macro?.inflation?.value != null 
+            ? `${dashboardData.macro.inflation.value > 0 ? '+' : ''}${dashboardData.macro.inflation.value.toFixed(2)}%`
+            : '0.00%'
         },
         {
           label: 'US Unemployment Rate',
-          ...formatIndicator(macroData, 'Unemployment')
+          value: dashboardData?.macro?.unemployment?.value != null 
+            ? `${dashboardData.macro.unemployment.value.toFixed(2)}%`
+            : 'N/A',
+          change: dashboardData?.macro?.unemployment?.value != null 
+            ? `${dashboardData.macro.unemployment.value > 0 ? '+' : ''}${dashboardData.macro.unemployment.value.toFixed(2)}%`
+            : '0.00%'
         },
         {
           label: 'US Fed Funds Rate',
-          ...formatIndicator(macroData, 'Interest Rate')
+          value: dashboardData?.macro?.interest_rate?.value != null 
+            ? `${dashboardData.macro.interest_rate.value.toFixed(2)}%`
+            : 'N/A',
+          change: dashboardData?.macro?.interest_rate?.value != null 
+            ? `${dashboardData.macro.interest_rate.value > 0 ? '+' : ''}${dashboardData.macro.interest_rate.value.toFixed(2)}%`
+            : '0.00%'
         }
       ]
     },
@@ -156,18 +120,24 @@ const OverviewCards = () => {
       metrics: [
         { 
           label: 'Gold', 
-          value: `$${safeAccess(marketData, 'commodities.Gold.price', 0).toLocaleString()}`, 
-          change: `${safeAccess(marketData, 'commodities.Gold.change', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'commodities.Gold.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.commodities?.Gold?.price != null 
+            ? `$${dashboardData.commodities.Gold.price.toLocaleString()}`
+            : 'N/A', 
+          change: formatChangePercent(dashboardData?.commodities?.Gold?.changePercent) || '0.00%' 
         },
         { 
           label: 'Oil (WTI)', 
-          value: `$${safeAccess(marketData, 'commodities.Crude Oil.price', 0).toFixed(2)}`, 
-          change: `${safeAccess(marketData, 'commodities.Crude Oil.change', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'commodities.Crude Oil.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.commodities?.['Crude Oil']?.price != null 
+            ? `$${dashboardData.commodities['Crude Oil'].price.toFixed(2)}`
+            : 'N/A', 
+          change: formatChangePercent(dashboardData?.commodities?.['Crude Oil']?.changePercent) || '0.00%' 
         },
         { 
           label: 'Bitcoin', 
-          value: `$${safeAccess(marketData, 'crypto.Bitcoin.price', 0).toLocaleString()}`, 
-          change: `${safeAccess(marketData, 'crypto.Bitcoin.change', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'crypto.Bitcoin.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.commodities?.Bitcoin?.price != null 
+            ? `$${dashboardData.commodities.Bitcoin.price.toLocaleString()}`
+            : 'N/A', 
+          change: formatChangePercent(dashboardData?.commodities?.Bitcoin?.changePercent) || '0.00%' 
         }
       ]
     },
@@ -179,18 +149,24 @@ const OverviewCards = () => {
       metrics: [
         { 
           label: 'EUR/USD', 
-          value: safeAccess(marketData, 'currencies.EUR/USD.price', 0).toFixed(4), 
-          change: `${safeAccess(marketData, 'currencies.EUR/USD.changePercent', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'currencies.EUR/USD.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.currencies?.['EUR/USD']?.price != null 
+            ? dashboardData.currencies['EUR/USD'].price.toFixed(4)
+            : 'N/A', 
+          change: formatChangePercent(dashboardData?.currencies?.['EUR/USD']?.changePercent) || '0.00%' 
         },
         { 
           label: 'GBP/USD', 
-          value: safeAccess(marketData, 'currencies.GBP/USD.price', 0).toFixed(4),
-          change: `${safeAccess(marketData, 'currencies.GBP/USD.changePercent', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'currencies.GBP/USD.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.currencies?.['GBP/USD']?.price != null 
+            ? dashboardData.currencies['GBP/USD'].price.toFixed(4)
+            : 'N/A',
+          change: formatChangePercent(dashboardData?.currencies?.['GBP/USD']?.changePercent) || '0.00%' 
         },
         { 
           label: 'USD/JPY', 
-          value: safeAccess(marketData, 'currencies.USD/JPY.price', 0).toFixed(2),
-          change: `${safeAccess(marketData, 'currencies.USD/JPY.changePercent', 0) > 0 ? '+' : ''}${safeAccess(marketData, 'currencies.USD/JPY.changePercent', 0).toFixed(2)}%` 
+          value: dashboardData?.currencies?.['USD/JPY']?.price != null 
+            ? dashboardData.currencies['USD/JPY'].price.toFixed(2)
+            : 'N/A',
+          change: formatChangePercent(dashboardData?.currencies?.['USD/JPY']?.changePercent) || '0.00%' 
         }
       ]
     },
@@ -202,18 +178,24 @@ const OverviewCards = () => {
       metrics: [
         { 
           label: '10Y Treasury', 
-          value: `${safeAccess(overviewData, 'stats.bondYield10Y', 'N/A')}%`, 
-          change: '+0.05%' 
+          value: dashboardData?.bonds?.US10Y?.yield != null 
+            ? `${dashboardData.bonds.US10Y.yield}%`
+            : 'N/A', 
+          change: formatChangePercent(dashboardData?.bonds?.US10Y?.changePercent) || '0.00%' 
         },
         { 
           label: 'VIX', 
-          value: safeAccess(overviewData, 'stats.vixLevel', 'N/A').toString(), 
-          change: '+1.2%' 
+          value: dashboardData?.bonds?.VIX?.value != null 
+            ? dashboardData.bonds.VIX.value.toString()
+            : 'N/A', 
+          change: formatChangePercent(dashboardData?.bonds?.VIX?.changePercent) || '0.00%' 
         },
         { 
           label: 'DXY', 
-          value: safeAccess(overviewData, 'stats.dollarIndex', 'N/A').toString(), 
-          change: '+0.3%' 
+          value: dashboardData?.bonds?.DXY?.value != null 
+            ? dashboardData.bonds.DXY.value.toString()
+            : 'N/A', 
+          change: formatChangePercent(dashboardData?.bonds?.DXY?.changePercent) || '0.00%' 
         }
       ]
     },
@@ -223,18 +205,17 @@ const OverviewCards = () => {
       color: 'stocks',
       link: '/stocks',
       metrics: STOCK_SYMBOLS.map(({ symbol, label }) => {
-        const stock = realtimeStocks[symbol] || stocksData?.topStocks?.[symbol] || {};
-        let price = stock.price;
+        const dashboardStock = dashboardData?.stocks?.[symbol];
+        let price = dashboardStock?.price;
         if (typeof price === 'string') {
           const parsed = parseFloat(price);
           price = !isNaN(parsed) ? parsed : undefined;
         }
+        const changePercent = dashboardStock?.changePercent;
         return {
-          label: `${stock.name || label} (${symbol})`,
+          label: `${dashboardStock?.name || label} (${symbol})`,
           value: typeof price === 'number' && !isNaN(price) ? `$${price.toFixed(2)}` : 'N/A',
-          change: typeof stock.changePercent === 'number'
-            ? `${stock.changePercent > 0 ? '+' : ''}${stock.changePercent.toFixed(2)}%`
-            : '0.00%'
+          change: formatChangePercent(changePercent) || '0.00%'
         };
       })
     }

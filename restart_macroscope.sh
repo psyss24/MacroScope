@@ -43,7 +43,7 @@ fi
 # Start backend
 echo "Starting the backend API server..."
 cd backend
-python3 api_server.py &
+python3 api/api_server.py &
 BACKEND_PID=$!
 echo $BACKEND_PID > backend.pid
 cd ..

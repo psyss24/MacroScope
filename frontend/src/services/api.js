@@ -89,6 +89,14 @@ const apiService = {
   },
   
   /**
+   * Get optimized dashboard data with only specific metrics needed for overview cards
+   * @returns {Promise<Object>} - Dashboard data
+   */
+  getDashboardData: (options = {}) => {
+    return fetchFromAPI('/dashboard', options);
+  },
+  
+  /**
    * Get top stocks data
    * @returns {Promise<Object>} - Stocks data
    */
