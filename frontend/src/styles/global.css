@@ -4,26 +4,26 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-    /* Color palette matching main website */
-    --primary-bg: #f8f9fa;
-    --secondary-bg: #fdfdfd;
-    --text-color: #5a6169;
-    --accent-color: #3c4043;
-    --border-color: #e8eaed;
-    --muted-text: #7a8087;
-    --hover-bg: #f5f7fa;
-    --subtle-shadow: rgba(60, 64, 67, 0.05);
-    --error-color: #dc3545;
+    /* Dark theme color palette (now default) */
+    --primary-bg: #121212;
+    --secondary-bg: #111;
+    --text-color: #e0e0e0;
+    --accent-color: #90caf9;
+    --border-color: #333333;
+    --muted-text: #a0a0a0;
+    --hover-bg: #2c2c2c;
+    --subtle-shadow: rgba(0, 0, 0, 0.2);
+    --error-color: #ef5350;
     
-    /* Genre colors for different data types */
-    --markets-color: #4caf50;
-    --macro-color: #ba68c8;
-    --commodities-color: #64b5f6;
-    --bonds-color: #ffb74d;
-    --risk-color: #f44336;
+    /* Genre colors for dark mode - slightly brighter for better contrast */
+    --markets-color: #66bb6a;
+    --macro-color: #ce93d8;
+    --commodities-color: #90caf9;
+    --bonds-color: #ffcc80;
+    --risk-color: #ef5350;
     
-    /* Card gradients */
-    --card-gradient: linear-gradient(135deg, var(--secondary-bg) 0%, #ffffff 100%);
+    /* Card gradients for dark mode - using gray and black instead of white */
+    --card-gradient: linear-gradient(135deg, var(--secondary-bg) 0%, #1a1a1a 100%);
     
     /* Typography */
     --font-headline: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -45,46 +45,47 @@
     --radius-lg: 12px;
     --radius-xl: 16px;
     
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
-    
-    /* Transitions */
-    --transition-fast: 0.15s ease-in-out;
-    --transition-normal: 0.3s ease-in-out;
-    --transition-slow: 0.5s ease-in-out;
-    --card-fade-mask-rgb: 255,255,255;
-}
-
-/* Dark mode variables */
-body.dark-mode {
-    --primary-bg: #121212;
-    --secondary-bg: #111;
-    --text-color: #e0e0e0;
-    --accent-color: #90caf9;
-    --border-color: #333333;
-    --muted-text: #a0a0a0;
-    --hover-bg: #2c2c2c;
-    --subtle-shadow: rgba(0, 0, 0, 0.2);
-    
-    /* Genre colors for dark mode - slightly brighter for better contrast */
-    --markets-color: #66bb6a;
-    --macro-color: #ce93d8;
-    --commodities-color: #90caf9;
-    --bonds-color: #ffcc80;
-    --risk-color: #ef5350;
-    
-    /* Card gradients for dark mode - using gray and black instead of white */
-    --card-gradient: linear-gradient(135deg, var(--secondary-bg) 0%, #1a1a1a 100%);
-    
     /* Shadows for dark mode */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.35);
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
     --card-fade-mask-rgb: 17,17,17;
+}
+
+/* Light mode variables (for backward compatibility if needed) */
+body.light-mode {
+    --primary-bg: #f8f9fa;
+    --secondary-bg: #fdfdfd;
+    --text-color: #5a6169;
+    --accent-color: #3c4043;
+    --border-color: #e8eaed;
+    --muted-text: #7a8087;
+    --hover-bg: #f5f7fa;
+    --subtle-shadow: rgba(60, 64, 67, 0.05);
+    --error-color: #dc3545;
+    
+    /* Genre colors for different data types */
+    --markets-color: #4caf50;
+    --macro-color: #ba68c8;
+    --commodities-color: #64b5f6;
+    --bonds-color: #ffb74d;
+    --risk-color: #f44336;
+    
+    /* Card gradients */
+    --card-gradient: linear-gradient(135deg, var(--secondary-bg) 0%, #ffffff 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    --card-fade-mask-rgb: 255,255,255;
 }
 
 /* Reset and base styles */

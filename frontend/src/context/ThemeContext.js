@@ -2,20 +2,29 @@ import React, { createContext, useState, useEffect } from 'react';
 
 // Create the theme context
 export const ThemeContext = createContext({
-  darkMode: false,
+  darkMode: true, // Changed default to true for dark mode
   toggleDarkMode: () => {},
 });
 
 // Create the theme provider component
 export const ThemeProvider = ({ children }) => {
-  // Check if dark mode is stored in localStorage
-  const storedDarkMode = localStorage.getItem('darkMode') === 'true';
+  // Check if dark mode is stored in localStorage, default to true (dark mode)
+  const storedDarkMode = localStorage.getItem('darkMode') !== 'false'; // Default to true
   const [darkMode, setDarkMode] = useState(storedDarkMode);
 
   // Toggle dark mode function
   const toggleDarkMode = () => {
     setDarkMode(prevMode => !prevMode);
   };
+
+  // Apply dark mode by default on mount
+  useEffect(() => {
+    // Set dark mode as default if no preference is stored
+    if (localStorage.getItem('darkMode') === null) {
+      setDarkMode(true);
+      localStorage.setItem('darkMode', 'true');
+    }
+  }, []);
 
   // Update localStorage and apply class to body when darkMode changes
   useEffect(() => {
