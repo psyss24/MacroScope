@@ -9,20 +9,14 @@ echo "================================"
 # Function to deploy backend to Railway
 deploy_backend() {
     echo "📦 Deploying backend to Railway..."
-    cd backend
-    
-    # Check if Railway CLI is installed
-    if ! command -v railway &> /dev/null; then
-        echo "❌ Railway CLI not found. Please install it first:"
-        echo "   npm install -g @railway/cli"
-        echo "   railway login"
-        exit 1
-    fi
-    
-    # Deploy to Railway
-    railway up
-    cd ..
-    echo "✅ Backend deployed to Railway"
+    echo "⚠️  Backend deployment requires separate repository"
+    echo "   Please deploy from your backend repository directly"
+    echo "   or update this script with the correct backend repo path"
+    echo ""
+    echo "Expected backend repository structure:"
+    echo "   - Backend code in separate repo"
+    echo "   - Railway project connected to that repo"
+    echo "   - Deploy using: cd /path/to/backend-repo && railway up"
 }
 
 # Function to deploy frontend to GitHub Pages

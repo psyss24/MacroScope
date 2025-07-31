@@ -36,25 +36,20 @@ cd frontend && npm start
 
 ### Backend (Railway)
 
-1. **Install Railway CLI**:
-   ```bash
-   npm install -g @railway/cli
-   railway login
-   ```
+**Note**: Backend is deployed from a separate repository connected to Railway.
 
-2. **Deploy to Railway**:
+1. **Deploy from Backend Repository**:
    ```bash
-   cd backend
+   cd /path/to/backend-repository
    railway up
    ```
 
-3. **Configure Environment Variables** (in Railway dashboard):
+2. **Configure Environment Variables** (in Railway dashboard):
    - `FLASK_ENV=production`
-   - `PORT=8000` (auto-set by Railway)
+   - `PORT=8080` (or as configured in Railway)
 
-4. **Get your Railway URL**:
-   - Check Railway dashboard for your app URL
-   - Update `frontend/src/config.js` with the correct URL
+3. **Backend URL**:
+   - `https://macroscope-backend-production.up.railway.app:8080`
 
 ### Frontend (GitHub Pages)
 
