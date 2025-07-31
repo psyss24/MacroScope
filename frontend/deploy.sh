@@ -27,9 +27,13 @@ fi
 
 echo "✅ Build successful!"
 
-# Add build folder to git
-echo "📝 Adding build files to git..."
-git add build/
+# Move build files to root for GitHub Pages
+echo "📁 Moving build files to root directory..."
+cp -r build/* ../
+
+# Add all files to git
+echo "📝 Adding files to git..."
+git add -A
 
 # Commit the build
 echo "💾 Committing build files..."

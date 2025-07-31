@@ -2,434 +2,138 @@
   "indices": {
     "S&P 500": {
       "symbol": "^GSPC",
-      "price": 6296.79,
-      "change": -0.57,
-      "changePercent": -0.01,
+      "price": 5781.07,
+      "change": -15.69,
+      "changePercent": 0.63,
       "marketCap": "N/A",
-      "volume": "5.2B"
+      "volume": "4429M"
     },
     "NASDAQ": {
       "symbol": "^IXIC",
-      "price": 20895.65,
-      "change": 10.0,
-      "changePercent": 0.05,
+      "price": 19785.42,
+      "change": -79.14,
+      "changePercent": -0.41,
       "marketCap": "N/A",
-      "volume": "9.4B"
+      "volume": "4052M"
     },
     "Dow Jones": {
       "symbol": "^DJI",
-      "price": 44342.19,
-      "change": -142.3,
-      "changePercent": -0.32,
+      "price": 43037.85,
+      "change": 141.88,
+      "changePercent": 0.47,
       "marketCap": "N/A",
-      "volume": "497.8M"
+      "volume": "353M"
     },
     "Russell 2000": {
       "symbol": "^RUT",
-      "price": 2240.01,
-      "change": -13.67,
-      "changePercent": -0.61,
+      "price": 2283.82,
+      "change": -2.98,
+      "changePercent": 0.24,
       "marketCap": "N/A",
-      "volume": "5.2B"
-    },
-    "FTSE 100": {
-      "symbol": "^FTSE",
-      "price": 8992.1,
-      "change": 19.5,
-      "changePercent": 0.22,
-      "marketCap": "N/A",
-      "volume": "678.4M"
-    },
-    "DAX": {
-      "symbol": "^GDAXI",
-      "price": 24289.51,
-      "change": -81.42,
-      "changePercent": -0.33,
-      "marketCap": "N/A",
-      "volume": "47.7M"
-    },
-    "Nikkei 225": {
-      "symbol": "^N225",
-      "price": 39819.11,
-      "change": -82.08,
-      "changePercent": -0.21,
-      "marketCap": "N/A",
-      "volume": "92.0M"
-    },
-    "Hang Seng": {
-      "symbol": "^HSI",
-      "price": 24825.66,
-      "change": 326.71,
-      "changePercent": 1.33,
-      "marketCap": "N/A",
-      "volume": "2.9B"
-    },
-    "ASX 200": {
-      "symbol": "^AXJO",
-      "price": 8757.2,
-      "change": 118.2,
-      "changePercent": 1.37,
-      "marketCap": "N/A",
-      "volume": "717.8K"
-    }
-  },
-  "etfs": {
-    "S&P 500 ETF (SPY)": {
-      "symbol": "SPY",
-      "price": 627.58,
-      "change": -0.46,
-      "changePercent": -0.07,
-      "volume": "65.5M",
-      "aum": "$603.52B",
-      "category": "Large Blend",
-      "yield": "1.21%"
-    },
-    "Nasdaq ETF (QQQ)": {
-      "symbol": "QQQ",
-      "price": 561.26,
-      "change": -0.54,
-      "changePercent": -0.1,
-      "volume": "50.4M",
-      "aum": "$333.55B",
-      "category": "Large Growth",
-      "yield": "0.58%"
-    },
-    "Russell 2000 ETF (IWM)": {
-      "symbol": "IWM",
-      "price": 222.33,
-      "change": -1.59,
-      "changePercent": -0.71,
-      "volume": "49.0M",
-      "aum": "$62.11B",
-      "category": "Small Blend",
-      "yield": "1.20%"
-    },
-    "Total Market ETF (VTI)": {
-      "symbol": "VTI",
-      "price": 309.09,
-      "change": -0.17,
-      "changePercent": -0.05,
-      "volume": "2.6M",
-      "aum": "$1.82T",
-      "category": "Large Blend",
-      "yield": "1.29%"
-    },
-    "Developed Markets ETF (VEA)": {
-      "symbol": "VEA",
-      "price": 56.64,
-      "change": -0.13,
-      "changePercent": -0.23,
-      "volume": "8.0M",
-      "aum": "$224.75B",
-      "category": "Foreign Large Blend",
-      "yield": "2.81%"
-    },
-    "Emerging Markets ETF (VWO)": {
-      "symbol": "VWO",
-      "price": 50.49,
-      "change": -0.06,
-      "changePercent": -0.12,
-      "volume": "5.4M",
-      "aum": "$116.44B",
-      "category": "Diversified Emerging Mkts",
-      "yield": "3.02%"
-    },
-    "Bond ETF (BND)": {
-      "symbol": "BND",
-      "price": 72.85,
-      "change": 0.12,
-      "changePercent": 0.16,
-      "volume": "5.2M",
-      "aum": "$352.01B",
-      "category": "Intermediate Core Bond",
-      "yield": "3.75%"
-    },
-    "Long-Term Treasury ETF (TLT)": {
-      "symbol": "TLT",
-      "price": 85.24,
-      "change": 0.13,
-      "changePercent": 0.15,
-      "volume": "27.5M",
-      "aum": "$50.90B",
-      "category": "Long Government",
-      "yield": "4.39%"
-    },
-    "Gold ETF (GLD)": {
-      "symbol": "GLD",
-      "price": 308.39,
-      "change": 0.8,
-      "changePercent": 0.26,
-      "volume": "5.6M",
-      "aum": "$97.99B",
-      "category": "Commodities Focused"
-    },
-    "Real Estate ETF (VNQ)": {
-      "symbol": "VNQ",
-      "price": 89.94,
-      "change": 0.19,
-      "changePercent": 0.21,
-      "volume": "2.5M",
-      "aum": "$63.57B",
-      "category": "Real Estate",
-      "yield": "4.07%"
-    }
-  },
-  "bonds": {
-    "10-Year Treasury": {
-      "symbol": "^TNX",
-      "yield": 4.432,
-      "change": -0.031,
-      "changePercent": -0.69,
-      "maturity": "10Y"
-    },
-    "30-Year Treasury": {
-      "symbol": "^TYX",
-      "yield": 5.001,
-      "change": -0.013,
-      "changePercent": -0.26,
-      "maturity": "30Y"
-    },
-    "5-Year Treasury": {
-      "symbol": "^FVX",
-      "yield": 3.962,
-      "change": -0.044,
-      "changePercent": -1.1,
-      "maturity": "5Y"
-    },
-    "2-Year Treasury": {
-      "symbol": "^IRX",
-      "yield": 4.23,
-      "change": -0.005,
-      "changePercent": -0.12,
-      "maturity": "2Y"
-    },
-    "Corporate Bond ETF": {
-      "symbol": "LQD",
-      "yield": "4.46%",
-      "change": 0.2,
-      "changePercent": 0.19,
-      "aum": "$30.82B"
-    },
-    "High Yield Bond ETF": {
-      "symbol": "HYG",
-      "yield": "5.83%",
-      "change": 0.11,
-      "changePercent": 0.14,
-      "aum": "$15.94B"
-    },
-    "International Bond ETF": {
-      "symbol": "BNDX",
-      "yield": "4.27%",
-      "change": -0.02,
-      "changePercent": -0.04,
-      "aum": "$104.05B"
+      "volume": "2072M"
     }
   },
   "currencies": {
     "EUR/USD": {
       "symbol": "EURUSD=X",
-      "price": 1.1618,
-      "change": -0.0017,
-      "changePercent": -0.15,
-      "bid": 1.1618,
-      "ask": 1.1612
+      "price": 1.0894,
+      "change": -0.0005,
+      "changePercent": -0.03,
+      "bid": 1.0921,
+      "ask": 1.0914
     },
     "GBP/USD": {
       "symbol": "GBPUSD=X",
-      "price": 1.3422,
-      "change": -0.001,
-      "changePercent": -0.08,
-      "bid": 1.3422,
-      "ask": 1.3421
+      "price": 1.2778,
+      "change": -0.0005,
+      "changePercent": 0.2,
+      "bid": 1.2758,
+      "ask": 1.2683
     },
     "USD/JPY": {
       "symbol": "USDJPY=X",
-      "price": 148.749,
-      "change": 0.746,
-      "changePercent": 0.5,
-      "bid": 148.749,
-      "ask": 148.847
+      "price": 156.2,
+      "change": -0.06,
+      "changePercent": 0.13,
+      "bid": 155.37,
+      "ask": 156.11
     },
     "USD/CHF": {
       "symbol": "USDCHF=X",
-      "price": 0.8009,
-      "change": -0.0001,
-      "changePercent": -0.01,
-      "bid": 0.8009,
-      "ask": 0.8025
-    },
-    "USD/CAD": {
-      "symbol": "USDCAD=X",
-      "price": 1.3721,
-      "change": -0.0015,
-      "changePercent": -0.11,
-      "bid": 1.3721,
-      "ask": 1.3726
-    },
-    "AUD/USD": {
-      "symbol": "AUDUSD=X",
-      "price": 0.6512,
-      "change": 0.0014,
-      "changePercent": 0.21,
-      "bid": 0.6512,
-      "ask": 0.6508
-    },
-    "USD/CNY": {
-      "symbol": "USDCNY=X",
-      "price": 7.1771,
-      "change": -0.0061,
-      "changePercent": -0.08,
-      "bid": 7.1771,
-      "ask": 7.1781
-    },
-    "USD Index": {
-      "symbol": "DX-Y.NYB",
-      "price": 98.463,
-      "change": 0.0,
-      "changePercent": 0.0,
-      "bid": 98.4532,
-      "ask": 98.4728
+      "price": 0.8821,
+      "change": 0.0003,
+      "changePercent": -0.21,
+      "bid": 0.8815,
+      "ask": 0.8804
     }
   },
   "commodities": {
     "Gold": {
       "symbol": "GC=F",
-      "price": 3358.3,
-      "change": 0.0,
-      "changePercent": 0.0,
+      "price": 2646.72,
+      "change": -3.15,
+      "changePercent": 0.19,
       "unit": "oz",
-      "volume": "N/A"
+      "volume": "180K"
     },
     "Silver": {
       "symbol": "SI=F",
-      "price": 38.46,
-      "change": 0.0,
-      "changePercent": 0.0,
+      "price": 29.54,
+      "change": -0.25,
+      "changePercent": 1.02,
       "unit": "oz",
-      "volume": "N/A"
+      "volume": "43K"
     },
-    "Crude Oil (WTI)": {
+    "Crude Oil": {
       "symbol": "CL=F",
-      "price": 67.34,
-      "change": 0.0,
-      "changePercent": 0.0,
+      "price": 76.28,
+      "change": 0.45,
+      "changePercent": 0.42,
       "unit": "barrel",
-      "volume": "N/A"
-    },
-    "Brent Crude": {
-      "symbol": "BZ=F",
-      "price": 69.28,
-      "change": 0.0,
-      "changePercent": 0.0,
-      "unit": "barrel",
-      "volume": "N/A"
+      "volume": "426K"
     },
     "Natural Gas": {
       "symbol": "NG=F",
-      "price": 3.57,
-      "change": 0.0,
-      "changePercent": 0.0,
+      "price": 3.47,
+      "change": -0.02,
+      "changePercent": 0.31,
       "unit": "MMBtu",
-      "volume": "N/A"
-    },
-    "Copper": {
-      "symbol": "HG=F",
-      "price": 5.6,
-      "change": 0.0,
-      "changePercent": 0.0,
-      "unit": "lb",
-      "volume": "N/A"
-    },
-    "Corn": {
-      "symbol": "ZC=F",
-      "price": 427.75,
-      "change": 0.0,
-      "changePercent": 0.0,
-      "unit": "bushel",
-      "volume": "N/A"
-    },
-    "Wheat": {
-      "symbol": "ZW=F",
-      "price": 546.25,
-      "change": 0.0,
-      "changePercent": 0.0,
-      "unit": "bushel",
-      "volume": "N/A"
-    },
-    "Soybeans": {
-      "symbol": "ZS=F",
-      "price": 1035.75,
-      "change": 0.0,
-      "changePercent": 0.0,
-      "unit": "bushel",
-      "volume": "N/A"
+      "volume": "205K"
     }
   },
   "crypto": {
     "Bitcoin": {
       "symbol": "BTC-USD",
-      "price": 118742.45,
-      "change": 802.48,
-      "changePercent": 0.68,
-      "marketCap": "$2.36T",
-      "volume": "50.9B"
+      "price": 67527.39,
+      "change": 44.71,
+      "changePercent": 1.64,
+      "marketCap": "$1.32T",
+      "volume": "32B"
     },
     "Ethereum": {
       "symbol": "ETH-USD",
-      "price": 3779.18,
-      "change": 183.9,
-      "changePercent": 5.12,
-      "marketCap": "$456.2B",
-      "volume": "36.9B"
+      "price": 3367.49,
+      "change": 25.89,
+      "changePercent": -0.73,
+      "marketCap": "$411B",
+      "volume": "16B"
     },
-    "Binance Coin": {
+    "BNB": {
       "symbol": "BNB-USD",
-      "price": 754.49,
-      "change": 20.96,
-      "changePercent": 2.86,
-      "marketCap": "$105.1B",
-      "volume": "2.0B"
+      "price": 714.43,
+      "change": 6.49,
+      "changePercent": 0.41,
+      "marketCap": "$104B",
+      "volume": "2054M"
     },
     "XRP": {
       "symbol": "XRP-USD",
-      "price": 3.53,
-      "change": 0.1,
-      "changePercent": 2.89,
-      "marketCap": "$208.8B",
-      "volume": "7.3B"
-    },
-    "Cardano": {
-      "symbol": "ADA-USD",
-      "price": 0.87,
-      "change": 0.04,
-      "changePercent": 5.04,
-      "marketCap": "$30.9B",
-      "volume": "1.4B"
-    },
-    "Solana": {
-      "symbol": "SOL-USD",
-      "price": 182.47,
-      "change": 5.4,
-      "changePercent": 3.05,
-      "marketCap": "$98.2B",
-      "volume": "5.5B"
-    },
-    "Dogecoin": {
-      "symbol": "DOGE-USD",
-      "price": 0.26,
-      "change": 0.02,
-      "changePercent": 9.07,
-      "marketCap": "$39.6B",
-      "volume": "3.8B"
-    },
-    "Polkadot": {
-      "symbol": "DOT-USD",
-      "price": 4.56,
-      "change": 0.15,
-      "changePercent": 3.31,
-      "marketCap": "$7.3B",
-      "volume": "383.1M"
+      "price": 2.34,
+      "change": -0.01,
+      "changePercent": 0.75,
+      "marketCap": "$133B",
+      "volume": "4562M"
     }
   },
-  "timestamp": "2025-07-20T17:16:00.045623"
+  "timestamp": "2025-07-16T20:30:53.252466"
 }
