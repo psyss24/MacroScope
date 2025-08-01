@@ -1,10 +1,15 @@
 {
 
   "name": "macroscope-frontend",
+
   "version": "1.0.0",
+
   "description": "Comprehensive financial analysis platform frontend",
+
   "main": "src/index.js",
-  "homepage": "https://saadsaqib.dev",
+
+  "homepage": "https://saadsaqib.dev/MacroScope",
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -14,59 +19,116 @@
     "deploy": "npm run build && git add build && git commit -m 'Deploy to GitHub Pages' && git push",
     "deploy:prod": "npm run build && git add build && git commit -m 'Deploy to GitHub Pages' && git push"
   },
+
   "repository": {
+
     "type": "git",
+
     "url": "https://github.com/psyss24/MacroScope.git"
+
   },
+
   "keywords": [
+
     "finance",
+
     "stocks",
+
     "economics",
+
     "data-visualization",
+
     "react",
+
     "github-pages"
+
   ],
+
   "author": "Saad Saqib",
+
   "license": "MIT",
+
   "dependencies": {
+
     "axios": "^1.3.4",
+
     "chart.js": "^4.2.1",
+
     "chartjs-adapter-date-fns": "^3.0.0",
+
     "classnames": "^2.3.2",
+
     "date-fns": "^2.29.3",
+
     "embla-carousel": "^8.6.0",
+
     "embla-carousel-react": "^8.6.0",
+
     "lodash": "^4.17.21",
+
     "plotly.js": "^3.0.2",
+
     "react": "^18.2.0",
+
     "react-chartjs-2": "^5.2.0",
+
     "react-dom": "^18.2.0",
+
     "react-plotly.js": "^2.6.0",
+
     "react-router-dom": "^6.8.0",
+
     "react-scripts": "5.0.1"
+
   },
+
   "devDependencies": {
+
     "@testing-library/jest-dom": "^5.16.5",
+
     "@testing-library/react": "^13.4.0",
+
     "@testing-library/user-event": "^13.5.0"
+
   },
+
   "eslintConfig": {
+
     "extends": [
+
       "react-app",
+
       "react-app/jest"
+
     ]
+
   },
+
   "browserslist": {
+
     "production": [
+
       ">0.2%",
+
       "not dead",
+
       "not op_mini all"
+
     ],
+
     "development": [
+
       "last 1 chrome version",
+
       "last 1 firefox version",
+
       "last 1 safari version"
+
     ]
+
   },
+
   "proxy": "http://localhost:8000"
+
 }
+

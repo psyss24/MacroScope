@@ -15,7 +15,7 @@ import './styles/global.css';
 function App() {
   return (
     <ThemeProvider>
-      <Router>
+      <Router basename="/MacroScope">
         <div className="App">
           <Header />
           <main>
