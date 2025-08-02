@@ -220,12 +220,12 @@ const FeaturedStockCard = ({ stock }) => {
 
   const theme = typeof document !== 'undefined' ? document.body.dataset.theme : 'dark';
   return (
-    <div style={{ position: 'relative', zIndex: 1000 }}>
+    <div style={{ position: 'relative', zIndex: 1000, backgroundColor: 'var(--secondary-bg)' }}>
       <div
         ref={cardRef}
         className={styles.featuredCard}
         data-theme={theme}
-        style={{ border: 'none', position: 'relative', zIndex: 2 }}
+        style={{ border: 'none', position: 'relative', zIndex: 2, backgroundColor: 'var(--secondary-bg)' }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
