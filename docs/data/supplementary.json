@@ -1,0 +1,258 @@
+{
+  "sentiment": {
+    "timestamp": "2025-07-15T21:26:45.279625",
+    "fear_greed_index": {
+      "score": 74.0285714285714,
+      "rating": "greed",
+      "timestamp": "2025-07-15T21:26:45.408995"
+    },
+    "crypto_sentiment": {
+      "score": 73,
+      "rating": "Greed",
+      "timestamp": "1752537600"
+    },
+    "sentiment_indicators": {
+      "market_sentiment": "Greed",
+      "crypto_sentiment": "Greed"
+    }
+  },
+  "bonds": {
+    "timestamp": "2025-07-15T21:26:50.271887",
+    "treasury_yields": {},
+    "yield_curve": {},
+    "credit_spreads": {},
+    "bond_indicators": {}
+  },
+  "risk": {
+    "timestamp": "2025-07-15T21:26:50.271907",
+    "volatility_metrics": {
+      "indices": {
+        "average": 20.03,
+        "max": 29.85,
+        "min": 12.61,
+        "details": {
+          "^GSPC": 19.93,
+          "^DJI": 17.53,
+          "^IXIC": 26.14,
+          "^FTSE": 12.61,
+          "^GDAXI": 17.87,
+          "^N225": 29.85,
+          "^FCHI": 16.3
+        }
+      },
+      "stocks": {
+        "average": 31.85,
+        "max": 73.85,
+        "min": 17.16,
+        "details": {
+          "AAPL": 32.0,
+          "MSFT": 25.32,
+          "GOOGL": 31.94,
+          "AMZN": 34.61,
+          "TSLA": 73.85,
+          "META": 36.59,
+          "NVDA": 57.34,
+          "NFLX": 32.61,
+          "V": 23.23,
+          "JPM": 28.36,
+          "JNJ": 18.99,
+          "WMT": 24.23,
+          "PG": 19.39,
+          "UNH": 44.53,
+          "HD": 22.39,
+          "MA": 22.76,
+          "DIS": 30.48,
+          "BAC": 28.55,
+          "ADBE": 34.39,
+          "CRM": 32.72,
+          "PYPL": 38.0,
+          "INTC": 64.72,
+          "CSCO": 23.29,
+          "KO": 17.16,
+          "PFE": 24.02,
+          "VZ": 22.45,
+          "T": 23.57,
+          "XOM": 24.33
+        }
+      },
+      "currencies": {
+        "average": 8.97,
+        "max": 11.39,
+        "min": 6.22,
+        "details": {
+          "EURUSD=X": 8.16,
+          "GBPUSD=X": 7.73,
+          "USDJPY=X": 11.39,
+          "USDCHF=X": 9.36,
+          "USDCAD=X": 6.22,
+          "AUDUSD=X": 10.95
+        }
+      },
+      "commodities": {
+        "average": 33.9,
+        "max": 74.96,
+        "min": 18.22,
+        "details": {
+          "GC=F": 18.22,
+          "SI=F": 29.96,
+          "CL=F": 35.01,
+          "NG=F": 74.96,
+          "ZC=F": 20.71,
+          "ZW=F": 24.57
+        }
+      }
+    },
+    "risk_indicators": {
+      "market_stress": "Medium",
+      "currency_risk": "Low",
+      "commodity_risk": "High"
+    },
+    "correlation_matrix": {
+      "indices_indices": 1.0,
+      "indices_stocks": 0.8,
+      "indices_currencies": 0.2,
+      "indices_commodities": 0.2,
+      "stocks_stocks": 1.0,
+      "stocks_currencies": 0.2,
+      "stocks_commodities": 0.2,
+      "currencies_currencies": 1.0,
+      "currencies_commodities": -0.3,
+      "commodities_commodities": 1.0
+    },
+    "var_metrics": {
+      "indices": {
+        "^GSPC_var_95": 2.07,
+        "^GSPC_var_99": 2.92,
+        "^DJI_var_95": 1.82,
+        "^DJI_var_99": 2.57,
+        "^IXIC_var_95": 2.71,
+        "^IXIC_var_99": 3.83,
+        "^FTSE_var_95": 1.31,
+        "^FTSE_var_99": 1.85,
+        "^GDAXI_var_95": 1.85,
+        "^GDAXI_var_99": 2.62,
+        "^N225_var_95": 3.09,
+        "^N225_var_99": 4.37,
+        "^FCHI_var_95": 1.69,
+        "^FCHI_var_99": 2.39
+      },
+      "stocks": {
+        "AAPL_var_95": 3.32,
+        "AAPL_var_99": 4.69,
+        "MSFT_var_95": 2.62,
+        "MSFT_var_99": 3.71,
+        "GOOGL_var_95": 3.31,
+        "GOOGL_var_99": 4.68,
+        "AMZN_var_95": 3.59,
+        "AMZN_var_99": 5.07,
+        "TSLA_var_95": 7.65,
+        "TSLA_var_99": 10.82,
+        "META_var_95": 3.79,
+        "META_var_99": 5.36,
+        "NVDA_var_95": 5.94,
+        "NVDA_var_99": 8.4,
+        "NFLX_var_95": 3.38,
+        "NFLX_var_99": 4.78,
+        "V_var_95": 2.41,
+        "V_var_99": 3.4,
+        "JPM_var_95": 2.94,
+        "JPM_var_99": 4.16,
+        "JNJ_var_95": 1.97,
+        "JNJ_var_99": 2.78,
+        "WMT_var_95": 2.51,
+        "WMT_var_99": 3.55,
+        "PG_var_95": 2.01,
+        "PG_var_99": 2.84,
+        "UNH_var_95": 4.61,
+        "UNH_var_99": 6.52,
+        "HD_var_95": 2.32,
+        "HD_var_99": 3.28,
+        "MA_var_95": 2.36,
+        "MA_var_99": 3.33,
+        "DIS_var_95": 3.16,
+        "DIS_var_99": 4.47,
+        "BAC_var_95": 2.96,
+        "BAC_var_99": 4.18,
+        "ADBE_var_95": 3.56,
+        "ADBE_var_99": 5.04,
+        "CRM_var_95": 3.39,
+        "CRM_var_99": 4.79,
+        "PYPL_var_95": 3.94,
+        "PYPL_var_99": 5.57,
+        "INTC_var_95": 6.71,
+        "INTC_var_99": 9.48,
+        "CSCO_var_95": 2.41,
+        "CSCO_var_99": 3.41,
+        "KO_var_95": 1.78,
+        "KO_var_99": 2.51,
+        "PFE_var_95": 2.49,
+        "PFE_var_99": 3.52,
+        "VZ_var_95": 2.33,
+        "VZ_var_99": 3.29,
+        "T_var_95": 2.44,
+        "T_var_99": 3.45,
+        "XOM_var_95": 2.52,
+        "XOM_var_99": 3.56
+      }
+    }
+  },
+  "calendar": {
+    "timestamp": "2025-07-15T21:26:45.789946",
+    "economic_calendar": [
+      {
+        "date": "2024-01-15",
+        "time": "08:30",
+        "event": "Retail Sales (MoM)",
+        "importance": "High",
+        "forecast": "0.3%",
+        "previous": "0.1%"
+      },
+      {
+        "date": "2024-01-16",
+        "time": "09:15",
+        "event": "Industrial Production (MoM)",
+        "importance": "Medium",
+        "forecast": "0.2%",
+        "previous": "0.1%"
+      }
+    ],
+    "earnings_calendar": [
+      {
+        "date": "2024-01-15",
+        "symbol": "AAPL",
+        "company": "Apple Inc.",
+        "time": "After Market Close",
+        "eps_estimate": 2.1,
+        "revenue_estimate": 89000000000
+      },
+      {
+        "date": "2024-01-16",
+        "symbol": "MSFT",
+        "company": "Microsoft Corporation",
+        "time": "After Market Close",
+        "eps_estimate": 2.75,
+        "revenue_estimate": 56000000000
+      }
+    ],
+    "dividend_calendar": [
+      {
+        "date": "2024-01-15",
+        "symbol": "AAPL",
+        "company": "Apple Inc.",
+        "dividend_amount": 0.24,
+        "ex_dividend_date": "2024-01-20",
+        "payment_date": "2024-01-25"
+      }
+    ]
+  },
+  "market_regime": {
+    "timestamp": "2025-07-15T21:26:50.273023",
+    "regime_type": "Transitional",
+    "confidence": 0.5,
+    "characteristics": [
+      "Low Interest Rates",
+      "Weak Growth"
+    ],
+    "outlook": "Mixed"
+  }
+}
