@@ -1,3 +1,4 @@
 backend/
 nade_modules/
 frontend/node_modules/
+.DS_Store
