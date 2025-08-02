@@ -68,13 +68,6 @@
     box-sizing: border-box;
 }
 
-/* Force dark mode globally */
-*,
-*::before,
-*::after {
-    background-color: inherit !important;
-}
-
 html {
     background-color: var(--primary-bg) !important;
 }
@@ -88,37 +81,6 @@ body {
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-/* Force dark backgrounds for all divs and containers */
-div {
-    background-color: inherit;
-}
-
-/* Override any potential white backgrounds */
-.card,
-[class*="card"],
-[class*="Card"] {
-    background-color: var(--secondary-bg) !important;
-}
-
-/* Force dark theme for all elements */
-body * {
-    color: inherit;
-}
-
-/* Specifically target React root and common container elements */
-#root {
-    background-color: var(--primary-bg) !important;
-}
-
-#root > div {
-    background-color: var(--primary-bg) !important;
-}
-
-/* Override any CSS modules that might be setting white backgrounds */
-[class*="module"] {
-    background-color: inherit !important;
 }
 
 /* Typography */
@@ -509,30 +471,4 @@ a:hover {
   background: var(--hover-bg) !important;
   transform: translateY(-4px) !important;
   box-shadow: var(--shadow-lg) !important;
-}
-
-/* Ultra-aggressive dark mode enforcement */
-* {
-  background-color: inherit !important;
-}
-
-/* Specifically target any remaining white backgrounds */
-div[style*="background"],
-div[style*="background-color"] {
-  background-color: var(--secondary-bg) !important;
-}
-
-/* Force all cards to be dark */
-[class*="card"],
-[class*="Card"],
-.card {
-  background: var(--secondary-bg) !important;
-  background-color: var(--secondary-bg) !important;
-}
-
-/* Override any gradients that might be white */
-[style*="background: linear-gradient"],
-[style*="background-image: linear-gradient"] {
-  background: var(--secondary-bg) !important;
-  background-image: none !important;
 }
