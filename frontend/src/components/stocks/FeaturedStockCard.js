@@ -220,100 +220,119 @@ const FeaturedStockCard = ({ stock }) => {
 
   const theme = typeof document !== 'undefined' ? document.body.dataset.theme : 'dark';
   return (
-    <div style={{ position: 'relative', zIndex: 1000, backgroundColor: 'var(--secondary-bg)' }}>
+    <div className={styles.featuredStockContainer}>
       <div
         ref={cardRef}
-        className={styles.featuredCard}
-        data-theme={theme}
-        style={{ border: 'none', position: 'relative', zIndex: 2, backgroundColor: 'var(--secondary-bg)' }}
+        className={styles.featuredStockCard}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className={styles.featuredCardHorizontalFlipped} style={{ alignItems: 'stretch', height: '100%', position: 'relative' }}>
-          {/* Chart absolutely positioned on the right, fills card height */}
-          <div className={styles.featuredCardChartRight} style={{ position: 'absolute', right: 0, top: 0, bottom: 0, height: '100%', width: '60%', zIndex: 1, minWidth: 0, overflow: 'visible', display: 'flex', alignItems: 'stretch', pointerEvents: 'none', background: 'transparent' }}>
-            {validHistory ? (
-              <div style={{ position: 'relative', width: '120%', height: '100%', marginLeft: '-10%', paddingBottom: 24, boxSizing: 'border-box', background: 'transparent' }}>
-                <TimeSeriesChart
-                  data={chartData}
-                  showLegend={false}
-                  height={cardHeight - 24}
-                  title=""
-                  xAxisTitle=""
-                  yAxisTitle=""
-                  config={{ staticPlot: true, displayModeBar: false }}
-                  layout={{ 
-                    ...chartLayout, 
-                    hovermode: false, 
-                    height: cardHeight - 24,
-                    paper_bgcolor: 'transparent',
-                    plot_bgcolor: 'transparent'
-                  }}
-                  transparent={true}
-                />
-                <div className={styles.featuredChartMask} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: cardHeight - 24, zIndex: 1 }} />
-                {/* View Details button moved here from info section */}
-                <a href={`/stocks/${symbol}`} className={stockStyles.mainPageViewMore} style={{ position: 'absolute', right: 24, bottom: 24, zIndex: 10, pointerEvents: 'auto' }}>
-                  View Details
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="m9 18 6-6-6-6" />
-                  </svg>
-                </a>
-              </div>
-            ) : (
-              <div className={styles.noChartData}>No chart data</div>
+        {/* Header Section */}
+        <div className={styles.cardHeader}>
+          <div className={styles.stockInfo}>
+            <div className={styles.stockTitle}>
+              <h3 className={styles.stockName}>{name}</h3>
+              <span className={styles.stockSymbol}>{symbol}</span>
+            </div>
+            {sector && (
+              <span className={styles.sectorTag}>{sector}</span>
             )}
           </div>
-          {/* Info section, z-index: 4 for text, but background is lower */}
-          <div className={styles.featuredCardLeftInfo} style={{ flex: '0 0 60%', maxWidth: '60%', minWidth: 0, display: 'flex', flexDirection: 'column', zIndex: 4, position: 'relative', paddingRight: 24 }}>
-            {/* Use a pseudo-element for the background in CSS for .featuredCardLeftInfo, z-index: 1 */}
-            <div style={{ flex: '0 0 auto', position: 'relative', zIndex: 4 }}>
-              <div className={styles.featuredHeaderRowFlexSmall} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 2 }}>
-                  <span className={styles.featuredNameSmall}>{name}</span>
-                  {sector && (
-                    <div className={stockStyles.featuredIndustryTag}>{sector}</div>
-                  )}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: 80 }}>
-                  <span className={styles.featuredPriceTiny} style={{ color: priceColor }}>
-                    {typeof price === 'number' ? `$${price.toFixed(2)}` : (isNaN(parseFloat(price)) ? 'N/A' : `$${parseFloat(price).toFixed(2)}`)}
-                  </span>
-                  {typeof percentChange === 'number' && !isNaN(percentChange) ? (
-                    <span style={{ color: priceColor, fontSize: '1.05rem', fontWeight: 600 }}>
-                      {percentChange > 0 ? '+' : percentChange < 0 ? '' : ''}{percentChange.toFixed(2)}%
-                    </span>
-                  ) : null}
-                </div>
+          <div className={styles.priceInfo}>
+            <div className={styles.price} style={{ color: priceColor }}>
+              {typeof price === 'number' ? `$${price.toFixed(2)}` : 'N/A'}
+            </div>
+            {typeof percentChange === 'number' && !isNaN(percentChange) && (
+              <div className={styles.priceChange} style={{ color: priceColor }}>
+                {percentChange > 0 ? '+' : ''}{percentChange.toFixed(2)}%
               </div>
-              <div className={styles.featuredMetricsGridSmall}>
-                <div><span>Market Cap:</span> <span>{formatMarketCap(metrics.marketCap)}</span></div>
-                <div><span>P/E:</span> <span>{fmt2(metrics.pe)}</span></div>
-                <div><span>Volume:</span> <span>{formatVolume(metrics.volume)}</span></div>
-                <div><span>52W High:</span> <span>{fmt2(metrics['52WeekHigh'])}</span></div>
-                <div><span>52W Low:</span> <span>{fmt2(metrics['52WeekLow'])}</span></div>
-                <div><span>Beta:</span> <span>{fmt2(metrics.beta)}</span></div>
+            )}
+          </div>
+        </div>
+
+        {/* Chart Section */}
+        <div className={styles.chartSection}>
+          {validHistory ? (
+            <div className={styles.chartContainer}>
+              <TimeSeriesChart
+                data={chartData}
+                showLegend={false}
+                height={200}
+                title=""
+                xAxisTitle=""
+                yAxisTitle=""
+                config={{ staticPlot: true, displayModeBar: false }}
+                layout={{ 
+                  ...chartLayout, 
+                  hovermode: false, 
+                  height: 200,
+                  paper_bgcolor: 'transparent',
+                  plot_bgcolor: 'transparent'
+                }}
+                transparent={true}
+              />
+            </div>
+          ) : (
+            <div className={styles.noChart}>
+              <span>No chart data available</span>
+            </div>
+          )}
+        </div>
+
+        {/* Metrics Grid */}
+        <div className={styles.metricsGrid}>
+          <div className={styles.metric}>
+            <span className={styles.metricLabel}>Market Cap</span>
+            <span className={styles.metricValue}>{formatMarketCap(metrics.marketCap)}</span>
+          </div>
+          <div className={styles.metric}>
+            <span className={styles.metricLabel}>P/E Ratio</span>
+            <span className={styles.metricValue}>{fmt2(metrics.pe)}</span>
+          </div>
+          <div className={styles.metric}>
+            <span className={styles.metricLabel}>Volume</span>
+            <span className={styles.metricValue}>{formatVolume(metrics.volume)}</span>
+          </div>
+          <div className={styles.metric}>
+            <span className={styles.metricLabel}>52W High</span>
+            <span className={styles.metricValue}>{fmt2(metrics['52WeekHigh'])}</span>
+          </div>
+          <div className={styles.metric}>
+            <span className={styles.metricLabel}>52W Low</span>
+            <span className={styles.metricValue}>{fmt2(metrics['52WeekLow'])}</span>
+          </div>
+          <div className={styles.metric}>
+            <span className={styles.metricLabel}>Beta</span>
+            <span className={styles.metricValue}>{fmt2(metrics.beta)}</span>
+          </div>
+        </div>
+
+        {/* Description Section */}
+        {description && (
+          <div className={styles.descriptionSection}>
+            <div className={styles.descriptionLabel}>About</div>
+            <div
+              className={styles.descriptionContainer}
+              ref={descOuterRef}
+            >
+              <div
+                className={`${styles.descriptionText} ${descScrollClass ? styles[descScrollClass] : ''}`}
+                ref={descInnerRef}
+              >
+                {description}
               </div>
             </div>
-            {description && (
-              <div
-                className={styles.featuredDescriptionEllipsis}
-                title={truncateText(description, 260)}
-                ref={descOuterRef}
-              >
-                <div
-                  className={
-                    styles.featuredDescriptionInner +
-                    (descScrollClass ? ' ' + styles[descScrollClass] : '')
-                  }
-                  ref={descInnerRef}
-                >
-                {description}
-                </div>
-              </div>
-            )}
-            {/* View Details button now moved to chart area */}
           </div>
+        )}
+
+        {/* Footer with Action Button */}
+        <div className={styles.cardFooter}>
+          <a href={`/stocks/${symbol}`} className={styles.viewDetailsButton}>
+            View Details
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
