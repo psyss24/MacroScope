@@ -22,6 +22,7 @@ const Header = () => {
               <Link to="/macro" className={styles.navLink}>Macro</Link>
               <Link to="/commodities" className={styles.navLink}>Commodities</Link>
               <Link to="/bonds" className={styles.navLink}>Bonds & Risk</Link>
+              <Link to="/test" className={styles.navLink}>Test</Link>
             </div>
           </nav>
         </div>
