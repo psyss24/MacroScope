@@ -141,8 +141,8 @@ const Charts = () => {
       },
       tooltip: {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        titleColor: '#fff',
-        bodyColor: '#fff',
+        titleColor: '#e0e0e0',
+        bodyColor: '#e0e0e0',
         borderColor: '#ddd',
         borderWidth: 1,
       }

@@ -166,6 +166,15 @@ const apiService = {
   },
   
   /**
+   * Get bond history data for a specific symbol
+   * @param {string} symbol - Bond symbol (e.g., 'US10Y', 'DE5Y')
+   * @returns {Promise<Array>} - Bond history data
+   */
+  getBondHistory: (symbol, options = {}) => {
+    return fetchFromAPI(`/bond_history/${encodeURIComponent(symbol)}`, options);
+  },
+  
+  /**
    * Check API health
    * @returns {Promise<Object>} - Health status
    */

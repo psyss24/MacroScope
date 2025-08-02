@@ -153,7 +153,7 @@ const FeaturedStockCard = ({ stock }) => {
     chartColor = '#e53935';
     priceColor = '#e53935';
   } else {
-    chartColor = (typeof window !== 'undefined' && document.body.dataset.theme === 'light') ? '#222' : '#fff';
+    chartColor = '#fff';
     priceColor = chartColor;
   }
 
@@ -231,9 +231,9 @@ const FeaturedStockCard = ({ stock }) => {
       >
         <div className={styles.featuredCardHorizontalFlipped} style={{ alignItems: 'stretch', height: '100%', position: 'relative' }}>
           {/* Chart absolutely positioned on the right, fills card height */}
-          <div className={styles.featuredCardChartRight} style={{ position: 'absolute', right: 0, top: 0, bottom: 0, height: '100%', width: '60%', zIndex: 1, minWidth: 0, overflow: 'visible', display: 'flex', alignItems: 'stretch', pointerEvents: 'none' }}>
+          <div className={styles.featuredCardChartRight} style={{ position: 'absolute', right: 0, top: 0, bottom: 0, height: '100%', width: '60%', zIndex: 1, minWidth: 0, overflow: 'visible', display: 'flex', alignItems: 'stretch', pointerEvents: 'none', background: 'transparent' }}>
             {validHistory ? (
-              <div style={{ position: 'relative', width: '120%', height: '100%', marginLeft: '-10%', paddingBottom: 24, boxSizing: 'border-box' }}>
+              <div style={{ position: 'relative', width: '120%', height: '100%', marginLeft: '-10%', paddingBottom: 24, boxSizing: 'border-box', background: 'transparent' }}>
                 <TimeSeriesChart
                   data={chartData}
                   showLegend={false}
@@ -242,7 +242,13 @@ const FeaturedStockCard = ({ stock }) => {
                   xAxisTitle=""
                   yAxisTitle=""
                   config={{ staticPlot: true, displayModeBar: false }}
-                  layout={{ ...chartLayout, hovermode: false, height: cardHeight - 24 }}
+                  layout={{ 
+                    ...chartLayout, 
+                    hovermode: false, 
+                    height: cardHeight - 24,
+                    paper_bgcolor: 'transparent',
+                    plot_bgcolor: 'transparent'
+                  }}
                   transparent={true}
                 />
                 <div className={styles.featuredChartMask} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: cardHeight - 24, zIndex: 1 }} />

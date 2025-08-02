@@ -109,11 +109,11 @@ const TimeSeriesChart = ({
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  // Define colors based on theme
-  const textColor = darkMode ? '#e0e0e0' : '#5a6169';
-  const gridColor = darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-  const paperBgColor = layout.paper_bgcolor || (darkMode ? '#111' : '#fff');
-  const plotBgColor = layout.plot_bgcolor || (darkMode ? '#111' : '#fff');
+  // Define colors for dark mode only
+  const textColor = '#e0e0e0';
+  const gridColor = 'rgba(255, 255, 255, 0.1)';
+  const paperBgColor = layout.paper_bgcolor || '#111';
+  const plotBgColor = layout.plot_bgcolor || '#111';
 
   // Prepare data for Plotly
   const plotData = data.map((series, index) => ({
@@ -242,12 +242,12 @@ const TimeSeriesChart = ({
     },
     hovermode: 'closest',
     hoverlabel: {
-      bgcolor: darkMode ? '#333333' : '#ffffff',
-      bordercolor: darkMode ? '#555555' : '#e8eaed',
+      bgcolor: '#333333',
+      bordercolor: '#555555',
       font: {
         family: 'Work Sans, sans-serif',
         size: 12,
-        color: darkMode ? '#ffffff' : '#333333'
+        color: '#ffffff'
       }
     },
     ...layout

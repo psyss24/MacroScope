@@ -126,7 +126,7 @@ const DashboardChart = (props) => {
       onClick={() => setMode(mode === 'normalised' ? 'raw' : 'normalised')}
       style={{
         background: 'var(--accent-color)',
-        color: '#fff',
+        color: '#e0e0e0',
         border: 'none',
         borderRadius: 6,
         padding: '3px 10px',
@@ -289,11 +289,11 @@ const DashboardChart = (props) => {
   }
 
   // Theme-aware colors
-  const textColor = darkMode ? '#e0e0e0' : '#5a6169';
+  const textColor = '#e0e0e0';
   const transparent = 'rgba(0,0,0,0)';
-  const axisColor = darkMode ? 'rgba(255,255,255,0.18)' : 'rgba(60,64,67,0.18)';
-  const baselineColor = darkMode ? 'rgba(255,255,255,0.13)' : 'rgba(60,64,67,0.13)';
-  const baselineLabelColor = darkMode ? 'rgba(255,255,255,0.38)' : 'rgba(60,64,67,0.38)';
+  const axisColor = 'rgba(255,255,255,0.18)';
+  const baselineColor = 'rgba(255,255,255,0.13)';
+  const baselineLabelColor = 'rgba(255,255,255,0.38)';
 
   return (
     <div

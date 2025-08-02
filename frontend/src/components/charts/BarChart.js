@@ -36,10 +36,10 @@ const BarChart = ({
   const [cardHovered, setCardHovered] = useState(false);
 
   // Define colors based on theme
-  const textColor = darkMode ? '#e0e0e0' : '#5a6169';
-  const gridColor = darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-  const paperBgColor = darkMode ? '#1e1e1e' : '#ffffff';
-  const plotBgColor = darkMode ? '#121212' : '#f8f9fa';
+  const textColor = '#e0e0e0';
+  const gridColor = 'rgba(255, 255, 255, 0.1)';
+  const paperBgColor = '#1e1e1e';
+  const plotBgColor = '#121212';
 
   // Prepare data for Plotly
   const plotData = data.map((series, index) => ({
@@ -54,9 +54,9 @@ const BarChart = ({
         ? {
         color: series.y,
         colorscale: [
-          [0, darkMode ? '#ef5350' : '#f44336'],  // Negative (red)
-          [0.5, darkMode ? '#ffca28' : '#ffc107'], // Neutral (yellow)
-          [1, darkMode ? '#66bb6a' : '#4caf50']    // Positive (green)
+              [0, '#ef5350'],  // Negative (red)
+    [0.5, '#ffca28'], // Neutral (yellow)
+    [1, '#66bb6a']    // Positive (green)
         ],
         colorbar: {
           tickfont: {
@@ -78,7 +78,7 @@ const BarChart = ({
         : {
             color: series.color || colors[index % colors.length],
             line: {
-              color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+              color: 'rgba(255, 255, 255, 0.1)',
               width: 1
             }
           }
@@ -141,12 +141,12 @@ const BarChart = ({
     },
     hovermode: false,
     hoverlabel: {
-      bgcolor: darkMode ? '#333333' : '#ffffff',
-      bordercolor: darkMode ? '#555555' : '#e8eaed',
+      bgcolor: '#333333',
+      bordercolor: '#555555',
       font: {
         family: 'Work Sans, sans-serif',
         size: 12,
-        color: darkMode ? '#ffffff' : '#333333'
+        color: '#ffffff'
       }
     },
     bargap: 0.2,

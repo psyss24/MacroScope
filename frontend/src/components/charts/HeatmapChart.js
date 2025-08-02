@@ -30,12 +30,12 @@ const HeatmapChart = ({
   const { darkMode } = useContext(ThemeContext);
 
   // Define colors based on theme
-  const textColor = darkMode ? '#e0e0e0' : '#5a6169';
-  const paperBgColor = darkMode ? '#1e1e1e' : '#ffffff';
-  const plotBgColor = darkMode ? '#121212' : '#f8f9fa';
+  const textColor = '#e0e0e0';
+  const paperBgColor = '#1e1e1e';
+  const plotBgColor = '#121212';
 
   // Determine if we should use a reversed color scale for dark mode
-  const effectiveColorScale = darkMode && colorScale === 'RdBu' ? 'RdBu_r' : colorScale;
+  const effectiveColorScale = colorScale === 'RdBu' ? 'RdBu_r' : colorScale;
 
   // Prepare data for Plotly
   const plotData = [
@@ -106,12 +106,12 @@ const HeatmapChart = ({
       }
     },
     hoverlabel: {
-      bgcolor: darkMode ? '#333333' : '#ffffff',
-      bordercolor: darkMode ? '#555555' : '#e8eaed',
+      bgcolor: '#333333',
+      bordercolor: '#555555',
       font: {
         family: 'Work Sans, sans-serif',
         size: 12,
-        color: darkMode ? '#ffffff' : '#333333'
+        color: '#ffffff'
       }
     },
     annotations: []
@@ -129,7 +129,7 @@ const HeatmapChart = ({
           font: {
             family: 'Work Sans, sans-serif',
             size: 10,
-            color: Math.abs(value) > 0.7 ? '#ffffff' : textColor
+            color: Math.abs(value) > 0.7 ? '#ffffff' : '#e0e0e0'
           },
           showarrow: false
         });

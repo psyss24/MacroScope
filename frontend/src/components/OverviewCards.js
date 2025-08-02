@@ -21,13 +21,16 @@ const OverviewCards = () => {
 
     const fetchData = async () => {
       try {
+        console.log('🔍 Fetching dashboard data from:', apiService.getDashboardData.toString());
         // Use only the optimized dashboard endpoint
         const data = await apiService.getDashboardData({ signal });
+        console.log('✅ Dashboard data received:', data);
         setDashboardData(data);
 
         // Set loading to false immediately since we have all the data we need
         setLoading(false);
       } catch (err) {
+        console.error('❌ Error fetching dashboard data:', err);
         if (err.name !== 'AbortError') {
           setError(err.message);
         }

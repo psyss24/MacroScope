@@ -93,9 +93,9 @@ const BondsRiskPage = () => {
         console.log('Starting to fetch bond histories for symbols:', BOND_SYMBOLS.map(s => s.symbol));
         const results = await Promise.all(
           BOND_SYMBOLS.map(({ symbol }) =>
-            fetch(`/api/bond_history/${symbol}`).then(res => {
-              console.log(`Fetch result for ${symbol}:`, res.status, res.ok);
-              return res.ok ? res.json() : Promise.reject(symbol);
+            apiService.getBondHistory(symbol).then(data => {
+              console.log(`Fetch result for ${symbol}:`, '200', true);
+              return data;
             }).catch((err) => {
               console.error(`Fetch error for ${symbol}:`, err);
               return null;

@@ -78,23 +78,9 @@ const MacroPage = () => {
       // Add a small delay to ensure loading state is visible
       await new Promise(resolve => setTimeout(resolve, 100));
       
-      const params = regionKey ? `?country=${encodeURIComponent(regionKey)}` : '';
-      const url = `/api/macro${params}`;
-      
       console.log(`Frontend: Fetching macro data for region '${regionKey}'`);
-      console.log(`Frontend: Request URL: ${url}`);
       
-      const response = await fetch(url, { signal });
-      
-      console.log(`Frontend: Response status: ${response.status}`);
-      console.log(`Frontend: Response ok: ${response.ok}`);
-      
-      if (!response.ok) {
-        console.error(`Frontend: HTTP error ${response.status}: ${response.statusText}`);
-        throw new Error(`Failed to fetch macro data: ${response.status} ${response.statusText}`);
-      }
-      
-      const data = await response.json();
+      const data = await apiService.getMacroData(regionKey, false, { signal });
       console.log(`Frontend: Received data structure:`, data);
       console.log(`Frontend: Data keys:`, Object.keys(data));
       if (data.countries) {

@@ -8,7 +8,7 @@ const config = {
     environment: 'development'
   },
   production: {
-    apiBaseUrl: 'https://macroscope-backend-production.up.railway.app:8080/api',
+    apiBaseUrl: 'https://macroscope-production.up.railway.app/api',
     environment: 'production'
   }
 };

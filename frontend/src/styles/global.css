@@ -9,6 +9,7 @@
     --secondary-bg: #111;
     --text-color: #e0e0e0;
     --accent-color: #90caf9;
+    --text-on-accent: #000000;
     --border-color: #333333;
     --muted-text: #a0a0a0;
     --hover-bg: #2c2c2c;
@@ -58,35 +59,7 @@
     --card-fade-mask-rgb: 17,17,17;
 }
 
-/* Light mode variables (for backward compatibility if needed) */
-body.light-mode {
-    --primary-bg: #f8f9fa;
-    --secondary-bg: #fdfdfd;
-    --text-color: #5a6169;
-    --accent-color: #3c4043;
-    --border-color: #e8eaed;
-    --muted-text: #7a8087;
-    --hover-bg: #f5f7fa;
-    --subtle-shadow: rgba(60, 64, 67, 0.05);
-    --error-color: #dc3545;
-    
-    /* Genre colors for different data types */
-    --markets-color: #4caf50;
-    --macro-color: #ba68c8;
-    --commodities-color: #64b5f6;
-    --bonds-color: #ffb74d;
-    --risk-color: #f44336;
-    
-    /* Card gradients */
-    --card-gradient: linear-gradient(135deg, var(--secondary-bg) 0%, #ffffff 100%);
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
-    --card-fade-mask-rgb: 255,255,255;
-}
+
 
 /* Reset and base styles */
 * {
@@ -95,11 +68,15 @@ body.light-mode {
     box-sizing: border-box;
 }
 
+html {
+    background-color: var(--primary-bg) !important;
+}
+
 body {
     font-family: var(--font-body);
     line-height: 1.6;
-    background-color: var(--primary-bg);
-    color: var(--text-color);
+    background-color: var(--primary-bg) !important;
+    color: var(--text-color) !important;
     font-size: 16px;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
@@ -188,7 +165,7 @@ a:hover {
 
 .btn-primary {
     background: var(--accent-color);
-    color: white;
+    color: var(--text-on-accent);
     border-color: var(--accent-color);
 }
 
@@ -209,7 +186,7 @@ a:hover {
 
 /* Cards */
 .card {
-    background: linear-gradient(135deg, var(--secondary-bg) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);

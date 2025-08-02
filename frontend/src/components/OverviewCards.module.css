@@ -6,7 +6,7 @@
 }
 
 .card {
-    background: linear-gradient(135deg, var(--secondary-bg) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
     border: none;
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);

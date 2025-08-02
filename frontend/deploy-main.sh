@@ -1,66 +1,56 @@
 #!/bin/bash
-
-# Deploy frontend to GitHub Pages from main branch
+# Frontend Deployment Script for GitHub Pages
 echo "🚀 Deploying frontend to GitHub Pages from main branch..."
 
-# Build the production version
-echo "📦 Building production version..."
-npm run build
-
-# Check if build was successful
-if [ ! -d "build" ]; then
-    echo "❌ Build failed - build directory not found"
+# Check if we're in the right directory
+if [ ! -f "package.json" ]; then
+    echo "❌ Error: This script must be run from the frontend directory"
     exit 1
 fi
 
-echo "✅ Build successful!"
+echo "📦 Building production version..."
+npm run build
 
-# Copy build files to docs folder
-echo "📁 Copying build files to docs folder..."
-cp -r build/* ../docs/
-
-# Go back to root directory
-cd ..
-
-# Automatically fix asset paths in index.html to be relative
-echo "🔧 Fixing asset paths in index.html..."
-
-# Find the actual JS and CSS file names
-JS_FILE=$(find docs/static/js -name "main.*.js" | head -1 | sed 's|docs/static/js/||')
-CSS_FILE=$(find docs/static/css -name "main.*.css" | head -1 | sed 's|docs/static/css/||')
-
-if [ -n "$JS_FILE" ] && [ -n "$CSS_FILE" ]; then
-    echo "Found JS file: $JS_FILE"
-    echo "Found CSS file: $CSS_FILE"
-    
-    # Replace the file names in index.html
-    sed -i '' "s|src=\"/static/js/main.[^\"]*\.js\"|src=\"static/js/$JS_FILE\"|g" docs/index.html
-    sed -i '' "s|href=\"/static/css/main.[^\"]*\.css\"|href=\"static/css/$CSS_FILE\"|g" docs/index.html
-else
-    echo "⚠️  Could not find JS or CSS files, using fallback method"
-    # Fallback: just make paths relative
-    sed -i '' 's|src="/static/|src="static/|g' docs/index.html
-    sed -i '' 's|href="/static/|href="static/|g' docs/index.html
+if [ $? -ne 0 ]; then
+    echo "❌ Build failed!"
+    exit 1
 fi
 
-# Fix other asset paths
-sed -i '' 's|href="/favicon.ico"|href="favicon.ico"|g' docs/index.html
-sed -i '' 's|href="/logo192.png"|href="logo192.png"|g' docs/index.html
-sed -i '' 's|href="/manifest.json"|href="manifest.json"|g' docs/index.html
+echo "🔧 Copying build to docs folder..."
+rm -rf docs
+cp -r build docs
 
-# Add all docs files to git
-echo "📝 Adding docs files to git..."
+echo "📝 Updating index.html for GitHub Pages..."
+# Find the generated JS and CSS filenames
+JS_FILE=$(find docs/static/js -name "main.*.js" | head -1 | xargs basename)
+CSS_FILE=$(find docs/static/css -name "main.*.css" | head -1 | xargs basename)
+
+echo "Found JS file: $JS_FILE"
+echo "Found CSS file: $CSS_FILE"
+
+# Update the index.html file with the correct filenames
+sed -i '' "s/main\.[a-zA-Z0-9]*\.js/$JS_FILE/g" docs/index.html
+sed -i '' "s/main\.[a-zA-Z0-9]*\.css/$CSS_FILE/g" docs/index.html
+
+# Make all paths relative (remove leading slashes)
+sed -i '' 's|src="/static/|src="static/|g' docs/index.html
+sed -i '' 's|href="/static/|href="static/|g' docs/index.html
+sed -i '' 's|src="/favicon.ico|src="favicon.ico|g' docs/index.html
+sed -i '' 's|href="/manifest.json|href="manifest.json|g' docs/index.html
+
+# Fix any remaining absolute paths with /MacroScope/ prefix
+sed -i '' 's|src="/MacroScope/static/|src="static/|g' docs/index.html
+sed -i '' 's|href="/MacroScope/static/|href="static/|g' docs/index.html
+
+echo "📁 Creating .nojekyll file..."
+touch docs/.nojekyll
+
+echo "🚀 Committing and pushing to GitHub..."
 git add docs/
-
-# Commit the changes
-echo "💾 Committing changes..."
 git commit -m "Deploy frontend to GitHub Pages - $(date)"
-
-# Push to main branch
-echo "🚀 Pushing to main branch..."
 git push origin main
 
 echo "✅ Frontend deployed to GitHub Pages!"
-echo "🌐 Your app should be available at: https://saadsaqib.dev/MacroScope/"
+echo "🌐 Your site should be available at: https://saadsaqib.dev/MacroScope/"
 echo ""
-echo "Note: GitHub Pages may take 2-5 minutes to update" 
+echo "Note: GitHub Pages may take a few minutes to update" 

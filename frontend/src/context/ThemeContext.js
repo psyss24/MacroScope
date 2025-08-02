@@ -1,43 +1,35 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-// Create the theme context
+// Create the theme context - dark mode only
 export const ThemeContext = createContext({
-  darkMode: true, // Changed default to true for dark mode
-  toggleDarkMode: () => {},
+  darkMode: true, // Always dark mode
+  toggleDarkMode: () => {}, // Disabled
 });
 
 // Create the theme provider component
 export const ThemeProvider = ({ children }) => {
-  // Check if dark mode is stored in localStorage, default to true (dark mode)
-  const storedDarkMode = localStorage.getItem('darkMode') !== 'false'; // Default to true
-  const [darkMode, setDarkMode] = useState(storedDarkMode);
+  // Always use dark mode
+  const [darkMode, setDarkMode] = useState(true);
 
-  // Toggle dark mode function
+  // Disable theme toggle - always dark
   const toggleDarkMode = () => {
-    setDarkMode(prevMode => !prevMode);
+    // No-op - theme switching disabled
   };
 
-  // Apply dark mode by default on mount
+  // Apply dark mode on mount
   useEffect(() => {
-    // Set dark mode as default if no preference is stored
-    if (localStorage.getItem('darkMode') === null) {
-      setDarkMode(true);
-      localStorage.setItem('darkMode', 'true');
-    }
+    // Always set dark mode
+    setDarkMode(true);
+    localStorage.setItem('darkMode', 'true');
   }, []);
 
   // Update localStorage and apply class to body when darkMode changes
   useEffect(() => {
-    localStorage.setItem('darkMode', darkMode);
+    localStorage.setItem('darkMode', 'true');
     
-    // Apply or remove dark-mode class from body
-    if (darkMode) {
-      document.body.classList.add('dark-mode');
-      document.body.setAttribute('data-theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-mode');
-      document.body.setAttribute('data-theme', 'light');
-    }
+    // Always apply dark mode
+    document.body.classList.add('dark-mode');
+    document.body.setAttribute('data-theme', 'dark');
   }, [darkMode]);
 
   // Provide the theme context to children
