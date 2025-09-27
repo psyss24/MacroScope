@@ -4,5 +4,5 @@ frontend/node_modules/
 .DS_Store
 venv/
 deployment/
-
-
+.idea/
+.vscode/
