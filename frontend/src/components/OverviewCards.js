@@ -164,35 +164,6 @@ const OverviewCards = () => {
       ]
     },
     {
-      title: 'Currencies',
-      description: 'Foreign exchange rates and currency pair analysis',
-      color: 'currencies',
-      link: '/currency',
-      metrics: [
-        { 
-          label: 'EUR/USD', 
-          value: dashboardData?.currencies?.['EUR/USD']?.price != null 
-            ? dashboardData.currencies['EUR/USD'].price.toFixed(4)
-            : 'N/A', 
-          change: formatChangePercent(dashboardData?.currencies?.['EUR/USD']?.changePercent) || '0.00%' 
-        },
-        { 
-          label: 'GBP/USD', 
-          value: dashboardData?.currencies?.['GBP/USD']?.price != null 
-            ? dashboardData.currencies['GBP/USD'].price.toFixed(4)
-            : 'N/A',
-          change: formatChangePercent(dashboardData?.currencies?.['GBP/USD']?.changePercent) || '0.00%' 
-        },
-        { 
-          label: 'USD/JPY', 
-          value: dashboardData?.currencies?.['USD/JPY']?.price != null 
-            ? dashboardData.currencies['USD/JPY'].price.toFixed(2)
-            : 'N/A',
-          change: formatChangePercent(dashboardData?.currencies?.['USD/JPY']?.changePercent) || '0.00%' 
-        }
-      ]
-    },
-    {
       title: 'Bonds & Risk',
       description: 'Treasury yields, bond market data, and risk indicators',
       color: 'bonds',

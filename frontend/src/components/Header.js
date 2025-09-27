@@ -18,7 +18,6 @@ const Header = () => {
             <div className={styles.navLinks}>
               <Link to="/markets" className={styles.navLink}>Markets</Link>
               <Link to="/stocks" className={styles.navLink}>Stocks</Link>
-              <Link to="/currency" className={styles.navLink}>Currency</Link>
               <Link to="/macro" className={styles.navLink}>Macro</Link>
               <Link to="/commodities" className={styles.navLink}>Commodities</Link>
               <Link to="/bonds" className={styles.navLink}>Bonds & Risk</Link>

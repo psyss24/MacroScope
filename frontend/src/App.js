@@ -8,7 +8,6 @@ import CommoditiesPage from './pages/CommoditiesPage';
 import BondsRiskPage from './pages/BondsRiskPage';
 import StocksPage from './pages/StocksPage';
 import StockDetailPage from './components/stocks/StockDetailPage';
-import CurrencyPage from './pages/CurrencyPage';
 import { ThemeProvider } from './context/ThemeContext';
 import './styles/global.css';
 
@@ -28,7 +27,6 @@ function App() {
               <Route path="/risk" element={<BondsRiskPage />} />
               <Route path="/stocks" element={<StocksPage />} />
               <Route path="/stocks/:symbol" element={<StockDetailPage />} />
-              <Route path="/currency" element={<CurrencyPage />} />
             </Routes>
           </main>
         </div>
