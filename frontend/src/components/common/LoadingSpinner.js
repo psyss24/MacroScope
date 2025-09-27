@@ -31,17 +31,6 @@ const LoadingSpinner = ({ isLoading, message = 'Loading...' }) => {
               strokeLinejoin="round"
             />
           </svg>
-          
-          {/* Chart Data Points */}
-          <div className={styles.chartPoint}></div>
-          <div className={styles.chartPoint}></div>
-          <div className={styles.chartPoint}></div>
-          <div className={styles.chartPoint}></div>
-          <div className={styles.chartPoint}></div>
-          <div className={styles.chartPoint}></div>
-          
-          {/* Chart Pulse Effect */}
-          <div className={styles.chartPulse}></div>
         </div>
         <div className={styles.loadingText}>{message}</div>
       </div>

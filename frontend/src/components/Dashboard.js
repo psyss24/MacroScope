@@ -31,9 +31,9 @@ const Dashboard = () => {
               <span className={styles.subtitle}>Financial Analysis Platform</span>
             </h1>
             <p className={styles.description}>
-              Comprehensive market analysis with real-time data, macroeconomic indicators, 
-              and interactive visualizations. Track everything from individual stocks to 
-              global economic trends in one unified platform.
+              Comprehensive market analysis with real time data, macroeconomic indicators, 
+              and interactive visualisations. Track everything from individual stocks to 
+              global economic trends in one platform.
             </p>
           </div>
         </section>
