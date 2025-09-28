@@ -1,0 +1,47 @@
+{
+  "overview": {
+    "timestamp": "2025-07-15T21:26:49.237173",
+    "overview": {},
+    "detailed": {}
+  },
+  "gdp": {
+    "timestamp": "2025-07-15T21:26:49.237129",
+    "nominal_gdp": {},
+    "real_gdp": {},
+    "gdp_per_capita": {},
+    "gdp_growth": {}
+  },
+  "employment": {
+    "timestamp": "2025-07-15T21:26:49.237138",
+    "unemployment_rate": {},
+    "labor_force_participation": {},
+    "nonfarm_payrolls": {},
+    "jobless_claims": {}
+  },
+  "inflation": {
+    "timestamp": "2025-07-15T21:26:49.237147",
+    "cpi_all": {},
+    "cpi_core": {},
+    "pce": {},
+    "pce_core": {}
+  },
+  "interest_rates": {
+    "timestamp": "2025-07-15T21:26:49.237158",
+    "federal_funds": {},
+    "treasury_10y": {},
+    "treasury_2y": {},
+    "treasury_30y": {},
+    "mortgage_30y": {},
+    "yield_curve": {}
+  },
+  "economic_health": {
+    "overall_score": 64.3,
+    "component_scores": {
+      "gdp": 50,
+      "unemployment": 50,
+      "inflation": 100
+    },
+    "assessment": "Good",
+    "timestamp": "2025-07-15T21:26:50.273047"
+  }
+}
