@@ -25,6 +25,7 @@ frontend/node_modules/
 *.log
 logs/
 venv/
+frontend/.env
 
 # IDE
 .idea/
