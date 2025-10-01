@@ -22,10 +22,14 @@ frontend/node_modules/
 
 # Development
 .DS_Store
+*/.DS_Store
 *.log
 logs/
 venv/
 frontend/.env
+
+# Deployment script (personal workflow)
+frontend/deploy-main.sh
 
 # IDE
 .idea/
