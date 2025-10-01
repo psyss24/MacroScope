@@ -12,6 +12,10 @@ frontend/manifest.json
 # Duplicate/old directories to be cleaned up
 frontend/frontend/
 
+# Old static data and build artifacts (should only be in build/)
+frontend/data/
+frontend/static/
+
 # Dependencies
 node_modules/
 frontend/node_modules/
