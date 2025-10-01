@@ -20,6 +20,9 @@ echo "🔧 Copying build to docs folder..."
 rm -rf ../docs
 cp -r build ../docs
 
+echo "🔧 Copying 404.html for SPA routing..."
+cp public/404.html ../docs/404.html
+
 echo "📝 Updating index.html for GitHub Pages..."
 # Find the generated JS and CSS filenames
 JS_FILE=$(find ../docs/static/js -name "main.*.js" | head -1 | xargs basename)
@@ -42,7 +45,21 @@ sed -i '' 's|href="/manifest.json|href="manifest.json|g' ../docs/index.html
 sed -i '' 's|src="/MacroScope/static/|src="static/|g' ../docs/index.html
 sed -i '' 's|href="/MacroScope/static/|href="static/|g' ../docs/index.html
 
-echo "📁 Creating .nojekyll file..."
+echo "� Updating 404.html paths for production..."
+# Update 404.html to use the built static files
+if [ -f "../docs/404.html" ]; then
+    # Find the generated JS and CSS filenames from index.html
+    JS_FILE=$(grep -o 'static/js/main\.[a-zA-Z0-9]*\.js' ../docs/index.html | head -1)
+    CSS_FILE=$(grep -o 'static/css/main\.[a-zA-Z0-9]*\.css' ../docs/index.html | head -1)
+    
+    if [ -n "$JS_FILE" ] && [ -n "$CSS_FILE" ]; then
+        echo "Adding built assets to 404.html..."
+        # Insert CSS and JS links before closing head tag
+        sed -i '' "s|</head>|    <link rel=\"stylesheet\" href=\"$CSS_FILE\">\n    <script defer src=\"$JS_FILE\"></script>\n</head>|" ../docs/404.html
+    fi
+fi
+
+echo "�📁 Creating .nojekyll file..."
 touch ../docs/.nojekyll
 
 echo "🚀 Committing and pushing to GitHub..."

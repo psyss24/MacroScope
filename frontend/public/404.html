@@ -14,32 +14,47 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Favicon -->
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
     
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="apple-touch-icon" href="logo192.png" />
     
     <!-- Manifest -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="manifest" href="manifest.json" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://psyss24.github.io/projects/macroscope/">
+    <meta property="og:url" content="https://saadsaqib.dev/MacroScope/">
     <meta property="og:title" content="MacroScope - Financial Analysis Platform">
     <meta property="og:description" content="Comprehensive financial analysis platform with real-time market data and interactive visualisations">
-    <meta property="og:image" content="https://psyss24.github.io/projects/macroscope/preview.png">
+    <meta property="og:image" content="https://saadsaqib.dev/MacroScope/preview.png">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://psyss24.github.io/projects/macroscope/">
+    <meta property="twitter:url" content="https://saadsaqib.dev/MacroScope/">
     <meta property="twitter:title" content="MacroScope - Financial Analysis Platform">
     <meta property="twitter:description" content="Comprehensive financial analysis platform with real-time market data and interactive visualizations">
-    <meta property="twitter:image" content="https://psyss24.github.io/projects/macroscope/preview.png">
+    <meta property="twitter:image" content="https://saadsaqib.dev/MacroScope/preview.png">
+    
+    <!-- SPA 404 Handler Script -->
+    <script>
+        // Store the current path for React Router to handle
+        sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
+        // Redirect to index.html
+        location.replace('/MacroScope/');
+    </script>
 </head>
 <body>
     <noscript>
         You need to enable JavaScript to run this application.
     </noscript>
-    <div id="root"></div>
+    <div id="root">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Inter, sans-serif;">
+            <div style="text-align: center;">
+                <div style="font-size: 18px; margin-bottom: 10px;">Redirecting...</div>
+                <div style="font-size: 14px; color: #666;">Loading MacroScope</div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

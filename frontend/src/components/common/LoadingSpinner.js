@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './LoadingSpinner.module.css';
 
-// Original LoadingSpinner component for other pages
+
 const LoadingSpinner = ({ isLoading, message = 'Loading...' }) => {
   if (!isLoading) return null;
 
