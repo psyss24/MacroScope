@@ -1,6 +1,5 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Plot from 'react-plotly.js';
-import { ThemeContext } from '../../context/ThemeContext';
 import styles from './Charts.module.css';
 
 /**
@@ -27,8 +26,8 @@ const DashboardChart = (props) => {
     enableModeToggle = false,
     rawData = null, // [{ x, y, name, color? }]
     initialMode = 'normalised',
+    preserveGaps = false,
   } = props;
-  const { darkMode } = useContext(ThemeContext);
   const [showBaseline, setShowBaseline] = useState(false);
   const [hoveredX, setHoveredX] = useState(null);
   const [mode, setMode] = useState(initialMode);
@@ -45,7 +44,8 @@ const DashboardChart = (props) => {
     return xArr[Math.max(0, Math.min(xArr.length - 1, idx))];
   }
 
-  // Helper to normalise a y array to start at 100, forward-filling missing/nulls after the first valid value
+  // Helper to normalise a y array to start at 100.
+  // When preserveGaps=true, missing periods remain null (no interpolation).
   function normaliseY(y) {
     if (!y || y.length === 0) return [];
     // Find the first non-null, finite value (including negative values)
@@ -59,8 +59,7 @@ const DashboardChart = (props) => {
     return y.map((v, i) => {
       if (i < firstIdx) return null;
       if (v == null || !isFinite(v)) {
-        // Forward-fill after first valid value
-        return lastValid;
+        return preserveGaps ? null : lastValid;
       }
       if (i === firstIdx) {
         lastValid = 100;
@@ -75,9 +74,14 @@ const DashboardChart = (props) => {
     });
   }
 
-  // Helper to forward-fill missing/null values in y arrays (except at the start)
+  // Helper for raw mode.
+  // By default we forward-fill gaps for smoother trend lines, but for sparse
+  // datasets (like bonds with known outages) we can preserve true gaps.
   function forwardFillY(y) {
     if (!y || y.length === 0) return [];
+    if (preserveGaps) {
+      return y.map(v => (v == null || !isFinite(v) ? null : v));
+    }
     let lastValid = null;
     return y.map((v, i) => {
       if (v == null || !isFinite(v)) {
@@ -330,16 +334,25 @@ const DashboardChart = (props) => {
       {chartsToRender.length > 0 ? (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32, width: '100%' }}>
           {chartsToRender.map((chart, i) => {
+            const chartData = Array.isArray(chart?.data) ? chart.data : [];
+            if (chartData.length === 0) {
+              return (
+                <div key={i} style={{ flex: 1, minWidth: 0, width: '100%' }}>
+                  <div className={styles.noData}>No chart data available</div>
+                </div>
+              );
+            }
+
             // Determine if this is a dual-axis chart
             const isDualAxis = !!chart.layout?.yaxis2;
             // Only show baseline trace and label in normalised mode
             const showBaselineTrace = showBaseline && mode === 'normalised';
             let plotData = [];
             // Opacity reduction after vertical line should apply in all modes
-            if (showBaseline && hoveredX && chart.data[0] && Array.isArray(chart.data[0].x)) {
-              const xArr = xSeries || chart.data[0].x;
+            if (showBaseline && hoveredX && chartData[0] && Array.isArray(chartData[0].x)) {
+              const xArr = xSeries || chartData[0].x;
               const hoveredIdx = xArr ? xArr.findIndex(x => x === hoveredX) : -1;
-              plotData = chart.data.flatMap((series, sIdx) => {
+              plotData = chartData.flatMap((series, sIdx) => {
                 if (hoveredIdx === -1) {
                   // No hover, show as normal
                   return [{ ...series }];
@@ -372,10 +385,10 @@ const DashboardChart = (props) => {
                 return [traceBefore, traceAfter];
               });
               // Add baseline trace if needed...
-              if (showBaselineTrace && chart.data[0] && Array.isArray(chart.data[0].x)) {
+              if (showBaselineTrace && chartData[0] && Array.isArray(chartData[0].x)) {
                 plotData.push({
-                  x: chart.data[0].x,
-                  y: chart.data[0].x.map(() => 100),
+                  x: chartData[0].x,
+                  y: chartData[0].x.map(() => 100),
                   type: 'scatter',
                   mode: 'lines',
                   line: {
@@ -385,16 +398,16 @@ const DashboardChart = (props) => {
                   },
                   hoverinfo: 'skip',
                   showlegend: false,
-                  yaxis: chart.data[0].yaxis || 'y1',
+                  yaxis: chartData[0].yaxis || 'y1',
                 });
               }
             } else {
-              plotData = [...chart.data];
+              plotData = [...chartData];
               // Add baseline trace if needed...
-              if (showBaselineTrace && chart.data[0] && Array.isArray(chart.data[0].x)) {
+              if (showBaselineTrace && chartData[0] && Array.isArray(chartData[0].x)) {
                 plotData.push({
-                  x: chart.data[0].x,
-                  y: chart.data[0].x.map(() => 100),
+                  x: chartData[0].x,
+                  y: chartData[0].x.map(() => 100),
                   type: 'scatter',
                   mode: 'lines',
                   line: {
@@ -404,7 +417,7 @@ const DashboardChart = (props) => {
                   },
                   hoverinfo: 'skip',
                   showlegend: false,
-                  yaxis: chart.data[0].yaxis || 'y1',
+                  yaxis: chartData[0].yaxis || 'y1',
                 });
               }
             }
@@ -413,7 +426,7 @@ const DashboardChart = (props) => {
             let baselineLabelX = null;
             let baselineLabelYAnchor = 'bottom';
             let baselineLabelAnnotation = null;
-            if (showBaseline && chart.data[0] && Array.isArray(chart.data[0].x) && smartBaselineLabel) {
+            if (showBaseline && chartData[0] && Array.isArray(chartData[0].x) && smartBaselineLabel) {
               // Place baseline label in the padding area to the right of the chart
               baselineLabelAnnotation = {
                 xref: 'paper',
@@ -434,7 +447,7 @@ const DashboardChart = (props) => {
             }
             // Add vertical hover line matching chart title color, thin, subtle, and finely dashed
             let verticalLineShape = null;
-            if (showBaseline && hoveredX && chart.data[0].x.some(x => String(x) === String(hoveredX))) {
+            if (showBaseline && hoveredX && chartData[0].x.some(x => String(x) === String(hoveredX))) {
               // Get the accent color from the CSS variable, fallback to #2196f3 if not set
               let accentColor = '#2196f3';
               if (typeof window !== 'undefined' && window.getComputedStyle) {
@@ -460,7 +473,7 @@ const DashboardChart = (props) => {
             // Remove the glow overlay for a minimal look
             let verticalLineGlow = null;
             // Only add the baseline trace at y=100 when showBaseline is true
-            if (showBaseline && chart.data[0] && Array.isArray(chart.data[0].x)) {
+            if (showBaseline && chartData[0] && Array.isArray(chartData[0].x)) {
               // plotData = [
               //   ...chart.data,
               //   {
@@ -484,7 +497,7 @@ const DashboardChart = (props) => {
               }
             }
             // Compose layout: always use minimal, gold-style layout for all charts
-            let xArr = xSeries || chart.data[0].x;
+            let xArr = xSeries || chartData[0].x;
             const { monthTicks, monthLabels } = getMonthTicksAndLabels(xArr, plotAreaRef.current?.offsetWidth || 800);
             const layout = {
               ...chart.layout,
@@ -585,7 +598,7 @@ const DashboardChart = (props) => {
                   onMouseMove={e => {
                     if (!showBaseline || !showPricesOnHover) return;
                     const rect = e.currentTarget.getBoundingClientRect();
-                    const xArr = xSeries || chart.data[0].x;
+                    const xArr = xSeries || chartData[0].x;
                     // Find the first and last valid data indices
                     const firstValidIdx = xArr.findIndex(x => x != null);
                     const lastValidIdx = (() => { let idx = xArr.length - 1; while (idx >= 0 && xArr[idx] == null) idx--; return idx; })();

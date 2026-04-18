@@ -345,6 +345,7 @@ const BondsRiskPage = () => {
             smartBaselineLabel={true}
             showPricesOnHover={true}
             enableModeToggle={true}
+            preserveGaps={true}
             rawData={buildChartData(selectedRegion.symbols)}
             charts={[{
               layout: {
