@@ -2,13 +2,15 @@
  * Configuration file for environment-specific settings
  */
 
+const envApiBaseUrl = (process.env.REACT_APP_API_BASE_URL || '').trim();
+
 const config = {
   development: {
     apiBaseUrl: 'http://localhost:8000/api',
     environment: 'development'
   },
   production: {
-    apiBaseUrl: 'https://macroscope-00-production.up.railway.app/api',
+    apiBaseUrl: envApiBaseUrl || 'https://api.saadsaqib.dev/api',
     environment: 'production'
   }
 };
