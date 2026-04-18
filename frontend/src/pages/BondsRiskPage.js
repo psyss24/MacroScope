@@ -109,30 +109,31 @@ const BondsRiskPage = () => {
         BOND_SYMBOLS.forEach(({ symbol, name }, i) => {
           const arr = results[i];
           if (Array.isArray(arr) && arr.length > 0) {
-            // Transform array of {x, y} objects into {x: [...], y: [...], name: ...} format
-            const xValues = arr.map(item => {
-              // Convert date format from "Sep 30, 2024" to ISO format
+            // Transform array of {x, y} objects into aligned ISO date and numeric yield arrays.
+            const points = arr.map(item => {
               try {
                 const date = new Date(item.x);
-                // Check if date is valid
                 if (isNaN(date.getTime())) {
                   console.warn(`Invalid date for ${symbol}: ${item.x}`);
                   return null;
                 }
-                return date.toISOString().split('T')[0]; // Convert to YYYY-MM-DD format
+                const yieldValue = Number(item.y);
+                if (!Number.isFinite(yieldValue)) {
+                  return null;
+                }
+                return {
+                  x: date.toISOString().split('T')[0],
+                  y: yieldValue,
+                };
               } catch (e) {
-                console.warn(`Could not parse date for ${symbol}: ${item.x}`, e);
+                console.warn(`Could not parse data point for ${symbol}:`, item, e);
                 return null;
               }
-            }).filter(date => date !== null); // Remove invalid dates
-            
-            const yValues = arr.map((item, index) => {
-              // Only include yield if we have a valid date
-              return xValues[index] !== null ? item.y : null;
-            }).filter(yieldValue => yieldValue !== null); // Remove yields for invalid dates
-            
-            // Ensure x and y arrays have same length
-            const minLength = Math.min(xValues.length, yValues.length);
+            }).filter(Boolean);
+
+            const xValues = points.map(point => point.x);
+            const yValues = points.map(point => point.y);
+            const minLength = points.length;
             histories[symbol] = { 
               x: xValues.slice(0, minLength), 
               y: yValues.slice(0, minLength), 
@@ -166,7 +167,8 @@ const BondsRiskPage = () => {
   // Generate 6 months of dates for chart alignment
   const today = new Date();
   const start = new Date(today);
-  start.setMonth(today.getMonth() - 6);
+  // Use 12 months to better accommodate sparse sovereign yield histories.
+  start.setMonth(today.getMonth() - 12);
   const xSeries = [];
   for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
     xSeries.push(d.toISOString().split('T')[0]);
@@ -205,7 +207,7 @@ const BondsRiskPage = () => {
         return yieldValue != null ? yieldValue : null;
       });
       
-      // Check if we have enough data points to show the line
+      // Keep traces only when there is enough data to draw a line.
       const validDataPoints = yValues.filter(y => y != null).length;
       if (validDataPoints < 2) {
         console.warn(`Insufficient data for ${symbol}: only ${validDataPoints} valid points`);
@@ -332,6 +334,10 @@ const BondsRiskPage = () => {
             No bond time series data available for {selectedRegion?.label}.
             <br />
             <small>Debug info: selectedBondData length: {selectedBondData.length}</small>
+          </div>
+        ) : buildChartData(selectedRegion.symbols).length === 0 ? (
+          <div className={styles.error}>
+            Not enough time-series points to render a line chart for {selectedRegion?.label}.
           </div>
         ) : (
           <DashboardChart
