@@ -36,12 +36,23 @@
     <meta property="twitter:description" content="Comprehensive financial analysis platform with real-time market data and interactive visualizations">
     <meta property="twitter:image" content="https://saadsaqib.dev/MacroScope/preview.png">
     
+    <meta http-equiv="refresh" content="0; url=/MacroScope/" />
+
     <!-- SPA 404 Handler Script -->
     <script>
-        // Store the current path for React Router to handle
-        sessionStorage.setItem('redirectPath', location.pathname + location.search + location.hash);
-        // Redirect to index.html
-        location.replace('/MacroScope/');
+        (function () {
+            var target = '/MacroScope/';
+            var redirectPath = location.pathname + location.search + location.hash;
+
+            // Some browsers/privacy modes may block sessionStorage access.
+            try {
+                sessionStorage.setItem('redirectPath', redirectPath);
+            } catch (e) {
+                // Ignore and still redirect.
+            }
+
+            location.replace(target);
+        })();
     </script>
 </head>
 <body>
