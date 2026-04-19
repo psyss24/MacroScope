@@ -50,6 +50,8 @@ const getSentimentColorClass = (sentiment) => {
 };
 
 const BondsRiskPage = () => {
+  const SHORT_GAP_FILL_DAYS = 3;
+
   const [marketData, setMarketData] = useState(null);
   const [sentimentData, setSentimentData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -176,6 +178,35 @@ const BondsRiskPage = () => {
 
   // Build chart data for selected region
   const buildChartData = (regionSymbols) => {
+    const fillShortNullRuns = (values, maxRunLength) => {
+      const out = [...values];
+      let i = 0;
+      while (i < out.length) {
+        if (out[i] != null) {
+          i += 1;
+          continue;
+        }
+
+        const start = i;
+        while (i < out.length && out[i] == null) {
+          i += 1;
+        }
+        const end = i - 1;
+        const runLength = end - start + 1;
+        const left = start - 1 >= 0 ? out[start - 1] : null;
+        const right = i < out.length ? out[i] : null;
+
+        // Only bridge short internal gaps; preserve long outages and edge gaps.
+        if (runLength <= maxRunLength && left != null && right != null) {
+          for (let j = start; j <= end; j += 1) {
+            const weight = (j - start + 1) / (runLength + 1);
+            out[j] = left + (right - left) * weight;
+          }
+        }
+      }
+      return out;
+    };
+
     return regionSymbols.map((symbol, i) => {
       const bondData = bondHistories[symbol];
       if (!bondData || !bondData.x || !bondData.y) return null;
@@ -206,9 +237,11 @@ const BondsRiskPage = () => {
         // Return null for missing data points to create gaps in the line
         return yieldValue != null ? yieldValue : null;
       });
+
+      const chartYValues = fillShortNullRuns(yValues, SHORT_GAP_FILL_DAYS);
       
       // Keep traces only when there is enough data to draw a line.
-      const validDataPoints = yValues.filter(y => y != null).length;
+      const validDataPoints = chartYValues.filter(y => y != null).length;
       if (validDataPoints < 2) {
         console.warn(`Insufficient data for ${symbol}: only ${validDataPoints} valid points`);
         return null;
@@ -218,17 +251,17 @@ const BondsRiskPage = () => {
       if (symbol === 'GB5Y') {
         console.log('UK 5Y Chart Data:', {
           xSeriesLength: xSeries.length,
-          yValuesLength: yValues.length,
+          yValuesLength: chartYValues.length,
           validDataPoints,
-          firstValidIndex: yValues.findIndex(y => y != null),
-          lastValidIndex: yValues.lastIndexOf(yValues.find(y => y != null)),
-          sampleYValues: yValues.filter(y => y != null).slice(0, 5)
+          firstValidIndex: chartYValues.findIndex(y => y != null),
+          lastValidIndex: chartYValues.lastIndexOf(chartYValues.find(y => y != null)),
+          sampleYValues: chartYValues.filter(y => y != null).slice(0, 5)
         });
       }
       
       return {
         x: xSeries,
-        y: yValues,
+        y: chartYValues,
         name: `${selectedRegion.label} ${names[i]}`,
         type: 'scatter',
         mode: 'lines',
