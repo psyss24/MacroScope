@@ -6,6 +6,8 @@ import UnifiedCard from '../components/common/UnifiedCard';
 import CardSlider from '../components/common/CardSlider';
 import DashboardChart from '../components/charts/DashboardChart';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import useIsMobile from '../hooks/useIsMobile';
+import MarketsMobilePage from './mobile/MarketsMobilePage';
 
 // Helper function to generate dates for charts
 const generateDates = (days) => {
@@ -36,6 +38,10 @@ const getPriceClass = (changePercent) => {
 };
 
 const MarketsPage = () => {
+  const isMobile = useIsMobile();
+  const mobileMarketsEnabled = process.env.REACT_APP_ENABLE_MOBILE_MARKETS === 'true';
+  const shouldRenderMobile = isMobile && mobileMarketsEnabled;
+
   const [chartHovered, setChartHovered] = useState(false);
   const [marketData, setMarketData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -44,6 +50,8 @@ const MarketsPage = () => {
   const [selectedMarketChart, setSelectedMarketChart] = useState('us'); // Default to US Market Performance
 
   useEffect(() => {
+    if (shouldRenderMobile) return undefined;
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -60,7 +68,12 @@ const MarketsPage = () => {
     };
 
     fetchData();
-  }, []);
+    return undefined;
+  }, [shouldRenderMobile]);
+
+  if (shouldRenderMobile) {
+    return <MarketsMobilePage />;
+  }
 
   if (loading) return <LoadingSpinner isLoading={true} message="Loading market data..." />;
 

@@ -1,0 +1,11 @@
+.error {
+  margin: 8px 0;
+  color: var(--risk-color);
+  font-size: 0.9rem;
+}
+
+.stickyGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
