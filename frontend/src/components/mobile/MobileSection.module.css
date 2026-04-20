@@ -1,0 +1,25 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.heading {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.description {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

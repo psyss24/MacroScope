@@ -1,0 +1,28 @@
+.shell {
+  width: 100%;
+  margin: 0;
+  padding: 12px;
+}
+
+.header {
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  color: var(--muted-text);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

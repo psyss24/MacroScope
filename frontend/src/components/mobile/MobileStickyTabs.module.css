@@ -1,0 +1,36 @@
+.tabsWrap {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--primary-bg);
+  padding: 6px 0 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #111;
+  color: var(--text-color);
+  white-space: nowrap;
+  font-size: 0.88rem;
+  line-height: 1;
+  min-height: 36px;
+}
+
+.tabActive {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
