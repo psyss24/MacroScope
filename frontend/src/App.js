@@ -8,7 +8,8 @@ import CommoditiesPage from './pages/CommoditiesPage';
 import BondsRiskPage from './pages/BondsRiskPage';
 import StocksPage from './pages/StocksPage';
 import StockDetailPage from './components/stocks/StockDetailPage';
-import { ThemeProvider } from './context/ThemeContext';
+import HomeMobilePage from './pages/mobile/HomeMobilePage';
+import useIsMobile from './hooks/useIsMobile';
 import './styles/global.css';
 
 // Component to handle 404 redirects
@@ -34,27 +35,29 @@ function RedirectHandler() {
 }
 
 function App() {
+  const isMobile = useIsMobile();
+  const mobileHomeEnabled = process.env.REACT_APP_ENABLE_MOBILE_HOME !== 'false';
+  const shouldRenderMobileHome = isMobile && mobileHomeEnabled;
+
   return (
-    <ThemeProvider>
-      <Router basename="/MacroScope">
-        <div className="App">
-          <RedirectHandler />
-          <Header />
-          <main>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/markets" element={<MarketsPage />} />
-              <Route path="/macro" element={<MacroPage />} />
-              <Route path="/commodities" element={<CommoditiesPage />} />
-              <Route path="/bonds" element={<BondsRiskPage />} />
-              <Route path="/risk" element={<BondsRiskPage />} />
-              <Route path="/stocks" element={<StocksPage />} />
-              <Route path="/stocks/:symbol" element={<StockDetailPage />} />
-            </Routes>
-          </main>
-        </div>
-      </Router>
-    </ThemeProvider>
+    <Router basename="/MacroScope">
+      <div className="App">
+        <RedirectHandler />
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={shouldRenderMobileHome ? <HomeMobilePage /> : <Dashboard />} />
+            <Route path="/markets" element={<MarketsPage />} />
+            <Route path="/macro" element={<MacroPage />} />
+            <Route path="/commodities" element={<CommoditiesPage />} />
+            <Route path="/bonds" element={<BondsRiskPage />} />
+            <Route path="/risk" element={<BondsRiskPage />} />
+            <Route path="/stocks" element={<StocksPage />} />
+            <Route path="/stocks/:symbol" element={<StockDetailPage />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 
