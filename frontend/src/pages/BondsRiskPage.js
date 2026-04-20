@@ -6,6 +6,8 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import UnifiedCard from '../components/common/UnifiedCard';
 import CardSlider from '../components/common/CardSlider';
 import DashboardChart from '../components/charts/DashboardChart';
+import useIsMobile from '../hooks/useIsMobile';
+import BondsRiskMobilePage from './mobile/BondsRiskMobilePage';
 
 const BOND_SYMBOLS = [
   { symbol: 'US2Y', name: 'US 2Y Treasury' },
@@ -50,6 +52,10 @@ const getSentimentColorClass = (sentiment) => {
 };
 
 const BondsRiskPage = () => {
+  const isMobile = useIsMobile();
+  const mobileBondsEnabled = process.env.REACT_APP_ENABLE_MOBILE_BONDS === 'true';
+  const shouldRenderMobile = isMobile && mobileBondsEnabled;
+
   const SHORT_GAP_FILL_DAYS = 3;
 
   const [marketData, setMarketData] = useState(null);
@@ -61,6 +67,8 @@ const BondsRiskPage = () => {
   const [selectedBondRegion, setSelectedBondRegion] = useState('us'); // Default to US
 
   useEffect(() => {
+    if (shouldRenderMobile) return undefined;
+
     const controller = new AbortController();
     const signal = controller.signal;
     const fetchData = async () => {
@@ -84,10 +92,12 @@ const BondsRiskPage = () => {
     };
     fetchData();
     return () => { controller.abort(); };
-  }, []);
+  }, [shouldRenderMobile]);
 
   // Fetch bond histories for US, Germany, UK (2Y, 5Y, 10Y)
   useEffect(() => {
+    if (shouldRenderMobile) return undefined;
+
     let isMounted = true;
     setBondHistoryLoading(true);
     const fetchBondHistories = async () => {
@@ -158,7 +168,11 @@ const BondsRiskPage = () => {
     };
     fetchBondHistories();
     return () => { isMounted = false; };
-  }, []);
+  }, [shouldRenderMobile]);
+
+  if (shouldRenderMobile) {
+    return <BondsRiskMobilePage />;
+  }
 
   if (loading || bondHistoryLoading) return <LoadingSpinner isLoading={true} message={loading ? "Loading bonds and risk data..." : "Loading bond time series..."} />;
 
