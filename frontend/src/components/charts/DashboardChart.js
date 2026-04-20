@@ -144,8 +144,8 @@ const DashboardChart = (props) => {
         alignItems: 'center',
         zIndex: 1,
         marginLeft: 12,
-        opacity: showBaseline ? 1 : 0,
-        pointerEvents: showBaseline ? 'auto' : 'none',
+        opacity: 1,
+        pointerEvents: 'auto',
       }}
       aria-label="Toggle chart mode"
       tabIndex={0}

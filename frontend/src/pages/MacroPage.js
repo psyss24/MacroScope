@@ -163,14 +163,15 @@ const MacroPage = () => {
           {error}
         </div>
       )}
-      <div className={styles.regionTabs}>
-        {MACRO_REGIONS.map(region => (
+      <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
+        {MACRO_REGIONS.map((region) => (
           <UnifiedCard
             key={region.key}
-            className={`${styles.regionTab} ${selectedRegion === region.key ? styles.regionTabSelected : ''}`}
+            className={selectedRegion === region.key ? 'selectedCard buttonCard' : 'buttonCard'}
             onClick={() => setSelectedRegion(region.key)}
+            style={{ cursor: 'pointer', minWidth: 90, textAlign: 'center', fontWeight: 600 }}
           >
-            <span className={styles.regionTabLabel}>{region.label}</span>
+            {region.label}
           </UnifiedCard>
         ))}
       </div>

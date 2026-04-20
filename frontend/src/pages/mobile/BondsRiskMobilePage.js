@@ -55,7 +55,6 @@ const formatChange = (value) => {
 
 export default function BondsRiskMobilePage() {
   const [selectedRegion, setSelectedRegion] = useState('us');
-  const [marketData, setMarketData] = useState(null);
   const [bondHistories, setBondHistories] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -69,8 +68,7 @@ export default function BondsRiskMobilePage() {
         setLoading(true);
         setError(null);
 
-        const [marketResponse, ...histories] = await Promise.all([
-          apiService.getMarketData('bonds', false, { signal: controller.signal }),
+        const histories = await Promise.all([
           ...REGION_CONFIG.flatMap((region) =>
             region.symbols.map((symbol) =>
               apiService.getBondHistory(symbol, { signal: controller.signal }).catch(() => [])
@@ -80,13 +78,40 @@ export default function BondsRiskMobilePage() {
 
         if (!mounted) return;
 
-        setMarketData(marketResponse);
-
         const allSymbols = REGION_CONFIG.flatMap((region) => region.symbols);
         const historyMap = {};
+
+        const toIsoDate = (date) => {
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const day = String(date.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
+        };
+
+        const normaliseHistory = (points) => {
+          if (!Array.isArray(points)) return [];
+
+          return points
+            .map((point) => {
+              const parsedDate = new Date(point?.x);
+              const y = Number(point?.y);
+
+              if (Number.isNaN(parsedDate.getTime()) || !Number.isFinite(y)) {
+                return null;
+              }
+
+              return {
+                x: toIsoDate(parsedDate),
+                y,
+              };
+            })
+            .filter(Boolean)
+            .sort((a, b) => a.x.localeCompare(b.x));
+        };
+
         allSymbols.forEach((symbol, idx) => {
           const points = Array.isArray(histories[idx]) ? histories[idx] : [];
-          historyMap[symbol] = points;
+          historyMap[symbol] = normaliseHistory(points);
         });
 
         setBondHistories(historyMap);
@@ -151,18 +176,24 @@ export default function BondsRiskMobilePage() {
   }, [activeRegion, bondHistories]);
 
   const snapshotCards = useMemo(() => {
-    const bondsMap = marketData?.bonds || {};
-    return activeRegion.keys.map((name, idx) => {
-      const bond = bondsMap[name] || {};
+    return activeRegion.symbols.map((symbol, idx) => {
+      const points = Array.isArray(bondHistories[symbol]) ? bondHistories[symbol] : [];
+      const latest = points.length > 0 ? points[points.length - 1].y : null;
+      const previous = points.length > 1 ? points[points.length - 2].y : null;
+      const changePercent =
+        Number.isFinite(latest) && Number.isFinite(previous) && previous !== 0
+          ? ((latest - previous) / Math.abs(previous)) * 100
+          : null;
+
       return {
-        key: name,
+        key: symbol,
         label: idx === 0 ? '2Y' : idx === 1 ? '5Y' : '10Y',
-        valueText: formatYield(bond.price),
-        changeText: formatChange(bond.changePercent),
-        changePercent: bond.changePercent,
+        valueText: formatYield(latest),
+        changeText: formatChange(changePercent),
+        changePercent,
       };
     });
-  }, [activeRegion, marketData]);
+  }, [activeRegion, bondHistories]);
 
   if (loading) {
     return <LoadingSpinner isLoading={true} message="Loading mobile bonds view..." />;
