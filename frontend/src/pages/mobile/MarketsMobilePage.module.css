@@ -9,3 +9,7 @@
   flex-direction: column;
   gap: 8px;
 }
+
+.thematicTabsWrap {
+  margin-bottom: 10px;
+}

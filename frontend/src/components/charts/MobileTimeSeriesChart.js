@@ -138,6 +138,8 @@ export default function MobileTimeSeriesChart({
     (event) => {
       if (!aligned.xAxis.length) return;
 
+      event.preventDefault();
+
       const touch = event.touches?.[0];
       if (!touch) return;
 
@@ -157,10 +159,10 @@ export default function MobileTimeSeriesChart({
       const touch = event.touches?.[0];
       if (!touch) return;
 
+      event.preventDefault();
       pendingTouchXRef.current = touch.clientX;
 
       if (isTracking) {
-        event.preventDefault();
         updateTrackedIndex(touch.clientX);
       }
     },
@@ -325,6 +327,8 @@ export default function MobileTimeSeriesChart({
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onTouchCancel={handleTouchEnd}
+          onContextMenu={(event) => event.preventDefault()}
+          onSelectStart={(event) => event.preventDefault()}
         />
 
         {trackedDate ? (

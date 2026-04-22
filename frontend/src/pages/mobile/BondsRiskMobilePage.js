@@ -94,9 +94,27 @@ export default function BondsRiskMobilePage() {
           return points
             .map((point) => {
               const parsedDate = new Date(point?.x);
-              const y = Number(point?.y);
+              const rawValue = point?.y;
+
+              if (rawValue == null) {
+                return null;
+              }
+
+              if (typeof rawValue === 'string') {
+                const trimmed = rawValue.trim();
+                if (!trimmed || trimmed.toLowerCase() === 'null' || trimmed === '-') {
+                  return null;
+                }
+              }
+
+              const y = Number(rawValue);
 
               if (Number.isNaN(parsedDate.getTime()) || !Number.isFinite(y)) {
+                return null;
+              }
+
+              // Bond yields should not include placeholder 0 values from missing records.
+              if (Math.abs(y) < 1e-9) {
                 return null;
               }
 

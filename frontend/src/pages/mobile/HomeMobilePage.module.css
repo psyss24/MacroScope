@@ -1,142 +1,73 @@
-.error {
-  margin: 4px 0 10px;
-  color: var(--risk-color);
-  font-size: 0.86rem;
-}
-
 .heroCard {
-  border: 1px solid rgba(112, 153, 255, 0.24);
+  background: #111;
   border-radius: 16px;
-  padding: 14px;
-  background:
-    radial-gradient(circle at 8% 12%, rgba(98, 152, 255, 0.36), transparent 48%),
-    radial-gradient(circle at 92% 86%, rgba(51, 210, 176, 0.28), transparent 45%),
-    linear-gradient(138deg, rgba(15, 21, 31, 0.92), rgba(10, 14, 22, 0.95));
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.36);
-}
-
-.heroKicker {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #a7bddf;
+  padding: 22px 14px 18px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .heroTitle {
-  margin: 6px 0 0;
-  font-size: 1.24rem;
-  line-height: 1.2;
-}
-
-.heroMeta {
-  margin-top: 8px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-size: 0.78rem;
-  color: var(--muted-text);
-}
-
-.metricGrid {
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.metricCard {
-  border-color: rgba(149, 177, 229, 0.18);
-  background: rgba(10, 12, 16, 0.78);
-}
-
-.metricLabel {
   margin: 0;
-  font-size: 0.74rem;
-  color: #afbdd1;
-}
-
-.metricValue {
-  margin: 4px 0 0;
-  font-size: 1.02rem;
+  font-size: 2rem;
   font-weight: 700;
-  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--accent-color);
 }
 
-.metricChange {
-  margin: 5px 0 0;
-  font-size: 0.78rem;
-  color: var(--muted-text);
-}
-
-.navGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.navLink {
-  text-decoration: none;
-  color: inherit;
-}
-
-.navCard {
-  min-height: 88px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: linear-gradient(165deg, rgba(23, 30, 44, 0.88), rgba(11, 15, 22, 0.95));
-}
-
-.navTitle {
-  margin: 0;
+.heroSubtitle {
+  margin: 6px 0 0;
   font-size: 0.98rem;
-  font-weight: 650;
-}
-
-.navSubtitle {
-  margin: 6px 0 0;
-  font-size: 0.78rem;
+  font-weight: 400;
   color: var(--muted-text);
-  line-height: 1.25;
 }
 
-.pulseGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+.heroDescription {
+  margin: 12px auto 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-color);
+  max-width: 32ch;
 }
 
-.pulseCard {
-  background: rgba(9, 12, 18, 0.92);
+.overviewWrap {
+  margin-top: 2px;
 }
 
-.pulseLabel {
-  margin: 0;
-  font-size: 0.72rem;
-  color: #9ca7b8;
+.overviewWrap :global(.overviewGrid) {
+  gap: 10px;
+  margin-bottom: 0;
 }
 
-.pulseValue {
-  margin: 6px 0 0;
-  font-size: 0.96rem;
-  font-weight: 700;
+.overviewWrap :global(.card) {
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.overviewWrap :global(.cardTitle h3) {
+  font-size: 1.04rem;
+}
+
+.overviewWrap :global(.cardTitle p) {
+  font-size: 0.82rem;
+}
+
+.overviewWrap :global(.metricLabel) {
+  font-size: 0.78rem;
+}
+
+.overviewWrap :global(.value) {
+  font-size: 0.82rem;
 }
 
 .timestamp {
-  margin: 4px 0 0;
+  margin: 2px 2px 0;
   font-size: 0.77rem;
   color: var(--muted-text);
   text-align: right;
 }
 
 @media (max-width: 420px) {
-  .metricGrid,
-  .navGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .pulseGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .heroTitle {
+    font-size: 1.8rem;
   }
 }

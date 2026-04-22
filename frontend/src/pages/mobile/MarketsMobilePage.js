@@ -14,6 +14,13 @@ const MARKET_VIEWS = [
   { key: 'global', label: 'Global ETFs' },
 ];
 
+const THEMATIC_VIEWS = [
+  { key: 'tech', label: 'Tech & Innovation' },
+  { key: 'defensive', label: 'Defensive vs Speculative' },
+  { key: 'global', label: 'Global Markets' },
+  { key: 'biotech', label: 'Biotech & Healthcare' },
+];
+
 const US_SERIES_KEYS = [
   { source: 'indices', key: 'S&P 500', label: 'S&P 500', color: '#4a90e2' },
   { source: 'indices', key: 'NASDAQ', label: 'NASDAQ', color: '#00b894' },
@@ -27,6 +34,33 @@ const GLOBAL_SERIES_KEYS = [
 ];
 
 const SNAPSHOT_KEYS = ['S&P 500', 'NASDAQ', 'Dow Jones', 'VIX'];
+
+const THEMATIC_SERIES = {
+  tech: [
+    { key: 'Nasdaq ETF (QQQ)', label: 'QQQ', color: '#4a90e2' },
+    { key: 'Semiconductor ETF (SMH)', label: 'SMH', color: '#00b894' },
+    { key: 'ARK Innovation ETF (ARKK)', label: 'ARKK', color: '#f5a623' },
+    { key: 'Robotics & AI ETF (BOTZ)', label: 'BOTZ', color: '#e67e22' },
+  ],
+  defensive: [
+    { key: 'Consumer Staples ETF (XLP)', label: 'XLP', color: '#4a90e2' },
+    { key: 'Health Care ETF (XLV)', label: 'XLV', color: '#00b894' },
+    { key: 'ARK Innovation ETF (ARKK)', label: 'ARKK', color: '#f5a623' },
+    { key: 'Russell 2000 ETF (IWM)', label: 'IWM', color: '#e67e22' },
+  ],
+  global: [
+    { key: 'S&P 500 ETF (SPY)', label: 'SPY', color: '#4a90e2' },
+    { key: 'iShares MSCI Emerging Markets ETF (EEM)', label: 'EEM', color: '#00b894' },
+    { key: 'iShares MSCI Japan ETF (EWJ)', label: 'EWJ', color: '#f5a623' },
+    { key: 'iShares China Large-Cap ETF (FXI)', label: 'FXI', color: '#e67e22' },
+  ],
+  biotech: [
+    { key: 'iShares Nasdaq Biotechnology ETF (IBB)', label: 'IBB', color: '#4a90e2' },
+    { key: 'SPDR S&P Biotech ETF (XBI)', label: 'XBI', color: '#00b894' },
+    { key: 'Health Care ETF (XLV)', label: 'XLV', color: '#f5a623' },
+    { key: 'Invesco Dynamic Biotechnology & Genome ETF (PBE)', label: 'PBE', color: '#e67e22' },
+  ],
+};
 
 const toIsoDate = (value) => {
   const date = new Date(value);
@@ -50,6 +84,7 @@ export default function MarketsMobilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedView, setSelectedView] = useState('us');
+  const [selectedThematicView, setSelectedThematicView] = useState('tech');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -118,6 +153,49 @@ export default function MarketsMobilePage() {
       .filter(Boolean);
   }, [marketData, seriesConfig]);
 
+  const thematicChartSeries = useMemo(() => {
+    if (!marketData) return [];
+
+    const thematicConfig = THEMATIC_SERIES[selectedThematicView] || [];
+    const datesSet = new Set();
+    const histories = thematicConfig.map((conf) => {
+      const source = marketData?.etfs?.[conf.key]?.history || [];
+      const history = Array.isArray(source) ? source : [];
+      history.forEach((point) => {
+        const iso = toIsoDate(point.date);
+        if (iso) datesSet.add(iso);
+      });
+      return { conf, history };
+    });
+
+    const xAxis = Array.from(datesSet).sort();
+    if (!xAxis.length) return [];
+
+    return histories
+      .map(({ conf, history }) => {
+        const byDate = new Map();
+        history.forEach((point) => {
+          const iso = toIsoDate(point.date);
+          const close = Number(point.close);
+          if (iso && Number.isFinite(close)) {
+            byDate.set(iso, close);
+          }
+        });
+
+        const y = xAxis.map((date) => (byDate.has(date) ? byDate.get(date) : null));
+        const validCount = y.filter((value) => value != null).length;
+        if (validCount < 2) return null;
+
+        return {
+          x: xAxis,
+          y,
+          name: conf.label,
+          color: conf.color,
+        };
+      })
+      .filter(Boolean);
+  }, [marketData, selectedThematicView]);
+
   const snapshotCards = useMemo(() => {
     const indices = marketData?.indices || {};
     return SNAPSHOT_KEYS.map((key) => {
@@ -160,6 +238,20 @@ export default function MarketsMobilePage() {
 
       <MobileSection title="Market Snapshot">
         <MobileMarketSnapshotCards cards={snapshotCards} />
+      </MobileSection>
+
+      <MobileSection title="Thematic ETF Charts">
+        <div className={styles.thematicTabsWrap}>
+          <MobileMarketViewTabs
+            views={THEMATIC_VIEWS}
+            activeView={selectedThematicView}
+            onViewChange={setSelectedThematicView}
+          />
+        </div>
+        <MobileMarketChartPanel
+          title={THEMATIC_VIEWS.find((view) => view.key === selectedThematicView)?.label || 'Thematic ETFs'}
+          series={thematicChartSeries}
+        />
       </MobileSection>
     </MobilePageShell>
   );
