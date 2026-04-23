@@ -2,10 +2,14 @@
     background: var(--secondary-bg);
     border-bottom: 1px solid var(--border-color);
     padding: var(--spacing-md) 0;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 3000;
     backdrop-filter: blur(10px);
+    transition: transform 80ms linear;
+    will-change: transform;
 }
 
 .headerContent {
@@ -49,6 +53,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
     color: #ffffff;
+}
+
+.nameLink {
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.nameLink:hover {
+    color: var(--accent-color);
 }
 
 .projectName {

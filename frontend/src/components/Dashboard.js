@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import OverviewCards from './OverviewCards';
-import MarketOverview from './MarketOverview';
-import MacroIndicators from './MacroIndicators';
-import TopStocks from './TopStocks';
-import Charts from './Charts';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
@@ -23,20 +19,6 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboard}>
       <div className="container">
-        {/* Hero Section */}
-        <section className={styles.heroCard}>
-          <div className={styles.heroContent}>
-            <h1 className={styles.title}>
-              MacroScope
-              <span className={styles.subtitle}>Financial Analysis Platform</span>
-            </h1>
-            <p className={styles.description}>
-              Comprehensive market analysis with real time data, macroeconomic indicators, 
-              and interactive visualisations. Track everything from individual stocks to 
-              global economic trends in one platform.
-            </p>
-          </div>
-        </section>
         {/* Overview Cards */}
         <section className={styles.overviewSection}>
           <OverviewCards key={`overview-${refreshKey}`} />

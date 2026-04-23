@@ -57,6 +57,7 @@
     --transition-normal: 0.3s ease-in-out;
     --transition-slow: 0.5s ease-in-out;
     --card-fade-mask-rgb: 17,17,17;
+    --app-header-height: 84px;
 }
 
 
@@ -81,6 +82,14 @@ body {
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    min-height: 100vh;
+}
+
+.App main {
+    padding-top: var(--app-header-height);
 }
 
 /* Typography */

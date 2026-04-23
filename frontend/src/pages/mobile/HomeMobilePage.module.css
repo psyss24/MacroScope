@@ -1,62 +1,140 @@
-.heroCard {
-  background: #111;
-  border-radius: 16px;
-  padding: 22px 14px 18px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.cardsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.heroTitle {
+.stateCard {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.compactCard {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.compactCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.compactCardHeader h3 {
   margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--accent-color);
+  font-size: 1rem;
+  line-height: 1.2;
+  color: #f6f6f6;
 }
 
-.heroSubtitle {
-  margin: 6px 0 0;
-  font-size: 0.98rem;
-  font-weight: 400;
+.compactCardHeader p {
+  margin: 4px 0 0;
+  font-size: 0.78rem;
   color: var(--muted-text);
 }
 
-.heroDescription {
-  margin: 12px auto 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
-  color: var(--text-color);
-  max-width: 32ch;
+.openPill {
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3px 9px;
+  font-size: 0.72rem;
+  color: #e8e8e8;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.overviewWrap {
-  margin-top: 2px;
+.metricsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.overviewWrap :global(.overviewGrid) {
-  gap: 10px;
-  margin-bottom: 0;
+.metricRow {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 8px;
 }
 
-.overviewWrap :global(.card) {
-  padding: 12px;
-  border-radius: 12px;
+.metricRow:first-child {
+  border-top: none;
+  padding-top: 0;
 }
 
-.overviewWrap :global(.cardTitle h3) {
-  font-size: 1.04rem;
+.metricLabel {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--muted-text);
+  line-height: 1.35;
 }
 
-.overviewWrap :global(.cardTitle p) {
-  font-size: 0.82rem;
+.metricValues {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.overviewWrap :global(.metricLabel) {
-  font-size: 0.78rem;
+.metricValue {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: #f0f0f0;
 }
 
-.overviewWrap :global(.value) {
-  font-size: 0.82rem;
+.metricDelta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  border-radius: 999px;
+  padding: 3px 7px;
+}
+
+.positive {
+  color: var(--markets-color);
+  background: rgba(102, 187, 106, 0.12);
+}
+
+.negative {
+  color: var(--risk-color);
+  background: rgba(239, 83, 80, 0.12);
+}
+
+.neutral {
+  color: var(--muted-text);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.markets {
+  border-left: 2px solid rgba(102, 187, 106, 0.7);
+}
+
+.macro {
+  border-left: 2px solid rgba(206, 147, 216, 0.7);
+}
+
+.commodities {
+  border-left: 2px solid rgba(144, 202, 249, 0.8);
+}
+
+.bonds {
+  border-left: 2px solid rgba(255, 204, 128, 0.9);
+}
+
+.stocks {
+  border-left: 2px solid rgba(144, 202, 249, 0.8);
 }
 
 .timestamp {
@@ -64,10 +142,4 @@
   font-size: 0.77rem;
   color: var(--muted-text);
   text-align: right;
-}
-
-@media (max-width: 420px) {
-  .heroTitle {
-    font-size: 1.8rem;
-  }
 }
