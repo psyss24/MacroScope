@@ -128,30 +128,12 @@ const DashboardChart = (props) => {
   const ModeToggleButton = enableModeToggle ? () => (
     <button
       onClick={() => setMode(mode === 'normalised' ? 'raw' : 'normalised')}
-      style={{
-        background: 'var(--accent-color)',
-        color: '#e0e0e0',
-        border: 'none',
-        borderRadius: 6,
-        padding: '3px 10px',
-        fontWeight: 600,
-        fontSize: '0.95rem',
-        cursor: 'pointer',
-        boxShadow: '0 2px 8px rgba(33,150,243,0.12)',
-        transition: 'all 0.18s',
-        outline: 'none',
-        height: 36,
-        alignItems: 'center',
-        zIndex: 1,
-        marginLeft: 12,
-        opacity: 1,
-        pointerEvents: 'auto',
-      }}
+      className={styles.modeToggleButton}
       aria-label="Toggle chart mode"
       tabIndex={0}
       onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setMode(mode === 'normalised' ? 'raw' : 'normalised'); } }}
     >
-      {mode === 'normalised' ? 'Normalised' : 'Raw'}
+      Mode: {mode === 'normalised' ? 'Normalised' : 'Raw'}
     </button>
   ) : null;
 

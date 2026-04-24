@@ -211,7 +211,7 @@ export default function MarketsMobilePage() {
   }, [marketData]);
 
   if (loading) {
-    return <LoadingSpinner isLoading={true} message="Loading mobile markets view..." />;
+    return <LoadingSpinner isLoading={true} message="Loading markets view..." />;
   }
 
   return (

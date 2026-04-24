@@ -6,14 +6,16 @@
 }
 
 .card {
-    background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
-    border: none;
-    border-radius: var(--radius-lg);
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 2px solid transparent;
+    border-radius: 14px;
     padding: var(--spacing-lg);
     transition: all var(--transition-normal);
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+    text-decoration: none;
 }
 
 :global(.dark-mode) .card {
@@ -25,8 +27,9 @@
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .card:hover::before {
@@ -34,38 +37,18 @@
 }
 
 /* Color variants */
-.card.markets::before {
-    background: var(--markets-color);
-}
-
-.card.macro::before {
-    background: var(--macro-color);
-}
-
-.card.commodities::before {
-    background: var(--commodities-color);
-}
-
-.card.bonds::before {
-    background: var(--bonds-color);
-}
-
-.card.risk::before {
-    background: var(--risk-color);
-}
+.card.markets { border-top-color: var(--markets-color); }
+.card.macro { border-top-color: var(--macro-color); }
+.card.commodities { border-top-color: var(--commodities-color); }
+.card.bonds { border-top-color: var(--bonds-color); }
+.card.stocks { border-top-color: var(--accent-color); }
 
 .cardHeader {
     display: flex;
-    align-items: flex-start;
-    gap: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
-    padding-left: 0;
-}
-
-.cardIcon {
-    font-size: 2rem;
-    line-height: 1;
-    flex-shrink: 0;
 }
 
 .cardTitle {
@@ -77,9 +60,9 @@
 
 .cardTitle h3 {
     font-family: var(--font-headline);
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--accent-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
     margin-bottom: var(--spacing-xs);
     line-height: 1.2;
     margin-left: 0;
@@ -88,13 +71,24 @@
 }
 
 .cardTitle p {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     color: var(--muted-text);
     line-height: 1.4;
     margin: 0;
     margin-left: 0;
     padding-left: 0;
     text-align: left;
+}
+
+.cardBadge {
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    color: #f2f2f2;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .cardMetrics {
@@ -108,8 +102,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .metric:last-child {
@@ -118,8 +112,9 @@
 
 .metricLabel {
     font-size: 0.85rem;
-    color: var(--muted-text);
+    color: #b8b8b8;
     font-weight: 500;
+    max-width: 62%;
 }
 
 .metricValue {
@@ -130,17 +125,17 @@
 
 .value {
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-weight: 600;
-    color: var(--accent-color);
+    color: #f4f4f4;
 }
 
 .change {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.72rem;
+    font-weight: 600;
     padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
+    border-radius: 999px;
     background: var(--hover-bg);
 }
 
@@ -162,26 +157,22 @@
 .cardFooter {
     display: flex;
     justify-content: flex-end;
+    margin-top: 4px;
 }
 
 .viewMore {
-    background: none;
-    border: none;
-    color: var(--muted-text);
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
+    color: #c7c7c7;
+    font-size: 0.82rem;
+    font-weight: 600;
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
+    padding: 0;
+    transition: color var(--transition-fast);
 }
 
 .viewMore:hover {
-    color: var(--accent-color);
-    background: var(--hover-bg);
+    color: #ffffff;
 }
 
 .viewMore svg {
@@ -206,10 +197,6 @@
     .cardHeader {
         gap: var(--spacing-sm);
         margin-bottom: var(--spacing-md);
-    }
-    
-    .cardIcon {
-        font-size: 1.5rem;
     }
     
     .cardTitle h3 {
@@ -248,12 +235,8 @@
     
     .cardHeader {
         flex-direction: column;
-        text-align: center;
+        align-items: flex-start;
         gap: var(--spacing-sm);
-    }
-    
-    .cardIcon {
-        font-size: 1.75rem;
     }
     
     .metric {

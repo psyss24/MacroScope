@@ -523,9 +523,6 @@ const BondsRiskPage = () => {
           )}
         </CardSlider>
       </section>
-      <div style={{ textAlign: 'right', color: 'var(--muted-text)', fontSize: '0.95rem', marginTop: 32 }}>
-        Last updated: {new Date((marketData?.timestamp || sentimentData?.timestamp || Date.now())).toLocaleString()}
-      </div>
     </div>
   );
 };

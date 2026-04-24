@@ -164,7 +164,7 @@ export default function MacroMobilePage() {
   }`;
 
   if (loading) {
-    return <LoadingSpinner isLoading={true} message="Loading mobile macro view..." />;
+    return <LoadingSpinner isLoading={true} message="Loading macro view..." />;
   }
 
   return (

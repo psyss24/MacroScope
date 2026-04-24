@@ -214,7 +214,7 @@ export default function BondsRiskMobilePage() {
   }, [activeRegion, bondHistories]);
 
   if (loading) {
-    return <LoadingSpinner isLoading={true} message="Loading mobile bonds view..." />;
+    return <LoadingSpinner isLoading={true} message="Loading bonds view..." />;
   }
 
   return (

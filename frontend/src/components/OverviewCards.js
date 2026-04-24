@@ -219,13 +219,11 @@ const OverviewCards = () => {
       {cards.map((card, index) => (
         <Link to={card.link || '#'} key={index} className={`${styles.card} ${styles[card.color]}`}>
           <div className={styles.cardHeader}>
-            <div className={styles.cardIcon}>
-              {/* Removed card.icon */}
-            </div>
             <div className={styles.cardTitle}>
               <h3>{card.title}</h3>
               <p>{card.description}</p>
             </div>
+            <span className={styles.cardBadge}>Open</span>
           </div>
           
           <div className={styles.cardMetrics}>
@@ -248,12 +246,12 @@ const OverviewCards = () => {
           </div>
           
           <div className={styles.cardFooter}>
-            <button className={styles.viewMore}>
+            <span className={styles.viewMore}>
               View Details
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="m9 18 6-6-6-6"/>
               </svg>
-            </button>
+            </span>
           </div>
         </Link>
       ))}
