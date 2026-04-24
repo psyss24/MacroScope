@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
 const Header = () => {
+  const SCROLL_JITTER_PX = 1;
+  const BOTTOM_LOCK_MARGIN_PX = 2;
+  const BOTTOM_RELEASE_PX = 28;
+
   const headerRef = useRef(null);
   const frameRef = useRef(null);
   const lastScrollYRef = useRef(0);
   const offsetRef = useRef(0);
+  const bottomLockRef = useRef(false);
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
@@ -22,10 +27,29 @@ const Header = () => {
         const currentY = window.scrollY || window.pageYOffset || 0;
         const delta = currentY - lastScrollYRef.current;
         lastScrollYRef.current = currentY;
+        const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        const distanceFromBottom = Math.max(0, maxScrollY - currentY);
+
+        if (delta >= 0 && distanceFromBottom <= BOTTOM_LOCK_MARGIN_PX) {
+          bottomLockRef.current = true;
+        } else if (distanceFromBottom > BOTTOM_RELEASE_PX) {
+          bottomLockRef.current = false;
+        }
 
         if (currentY <= 0) {
           offsetRef.current = 0;
           setOffset(0);
+          bottomLockRef.current = false;
+          frameRef.current = null;
+          return;
+        }
+
+        if (Math.abs(delta) <= SCROLL_JITTER_PX) {
+          frameRef.current = null;
+          return;
+        }
+
+        if (delta < 0 && bottomLockRef.current && distanceFromBottom <= BOTTOM_RELEASE_PX) {
           frameRef.current = null;
           return;
         }
