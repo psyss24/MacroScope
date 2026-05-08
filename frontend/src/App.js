@@ -1,31 +1,37 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import Header from './components/Header';
-import Dashboard from './components/Dashboard';
-import MarketsPage from './pages/MarketsPage';
-import MacroPage from './pages/MacroPage';
-import CommoditiesPage from './pages/CommoditiesPage';
-import BondsRiskPage from './pages/BondsRiskPage';
-import StocksPage from './pages/StocksPage';
-import StockDetailPage from './components/stocks/StockDetailPage';
-import HomeMobilePage from './pages/mobile/HomeMobilePage';
-import useIsMobile from './hooks/useIsMobile';
-import './styles/global.css';
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+import Header from "./components/Header";
+import Dashboard from "./components/Dashboard";
+import MarketsPage from "./pages/MarketsPage";
+import MacroPage from "./pages/MacroPage";
+import CommoditiesPage from "./pages/CommoditiesPage";
+import BondsRiskPage from "./pages/BondsRiskPage";
+import StocksPage from "./pages/StocksPage";
+import StockDetailPage from "./components/stocks/StockDetailPage";
+import HomeMobilePage from "./pages/mobile/HomeMobilePage";
+import useIsMobile from "./hooks/useIsMobile";
+import "./styles/global.css";
 
-// Component to handle 404 redirects
+// components to handle 404 redirects
 function RedirectHandler() {
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     // Check if we have a stored redirect path from 404.html
-    const redirectPath = sessionStorage.getItem('redirectPath');
+    const redirectPath = sessionStorage.getItem("redirectPath");
     if (redirectPath) {
-      sessionStorage.removeItem('redirectPath');
+      sessionStorage.removeItem("redirectPath");
       // Remove the /MacroScope prefix if it exists in the stored path
-      const cleanPath = redirectPath.replace('/MacroScope', '') || '/';
+      const cleanPath = redirectPath.replace("/MacroScope", "") || "/";
       // Only navigate if we're currently on the root path to avoid infinite loops
-      if (location.pathname === '/') {
+      if (location.pathname === "/") {
         navigate(cleanPath, { replace: true });
       }
     }
@@ -36,7 +42,8 @@ function RedirectHandler() {
 
 function App() {
   const isMobile = useIsMobile();
-  const mobileHomeEnabled = process.env.REACT_APP_ENABLE_MOBILE_HOME !== 'false';
+  const mobileHomeEnabled =
+    process.env.REACT_APP_ENABLE_MOBILE_HOME !== "false";
   const shouldRenderMobileHome = isMobile && mobileHomeEnabled;
 
   return (
@@ -46,7 +53,12 @@ function App() {
         <Header />
         <main>
           <Routes>
-            <Route path="/" element={shouldRenderMobileHome ? <HomeMobilePage /> : <Dashboard />} />
+            <Route
+              path="/"
+              element={
+                shouldRenderMobileHome ? <HomeMobilePage /> : <Dashboard />
+              }
+            />
             <Route path="/markets" element={<MarketsPage />} />
             <Route path="/macro" element={<MacroPage />} />
             <Route path="/commodities" element={<CommoditiesPage />} />
