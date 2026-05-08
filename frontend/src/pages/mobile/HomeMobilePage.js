@@ -193,11 +193,8 @@ export default function HomeMobilePage() {
   }, [dashboardData]);
 
   return (
-    <MobilePageShell
-      title="MacroScope"
-      subtitle="Live cross-market dashboard"
-    >
-      <MobileSection title="Overview" description="Same key metrics, redesigned for one-hand scanning">
+    <MobilePageShell title="MacroScope">
+      <MobileSection title="Overview">
         <div className={styles.cardsStack}>
           {loading && !cards.length ? (
             <div className={styles.stateCard}>Loading live dashboard...</div>
@@ -214,7 +211,6 @@ export default function HomeMobilePage() {
                   <h3>{card.title}</h3>
                   <p>{card.description}</p>
                 </div>
-                <span className={styles.openPill}>Open</span>
               </div>
 
               <div className={styles.metricsList}>

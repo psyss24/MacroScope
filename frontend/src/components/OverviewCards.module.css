@@ -37,11 +37,11 @@
 }
 
 /* Color variants */
-.card.markets { border-top-color: var(--markets-color); }
-.card.macro { border-top-color: var(--macro-color); }
-.card.commodities { border-top-color: var(--commodities-color); }
-.card.bonds { border-top-color: var(--bonds-color); }
-.card.stocks { border-top-color: var(--accent-color); }
+.card.markets { border-top-color: transparent; }
+.card.macro { border-top-color: transparent; }
+.card.commodities { border-top-color: transparent; }
+.card.bonds { border-top-color: transparent; }
+.card.stocks { border-top-color: transparent; }
 
 .cardHeader {
     display: flex;

@@ -223,7 +223,6 @@ const OverviewCards = () => {
               <h3>{card.title}</h3>
               <p>{card.description}</p>
             </div>
-            <span className={styles.cardBadge}>Open</span>
           </div>
           
           <div className={styles.cardMetrics}>
