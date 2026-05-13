@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { ThemeContext } from '../../context/ThemeContext';
 import styles from './Charts.module.css';
 
 /**
@@ -27,7 +26,7 @@ const HeatmapChart = ({
   config = {}
 }) => {
   // Access dark mode state from context
-  const { darkMode } = useContext(ThemeContext);
+  const darkMode = true;
 
   // Define colors based on theme
   const textColor = '#e0e0e0';

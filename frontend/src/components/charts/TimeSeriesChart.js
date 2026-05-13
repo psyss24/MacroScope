@@ -1,6 +1,5 @@
-import React, { useContext, useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import Plot from 'react-plotly.js';
-import { ThemeContext } from '../../context/ThemeContext';
 import styles from './Charts.module.css';
 
 /**
@@ -29,7 +28,7 @@ const TimeSeriesChart = ({
   transparent = false // NEW: if true, no container, just Plot
 }) => {
   // Access dark mode state from context
-  const { darkMode } = useContext(ThemeContext);
+  const darkMode = true;
   
   // State for comparison mode
   const [comparisonPoints, setComparisonPoints] = useState([]);

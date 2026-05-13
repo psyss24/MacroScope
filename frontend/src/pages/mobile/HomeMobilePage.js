@@ -205,7 +205,7 @@ export default function HomeMobilePage() {
           ) : null}
 
           {cards.map((card) => (
-            <Link key={card.title} to={card.link} className={`${styles.compactCard} ${styles[card.tone]}`}>
+            <Link key={card.title} to={card.link} className={styles.compactCard}>
               <div className={styles.compactCardHeader}>
                 <div>
                   <h3>{card.title}</h3>

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
-import { ThemeContext } from '../../context/ThemeContext';
 import styles from './Charts.module.css';
 
 /**
@@ -31,7 +30,7 @@ const BarChart = ({
   prices = {},
 }) => {
   // Access dark mode state from context
-  const { darkMode } = useContext(ThemeContext);
+  const darkMode = true;
   const [hoveredBar, setHoveredBar] = useState(null);
   const [cardHovered, setCardHovered] = useState(false);
 

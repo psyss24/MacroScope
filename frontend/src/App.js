@@ -64,7 +64,8 @@ function App() {
             <Route path="/commodities" element={<CommoditiesPage />} />
             <Route path="/bonds" element={<BondsRiskPage />} />
             <Route path="/risk" element={<BondsRiskPage />} />
-            <Route path="/stocks" element={<StocksPage />} />
+            <Route path="/stocks" element={<StocksComingSoonPage />} />
+            <Route path="/stocks-dev" element={<StocksPage />} />
             <Route path="/stocks/:symbol" element={<StockDetailPage />} />
           </Routes>
         </main>

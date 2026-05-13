@@ -8,7 +8,6 @@
 .card {
     background: linear-gradient(155deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-top: 2px solid transparent;
     border-radius: 14px;
     padding: var(--spacing-lg);
     transition: all var(--transition-normal);
@@ -36,12 +35,7 @@
     opacity: 0;
 }
 
-/* Color variants */
-.card.markets { border-top-color: transparent; }
-.card.macro { border-top-color: transparent; }
-.card.commodities { border-top-color: transparent; }
-.card.bonds { border-top-color: transparent; }
-.card.stocks { border-top-color: transparent; }
+/* Color variants removed */
 
 .cardHeader {
     display: flex;
