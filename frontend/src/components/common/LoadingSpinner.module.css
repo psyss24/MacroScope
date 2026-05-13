@@ -186,13 +186,14 @@
 
 /* Skeleton Card Styles - matches actual dashboard cards 1:1 */
 .skeletonCard {
+  box-sizing: border-box;
+  display: block;
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: var(--spacing-lg);
   position: relative;
   overflow: hidden;
-  min-height: 200px;
   transition: all var(--transition-normal);
 }
 
@@ -229,7 +230,7 @@
 }
 
 .skeletonTitleText {
-  height: 1.2rem;
+  height: 1.44rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   margin-bottom: var(--spacing-xs);
@@ -238,7 +239,7 @@
 }
 
 .skeletonDescription {
-  height: 0.86rem;
+  height: 1.2rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   width: 90%;
@@ -265,7 +266,7 @@
 }
 
 .skeletonMetricLabel {
-  height: 0.85rem;
+  height: 1.1rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   width: 50%;
@@ -279,18 +280,18 @@
 }
 
 .skeletonValue {
-  height: 0.92rem;
+  height: 1.2rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 40px;
+  width: 50px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeletonChange {
-  height: 1.2rem;
+  height: 1.4rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  width: 45px;
+  width: 55px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -301,10 +302,10 @@
 }
 
 .skeletonButton {
-  height: 0.82rem;
+  height: 1.1rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 70px;
+  width: 80px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
