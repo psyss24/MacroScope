@@ -159,79 +159,86 @@ const MacroPage = () => {
         </p>
       </header>
       {error && (
-        <div style={{ marginBottom: 16, color: 'var(--risk-color)' }}>
+        <div style={{ marginBottom: 16, color: 'var(--risk-color)', padding: '0 var(--spacing-lg)' }}>
           {error}
         </div>
       )}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
-        {MACRO_REGIONS.map((region) => (
-          <UnifiedCard
-            key={region.key}
-            className={selectedRegion === region.key ? 'selectedCard buttonCard' : 'buttonCard'}
-            onClick={() => setSelectedRegion(region.key)}
-            style={{ cursor: 'pointer', minWidth: 90, textAlign: 'center', fontWeight: 600 }}
-          >
-            {region.label}
-          </UnifiedCard>
-        ))}
-      </div>
-      <div className={styles.dashboardChartCard}>
-        <ChartCarousel
-          metrics={MACRO_CHART_OPTIONS}
-          region={selectedRegion}
-          regionData={regionData}
-          getChartData={(metricKey) => {
-            const dataKey = getDataKey(metricKey);
-            const entries = normalizeSeries(regionData[dataKey]);
-            if (!entries.length) return [];
-            const selectedOption = MACRO_CHART_OPTIONS.find(opt => opt.key === metricKey);
-            return [{
-              x: entries.map(d => d.x),
-              y: entries.map(d => d.value),
-              name: selectedOption?.label || metricKey,
-              unit: selectedOption?.unit || '',
-              type: 'scatter',
-              mode: 'lines',
-              line: { color: '#1976d2', width: 3 },
-            }];
-          }}
-          getChartTitle={(metricKey) => {
-            const selectedOption = MACRO_CHART_OPTIONS.find(opt => opt.key === metricKey);
-            const meta = getIndicatorMeta(metricKey);
-            const frequency = meta?.frequency ? ` (${meta.frequency})` : '';
-            return `${selectedOption?.label || metricKey} – ${selectedRegion}${frequency}`;
-          }}
-          smartBaselineLabel={true}
-          showPricesOnHover={true}
-          enableModeToggle={true}
-        />
-      </div>
-      <div className={styles.macroSummaryGrid}>
-        {MACRO_CHART_OPTIONS.map(opt => {
-          const latestPoint = getLatestPoint(opt.key);
-          const meta = getIndicatorMeta(opt.key);
-          const selectedOption = MACRO_CHART_OPTIONS.find(option => option.key === opt.key);
-          const latestValue = latestPoint?.value ?? meta?.latestValue ?? null;
-          const latestPeriod = latestPoint?.period ?? meta?.latestPeriod ?? null;
-
-          const formattedValue = latestValue != null && typeof latestValue === 'number'
-            ? latestValue.toFixed(2)
-            : latestValue;
-          
-          return (
-            <UnifiedCard key={opt.key} className={styles.macroSummaryCard}>
-              <div className={styles.summaryLabel}>{opt.label}</div>
-              <div className={styles.summaryValue}>
-                {formattedValue != null ? formattedValue : 'N/A'}
-                {selectedOption?.unit ? ` ${selectedOption.unit}` : ''}
-              </div>
-              <div className={styles.summaryAsOf}>
-                {latestPeriod ? `as of ${latestPeriod}` : ''}
-              </div>
+      <section className={styles.section} style={{ marginBottom: 24 }}>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          {MACRO_REGIONS.map((region) => (
+            <UnifiedCard
+              key={region.key}
+              className={selectedRegion === region.key ? 'selectedCard buttonCard' : 'buttonCard'}
+              onClick={() => setSelectedRegion(region.key)}
+              style={{ cursor: 'pointer', minWidth: 90, textAlign: 'center', fontWeight: 600 }}
+            >
+              {region.label}
             </UnifiedCard>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </section>
+      <section className={styles.section}>
+        <div className={styles.dashboardChartCard}>
+          <ChartCarousel
+            metrics={MACRO_CHART_OPTIONS}
+            region={selectedRegion}
+            regionData={regionData}
+            getChartData={(metricKey) => {
+              const dataKey = getDataKey(metricKey);
+              const entries = normalizeSeries(regionData[dataKey]);
+              if (!entries.length) return [];
+              const selectedOption = MACRO_CHART_OPTIONS.find(opt => opt.key === metricKey);
+              return [{
+                x: entries.map(d => d.x),
+                y: entries.map(d => d.value),
+                name: selectedOption?.label || metricKey,
+                unit: selectedOption?.unit || '',
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: '#1976d2', width: 3 },
+              }];
+            }}
+            getChartTitle={(metricKey) => {
+              const selectedOption = MACRO_CHART_OPTIONS.find(opt => opt.key === metricKey);
+              const meta = getIndicatorMeta(metricKey);
+              const frequency = meta?.frequency ? ` (${meta.frequency})` : '';
+              return `${selectedOption?.label || metricKey} – ${selectedRegion}${frequency}`;
+            }}
+            smartBaselineLabel={true}
+            showPricesOnHover={true}
+            enableModeToggle={true}
+          />
+        </div>
+      </section>
+      <section className={styles.section}>
+        <h2>Snapshot</h2>
+        <div className={styles.macroSummaryGrid}>
+          {MACRO_CHART_OPTIONS.map(opt => {
+            const latestPoint = getLatestPoint(opt.key);
+            const meta = getIndicatorMeta(opt.key);
+            const selectedOption = MACRO_CHART_OPTIONS.find(option => option.key === opt.key);
+            const latestValue = latestPoint?.value ?? meta?.latestValue ?? null;
+            const latestPeriod = latestPoint?.period ?? meta?.latestPeriod ?? null;
+
+            const formattedValue = latestValue != null && typeof latestValue === 'number'
+              ? latestValue.toFixed(2)
+              : latestValue;
+            
+            return (
+              <UnifiedCard key={opt.key} className={styles.macroSummaryCard}>
+                <div className={styles.summaryLabel}>{opt.label}</div>
+                <div className={styles.summaryValue}>
+                  {formattedValue != null ? formattedValue : 'N/A'}
+                  {selectedOption?.unit ? ` ${selectedOption.unit}` : ''}
+                </div>
+                <div className={styles.summaryAsOf}>
+                  {latestPeriod ? `as of ${latestPeriod}` : ''}
+                </div>
+              </UnifiedCard>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 };

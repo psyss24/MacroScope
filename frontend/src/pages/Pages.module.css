@@ -394,4 +394,43 @@
   .fearGreedLabels {
     font-size: 0.7rem;
   }
-}
+  }
+
+  /* Macro Summary Grid Styles */
+  .macroSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+  }
+
+  .macroSummaryCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 120px;
+  background: var(--card-gradient) !important;
+  }
+
+  .summaryLabel {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  }
+
+  .summaryValue {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  line-height: 1;
+  }
+
+  .summaryAsOf {
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  margin-top: var(--spacing-md);
+  font-style: italic;
+  }
