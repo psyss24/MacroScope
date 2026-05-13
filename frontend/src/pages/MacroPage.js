@@ -211,7 +211,7 @@ const MacroPage = () => {
         </div>
       </section>
       <section className={styles.section}>
-        <h2>Snapshot</h2>
+        <h2>{selectedRegion} Snapshot</h2>
         <div className={styles.macroSummaryGrid}>
           {MACRO_CHART_OPTIONS.map(opt => {
             const latestPoint = getLatestPoint(opt.key);

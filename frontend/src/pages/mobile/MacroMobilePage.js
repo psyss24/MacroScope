@@ -191,7 +191,7 @@ export default function MacroMobilePage() {
         <MobileMacroChartPanel title={chartTitle} series={chartSeries} />
       </MobileSection>
 
-      <MobileSection title="Snapshot">
+      <MobileSection title={`${selectedRegion} Snapshot`}>
         <MobileMacroSummaryCards items={summaryItems} />
       </MobileSection>
     </MobilePageShell>
