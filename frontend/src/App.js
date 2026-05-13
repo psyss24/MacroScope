@@ -13,6 +13,7 @@ import MacroPage from "./pages/MacroPage";
 import CommoditiesPage from "./pages/CommoditiesPage";
 import BondsRiskPage from "./pages/BondsRiskPage";
 import StocksPage from "./pages/StocksPage";
+import StocksComingSoonPage from "./pages/StocksComingSoonPage";
 import StockDetailPage from "./components/stocks/StockDetailPage";
 import HomeMobilePage from "./pages/mobile/HomeMobilePage";
 import useIsMobile from "./hooks/useIsMobile";
