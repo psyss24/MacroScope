@@ -56,7 +56,7 @@ const BondsRiskPage = () => {
   const mobileBondsEnabled = process.env.REACT_APP_ENABLE_MOBILE_BONDS === 'true';
   const shouldRenderMobile = isMobile && mobileBondsEnabled;
 
-  const SHORT_GAP_FILL_DAYS = 3;
+  const SHORT_GAP_FILL_DAYS = 6;
 
   const [marketData, setMarketData] = useState(null);
   const [sentimentData, setSentimentData] = useState(null);
