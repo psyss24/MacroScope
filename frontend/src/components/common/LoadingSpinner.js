@@ -42,7 +42,6 @@ const LoadingSpinner = ({ isLoading, message = 'Loading...' }) => {
 export const SkeletonCard = ({ className = '' }) => (
   <div className={`${styles.skeletonCard} ${className}`}>
     <div className={styles.skeletonHeader}>
-      <div className={styles.skeletonIcon}></div>
       <div className={styles.skeletonTitle}>
         <div className={styles.skeletonTitleText}></div>
         <div className={styles.skeletonDescription}></div>

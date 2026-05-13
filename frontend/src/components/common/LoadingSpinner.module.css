@@ -186,9 +186,9 @@
 
 /* Skeleton Card Styles - matches actual dashboard cards 1:1 */
 .skeletonCard {
-  background: var(--secondary-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
   padding: var(--spacing-lg);
   position: relative;
   overflow: hidden;
@@ -206,7 +206,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05),
     transparent
   );
   animation: shimmer 1.5s infinite;
@@ -214,40 +214,34 @@
 
 .skeletonHeader {
   display: flex;
-  align-items: flex-start;
-  gap: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   padding-left: 0;
-}
-
-.skeletonIcon {
-  width: 2rem;
-  height: 2rem;
-  background: var(--border-color);
-  border-radius: 4px;
-  animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeletonTitle {
   flex: 1;
   margin-left: 0;
   padding-left: 0;
+  width: 100%;
 }
 
 .skeletonTitleText {
-  height: 1.25rem;
-  background: var(--border-color);
+  height: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   margin-bottom: var(--spacing-xs);
-  width: 60%;
+  width: 40%;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeletonDescription {
-  height: 0.9rem;
-  background: var(--border-color);
+  height: 0.86rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 80%;
+  width: 90%;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -262,8 +256,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-sm) 0;
-  border-bottom: 1px solid var(--border-color);
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .skeletonMetric:last-child {
@@ -272,9 +266,9 @@
 
 .skeletonMetricLabel {
   height: 0.85rem;
-  background: var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 40%;
+  width: 50%;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -285,31 +279,32 @@
 }
 
 .skeletonValue {
-  height: 0.9rem;
-  background: var(--border-color);
+  height: 0.92rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 60px;
+  width: 40px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeletonChange {
-  height: 0.75rem;
-  background: var(--border-color);
-  border-radius: 4px;
-  width: 40px;
+  height: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  width: 45px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeletonFooter {
   display: flex;
   justify-content: flex-end;
+  margin-top: 4px;
 }
 
 .skeletonButton {
-  height: 0.85rem;
-  background: var(--border-color);
+  height: 0.82rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  width: 80px;
+  width: 70px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
