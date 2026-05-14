@@ -104,6 +104,15 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+@media (min-width: 769px) {
+  .heroCard {
+    background: var(--premium-card-bg) !important;
+    border: var(--premium-card-border);
+    box-shadow: var(--premium-card-shadow);
+    border-radius: 14px;
+  }
+}
 /* Removed hover animation for heroCard */
 
 /* Remove gradient background from .hero */

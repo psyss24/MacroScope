@@ -65,6 +65,17 @@
   --transition-slow: 0.5s ease-in-out;
   --card-fade-mask-rgb: 17, 17, 17;
   --app-header-height: 84px;
+
+  /* Premium Card Styles (Desktop Only) */
+  --premium-card-bg: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.015) 100%
+  );
+  --premium-card-border: 1px solid rgba(255, 255, 255, 0.08);
+  --premium-card-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+  --premium-card-hover-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
+  --premium-card-hover-border: rgba(255, 255, 255, 0.14);
 }
 
 /* Reset and base styles */

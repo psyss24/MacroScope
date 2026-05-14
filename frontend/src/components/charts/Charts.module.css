@@ -302,6 +302,22 @@
   outline-offset: 2px;
 }
 
+@media (min-width: 769px) {
+  .dashboardChartCard {
+    background: var(--premium-card-bg) !important;
+    border: var(--premium-card-border);
+    box-shadow: var(--premium-card-shadow);
+    border-radius: 14px;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .dashboardChartCard:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--premium-card-hover-shadow);
+    border-color: var(--premium-card-hover-border);
+  }
+}
+
 @media (max-width: 900px) {
   .dashboardChartCard {
     padding: 1.2rem 0.7rem 1.2rem 0.7rem;

@@ -219,6 +219,27 @@
   padding-right: 12px;
 }
 
+@media (min-width: 769px) {
+  .card {
+    background: var(--premium-card-bg) !important;
+    border: var(--premium-card-border);
+    box-shadow: var(--premium-card-shadow);
+    border-radius: 14px;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--premium-card-hover-shadow);
+    border-color: var(--premium-card-hover-border);
+  }
+
+  .card.buttonCard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
 @media (max-width: 600px) {
   .card {
     padding: var(--spacing-md);

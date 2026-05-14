@@ -6,14 +6,14 @@
 }
 
 .card {
-    background: linear-gradient(155deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--premium-card-bg);
+    border: var(--premium-card-border);
     border-radius: 14px;
     padding: var(--spacing-lg);
     transition: all var(--transition-normal);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+    box-shadow: var(--premium-card-shadow);
     text-decoration: none;
 }
 
@@ -27,8 +27,8 @@
 
 .card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
-    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: var(--premium-card-hover-shadow);
+    border-color: var(--premium-card-hover-border);
 }
 
 .card:hover::before {

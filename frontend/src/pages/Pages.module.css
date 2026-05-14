@@ -405,13 +405,28 @@
   }
 
   .macroSummaryCard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 120px;
-  background: var(--card-gradient) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 120px;
+    background: var(--card-gradient) !important;
   }
 
+  @media (min-width: 769px) {
+    .macroSummaryCard {
+      background: var(--premium-card-bg) !important;
+      border: var(--premium-card-border);
+      box-shadow: var(--premium-card-shadow);
+      border-radius: 14px;
+      transition: box-shadow var(--transition-normal), transform var(--transition-normal), border-color var(--transition-normal);
+    }
+
+    .macroSummaryCard:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--premium-card-hover-shadow);
+      border-color: var(--premium-card-hover-border);
+    }
+  }
   .summaryLabel {
   font-size: 0.9rem;
   color: var(--muted-text);
