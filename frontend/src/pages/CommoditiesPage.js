@@ -293,7 +293,6 @@ const CommoditiesPage = () => {
       {/* Move Commodity Price Change Comparison to the top */}
       <section style={sectionStyle}>
         <h2 style={sectionHeaderStyle}>Commodity Price Change Comparison</h2>
-        <div className={styles.dashboardChartCard}>
           <BarChart 
             data={[
               {
@@ -308,7 +307,6 @@ const CommoditiesPage = () => {
             yAxisTitle="Change (%)"
             height={400}
           />
-        </div>
       </section>
       {/* Metals Section */}
       <section style={sectionStyle}>

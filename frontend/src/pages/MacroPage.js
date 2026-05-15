@@ -178,8 +178,7 @@ const MacroPage = () => {
         </div>
       </section>
       <section className={styles.section}>
-        <div className={styles.dashboardChartCard}>
-          <ChartCarousel
+        <ChartCarousel
             metrics={MACRO_CHART_OPTIONS}
             region={selectedRegion}
             regionData={regionData}
@@ -208,7 +207,6 @@ const MacroPage = () => {
             showPricesOnHover={true}
             enableModeToggle={true}
           />
-        </div>
       </section>
       <section className={styles.section}>
         <h2>{selectedRegion} Snapshot</h2>
