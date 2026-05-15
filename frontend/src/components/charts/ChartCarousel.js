@@ -7,7 +7,7 @@ const arrowStyle = {
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)',
-  zIndex: 2,
+  zIndex: 20,
   background: '#181c24',
   color: 'var(--accent-color, #2196f3)',
   border: 'none',
