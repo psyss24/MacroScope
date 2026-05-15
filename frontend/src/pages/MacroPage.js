@@ -177,7 +177,7 @@ const MacroPage = () => {
           ))}
         </div>
       </section>
-      <section className={styles.section} style={{ paddingTop: 20 }}>
+      <section className={styles.section} style={{ paddingTop: 40 }}>
         <ChartCarousel
             metrics={MACRO_CHART_OPTIONS}
             region={selectedRegion}

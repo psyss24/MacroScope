@@ -12,7 +12,7 @@
     padding: var(--spacing-lg);
     transition: all var(--transition-normal);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: var(--premium-card-shadow);
     text-decoration: none;
 }

@@ -309,6 +309,7 @@
     box-shadow: var(--premium-card-shadow);
     border-radius: 14px;
     transition: box-shadow var(--transition-normal), transform var(--transition-normal), border-color var(--transition-normal);
+    overflow: visible !important;
   }
 
   .dashboardChartCard:hover {
