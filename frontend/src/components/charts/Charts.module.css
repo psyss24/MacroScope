@@ -312,7 +312,7 @@
   }
 
   .dashboardChartCard:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
     box-shadow: var(--premium-card-hover-shadow);
     border-color: var(--premium-card-hover-border);
   }
