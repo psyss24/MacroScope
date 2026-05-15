@@ -31,6 +31,13 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
     return () => window.removeEventListener('keydown', handleKey);
   }, [scrollPrev, scrollNext]);
 
+  // Re-initialize embla when children change (e.g. from loading skeletons to real data)
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.reInit();
+    }
+  }, [emblaApi, children]);
+
   // Responsive card width (peeking effect)
   const cardStyle = {
     flex: '0 0 auto',
@@ -40,7 +47,8 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
     boxSizing: 'border-box',
   };
 
-  const cardCount = React.Children.count(children);
+  const validChildren = React.Children.toArray(children).filter(Boolean);
+  const cardCount = validChildren.length;
 
   return (
     <div className={`${styles.sliderContainer} ${className}`} style={style}>
@@ -56,7 +64,7 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
       )}
       <div className={styles.sliderRow} ref={emblaRef}>
         <div className="embla__container" style={{ display: 'flex', gap: 'var(--slider-gap, 28px)' }}>
-          {React.Children.toArray(children).filter(Boolean).map((child, i) => (
+          {validChildren.map((child, i) => (
             <div className={`${styles.sliderCard} ${cardClassName} embla__slide`} style={cardStyle} key={i}>
               {child}
             </div>
