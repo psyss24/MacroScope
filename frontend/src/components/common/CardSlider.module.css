@@ -11,10 +11,11 @@
   flex-direction: row;
   gap: var(--slider-gap, 28px);
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: visible; /* Note: computed to auto by browsers because overflow-x is auto */
   scroll-behavior: smooth;
-  padding: 0 32px;
-  margin-bottom: 0;
+  padding: 16px 32px 32px 32px;
+  margin-top: -16px; /* Offset the top padding */
+  margin-bottom: -16px; /* Partially offset the bottom padding */
   scrollbar-width: none;
   -ms-overflow-style: none;
   min-width: 0;
@@ -84,7 +85,7 @@
   }
   .sliderRow {
     gap: 8px;
-    padding: 0 8px;
+    padding: 16px 8px 32px 8px;
   }
   .sliderContainer {
     max-width: 100vw;

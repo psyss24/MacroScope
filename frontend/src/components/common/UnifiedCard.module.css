@@ -5,12 +5,13 @@
   padding: var(--spacing-lg);
   transition: box-shadow var(--transition-normal), transform var(--transition-normal);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
 }
 
 .card:hover {
+  z-index: 10;
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }

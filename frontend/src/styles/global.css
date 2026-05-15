@@ -223,7 +223,7 @@ a:hover {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-normal);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .card:hover {

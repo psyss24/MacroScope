@@ -70,7 +70,7 @@ const ChartCarousel = ({
         </button>
       )}
       {/* Chart Card (centered, full width, unmodified) */}
-      <div style={{ margin: '0 56px', flex: '1 1 auto', maxWidth: '100%' }}>
+      <div style={{ margin: '0 56px', flex: '1 1 auto', maxWidth: '100%', overflow: 'visible' }}>
         <DashboardChart
           title={chartTitle}
           charts={hasData ? [{ data: chartData }] : []}

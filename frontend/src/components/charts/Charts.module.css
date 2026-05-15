@@ -269,10 +269,11 @@
   justify-content: flex-start;
   align-items: stretch;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 .dashboardChartCard:hover {
   box-shadow: var(--shadow-lg);
+  z-index: 10;
 }
 
 .modeToggleButton {
