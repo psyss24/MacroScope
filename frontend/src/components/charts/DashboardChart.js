@@ -286,7 +286,7 @@ const DashboardChart = (props) => {
       className={styles.dashboardChartCard}
       onMouseEnter={() => setShowBaseline(true)}
       onMouseLeave={() => setShowBaseline(false)}
-      style={{ cursor: showBaseline ? 'pointer' : 'pointer', paddingTop: 20 }}
+      style={{ cursor: showBaseline ? 'pointer' : 'pointer' }}
     >
       {/* Reserve fixed height for header area to prevent card resize on hover */}
       <div style={{ minHeight: 56, height: 56, marginBottom: 12, overflow: 'visible', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>

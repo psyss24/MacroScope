@@ -40,6 +40,12 @@
   padding: 0 var(--spacing-lg);
 }
 
+@media (min-width: 769px) {
+  .section {
+    padding-top: 12px;
+  }
+}
+
 .section h2 {
   font-size: 1.8rem;
   margin-bottom: var(--spacing-lg);

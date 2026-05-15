@@ -58,7 +58,7 @@ const ChartCarousel = ({
   const chartTitle = getChartTitle(currentMetric.key);
 
   return (
-    <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: 12 }}>
+    <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'visible' }}>
       {/* Left Arrow */}
       {metricCount > 1 && (
         <button
