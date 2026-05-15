@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/MacroScope/static/css/main.77da6b8c.css",
+    "main.css": "/MacroScope/static/css/main.9a7c42f6.css",
     "main.js": "/MacroScope/static/js/main.e229cfac.js",
     "index.html": "/MacroScope/index.html"
   },
   "entrypoints": [
-    "static/css/main.77da6b8c.css",
+    "static/css/main.9a7c42f6.css",
     "static/js/main.e229cfac.js"
   ]
 }
