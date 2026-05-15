@@ -7,21 +7,10 @@
 }
 
 .sliderRow {
-  display: flex;
-  flex-direction: row;
-  gap: var(--slider-gap, 28px);
-  overflow-x: auto;
-  overflow-y: visible; /* Note: computed to auto by browsers because overflow-x is auto */
-  scroll-behavior: smooth;
+  overflow: hidden; /* Embla handles scrolling by translating the container */
   padding: 16px 32px 32px 32px;
   margin-top: -16px; /* Offset the top padding */
   margin-bottom: -16px; /* Partially offset the bottom padding */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  min-width: 0;
-}
-.sliderRow::-webkit-scrollbar {
-  display: none;
 }
 
 .sliderCard {
@@ -84,7 +73,6 @@
     display: none;
   }
   .sliderRow {
-    gap: 8px;
     padding: 16px 8px 32px 8px;
   }
   .sliderContainer {
