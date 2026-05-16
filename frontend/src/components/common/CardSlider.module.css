@@ -13,12 +13,18 @@
   margin-bottom: -16px; /* Partially offset the bottom padding */
 }
 
+.emblaContainer {
+  display: flex;
+  margin-left: calc(var(--slider-gap, 28px) * -1);
+}
+
 .sliderCard {
   flex: 0 0 auto;
-  min-width: 200px;
-  max-width: 340px;
-  width: 100%;
+  min-width: calc(200px + var(--slider-gap, 28px));
+  width: calc(340px + var(--slider-gap, 28px));
+  max-width: 100%;
   box-sizing: border-box;
+  padding-left: var(--slider-gap, 28px);
 }
 
 .arrowBtn {
@@ -65,9 +71,14 @@
 }
 
 @media (max-width: 700px) {
+  .emblaContainer {
+    margin-left: -12px;
+  }
   .sliderCard {
-    min-width: 120px;
-    max-width: 200px;
+    min-width: calc(120px + 12px);
+    max-width: calc(200px + 12px);
+    width: 100%;
+    padding-left: 12px;
   }
   .arrowBtn {
     display: none;
@@ -80,4 +91,5 @@
     width: 100vw;
     margin: 0;
   }
-} 
+}
+ 

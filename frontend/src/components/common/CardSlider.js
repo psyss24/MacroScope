@@ -38,15 +38,6 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
     }
   }, [emblaApi, children]);
 
-  // Responsive card width (peeking effect)
-  const cardStyle = {
-    flex: '0 0 auto',
-    minWidth: 200,
-    width: CARD_WIDTH,
-    maxWidth: '100%',
-    boxSizing: 'border-box',
-  };
-
   const validChildren = React.Children.toArray(children).filter(Boolean);
   const cardCount = validChildren.length;
 
@@ -63,9 +54,9 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
       </button>
       )}
       <div className={styles.sliderRow} ref={emblaRef}>
-        <div className="embla__container" style={{ display: 'flex', gap: 'var(--slider-gap, 28px)' }}>
+        <div className={`embla__container ${styles.emblaContainer}`}>
           {validChildren.map((child, i) => (
-            <div className={`${styles.sliderCard} ${cardClassName} embla__slide`} style={cardStyle} key={i}>
+            <div className={`${styles.sliderCard} ${cardClassName} embla__slide`} key={i}>
               {child}
             </div>
           ))}
