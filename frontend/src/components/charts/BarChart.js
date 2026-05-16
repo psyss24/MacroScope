@@ -83,8 +83,9 @@ const BarChart = ({
           }
       )
     },
-    hoverinfo: 'none', // disable Plotly tooltip, we handle hover manually
-    ...(data.length === 1 && series.useColorScale ? { hoverinfo: 'none' } : {}),
+    hovertemplate: orientation === 'v' 
+      ? '<b>%{x}</b><br>Change: %{y:.2f}%<extra></extra>'
+      : '<b>%{y}</b><br>Change: %{x:.2f}%<extra></extra>',
   }));
 
   // Define layout with no gridlines or border, and fully transparent background
@@ -138,13 +139,13 @@ const BarChart = ({
         color: textColor
       }
     },
-    hovermode: false,
+    hovermode: 'closest',
     hoverlabel: {
-      bgcolor: '#333333',
-      bordercolor: '#555555',
+      bgcolor: '#1a1a1a',
+      bordercolor: 'rgba(255, 255, 255, 0.14)',
       font: {
         family: 'Work Sans, sans-serif',
-        size: 12,
+        size: 13,
         color: '#ffffff'
       }
     },
