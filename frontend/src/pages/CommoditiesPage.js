@@ -5,7 +5,6 @@ import BarChart from '../components/charts/BarChart';
 import styles from './Pages.module.css';
 import UnifiedCard from '../components/common/UnifiedCard';
 import CardSlider from '../components/common/CardSlider';
-import ViewDetailsButton from '../components/common/ViewDetailsButton';
 import DashboardChart from '../components/charts/DashboardChart';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import Plot from 'react-plotly.js';
@@ -365,10 +364,8 @@ const CommoditiesPage = () => {
                   { label: 'Change', value: data.changePercent != null ? `${data.changePercent >= 0 ? '+' : ''}${data.changePercent?.toFixed(2)}%` : 'N/A', valueClass: getPriceClass(data.changePercent) },
                   ...getMetrics(data)
                 ]}
-                actions={<ViewDetailsButton href={`/commodities/${data.symbol}`} />}
-              />
-            );
-          })}
+                />
+                );          })}
         </CardSlider>
       </section>
       <section style={sectionStyle}>
@@ -386,10 +383,8 @@ const CommoditiesPage = () => {
                   { label: 'Change', value: data.changePercent != null ? `${data.changePercent >= 0 ? '+' : ''}${data.changePercent?.toFixed(2)}%` : 'N/A', valueClass: getPriceClass(data.changePercent) },
                   ...getMetrics(data)
                 ]}
-                actions={<ViewDetailsButton href={`/commodities/${data.symbol}`} />}
-              />
-            );
-          })}
+                />
+                );          })}
         </CardSlider>
       </section>
       <section style={sectionStyle}>
@@ -407,10 +402,8 @@ const CommoditiesPage = () => {
                   { label: 'Change', value: data.changePercent != null ? `${data.changePercent >= 0 ? '+' : ''}${data.changePercent?.toFixed(2)}%` : 'N/A', valueClass: getPriceClass(data.changePercent) },
                   ...getMetrics(data)
                 ]}
-                actions={<ViewDetailsButton href={`/commodities/${data.symbol}`} />}
-              />
-            );
-          })}
+                />
+                );          })}
         </CardSlider>
       </section>
       <div style={{ textAlign: 'right', color: 'var(--muted-text)', fontSize: '0.95rem', marginTop: 32 }}>
