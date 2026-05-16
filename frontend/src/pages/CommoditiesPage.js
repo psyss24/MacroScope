@@ -122,12 +122,7 @@ const CommoditiesPage = () => {
     const metrics = [];
     if (type === 'crypto') {
       metrics.push(
-        { label: 'Market Cap', value: data.marketCap || 'N/A' },
-        { label: 'Volume', value: data.volume || 'N/A' }
-      );
-    } else {
-      metrics.push(
-        { label: 'Volume', value: data.volume || 'N/A' }
+        { label: 'Market Cap', value: data.marketCap || 'N/A' }
       );
     }
     return metrics;
