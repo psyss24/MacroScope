@@ -275,6 +275,8 @@ const CommoditiesPage = () => {
               {
                 x: Object.keys(marketData.commodities || {}),
                 y: Object.values(marketData.commodities || {}).map(item => item.changePercent || 0),
+                changePercentArr: Object.values(marketData.commodities || {}).map(item => item.changePercent || 0),
+                currentPriceArr: Object.values(marketData.commodities || {}).map(item => item.price || 0),
                 name: 'Price Change (%)',
                 useColorScale: true
               }
