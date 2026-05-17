@@ -50,19 +50,6 @@
   font-size: 1.8rem;
   margin-bottom: var(--spacing-lg);
   color: var(--accent-color);
-  position: relative;
-  padding-bottom: var(--spacing-sm);
-}
-
-.section h2::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: var(--markets-color);
-  border-radius: 2px;
 }
 
 /* Card grid layout */

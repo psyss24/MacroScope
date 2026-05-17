@@ -244,19 +244,6 @@
 .stockSectionTitle {
   font-size: 1.5rem;
   margin-bottom: var(--spacing-md);
-  position: relative;
-  padding-bottom: var(--spacing-xs);
-}
-
-.stockSectionTitle::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: var(--accent-color);
-  border-radius: 2px;
 }
 
 .stockChartContainer {
