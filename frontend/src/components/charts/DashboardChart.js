@@ -170,19 +170,31 @@ const DashboardChart = (props) => {
         yVal = series.y[hoveredIdx];
         if (enableModeToggle && rawData && rawData[i] && rawData[i].y) {
           if (mode === 'normalised') {
-            // In normalised mode, show normalised value and raw value in parentheses
-            rawVal = rawData[i].y[hoveredIdx];
+            // Find the last valid value up to hoveredIdx (forward-fill simulation)
+            for (let j = hoveredIdx; j >= 0; j--) {
+              if (rawData[i].y[j] != null && isFinite(rawData[i].y[j])) {
+                rawVal = rawData[i].y[j];
+                break;
+              }
+            }
           } else {
             // In raw mode, show the forward-filled value (the one actually plotted)
             rawVal = series.y[hoveredIdx];
           }
         }
       }
-      // Fallback to latest
-      if (yVal == null && series.y && series.y.length) yVal = series.y[series.y.length - 1];
+      // Fallback to latest valid if still null
+      if (yVal == null && series.y && series.y.length) {
+        yVal = series.y[series.y.length - 1];
+      }
       if (rawVal == null && enableModeToggle && rawData && rawData[i] && rawData[i].y && rawData[i].y.length) {
         if (mode === 'normalised') {
-          rawVal = rawData[i].y[rawData[i].y.length - 1];
+          for (let j = rawData[i].y.length - 1; j >= 0; j--) {
+            if (rawData[i].y[j] != null && isFinite(rawData[i].y[j])) {
+              rawVal = rawData[i].y[j];
+              break;
+            }
+          }
         } else {
           rawVal = series.y[series.y.length - 1];
         }
