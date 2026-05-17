@@ -8,6 +8,8 @@ import CardSlider from '../components/common/CardSlider';
 import DashboardChart from '../components/charts/DashboardChart';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import Plot from 'react-plotly.js';
+import { generateDates } from '../utils/dateUtils';
+import { getPriceClass } from '../utils/formatUtils';
 
 const containerStyle = {
   maxWidth: 1200,
@@ -41,28 +43,6 @@ const chartCardStyle = {
   margin: '0 auto',
   maxWidth: 900,
   marginBottom: 48,
-};
-
-// Helper function to generate dates for charts
-const generateDates = (days) => {
-  const dates = [];
-  const today = new Date();
-  
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    dates.push(date.toISOString().split('T')[0]);
-  }
-  
-  return dates;
-};
-
-// Helper for price color
-const getPriceClass = (changePercent) => {
-  if (typeof changePercent !== 'number') return 'valueNeutral';
-  if (changePercent > 0) return 'valuePositive';
-  if (changePercent < 0) return 'valueNegative';
-  return 'valueNeutral';
 };
 
 // Define required commodities for each category

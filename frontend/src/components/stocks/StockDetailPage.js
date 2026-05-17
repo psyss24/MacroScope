@@ -4,6 +4,7 @@ import apiService from '../../services/api';
 import TimeSeriesChart from '../charts/TimeSeriesChart';
 import styles from './Stocks.module.css';
 import LoadingSpinner from '../common/LoadingSpinner';
+import { formatMarketCap } from '../../utils/formatUtils';
 
 /**
  * StockDetailPage component for displaying detailed information about a stock
@@ -93,12 +94,6 @@ const StockDetailPage = () => {
     }
     
     return history.filter(item => new Date(item.date) >= cutoffDate);
-  };
-
-  // Format market cap
-  const formatMarketCap = (marketCap) => {
-    if (!marketCap || marketCap === 'N/A') return 'N/A';
-    return marketCap;
   };
 
   // Format change with appropriate color

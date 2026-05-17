@@ -8,6 +8,7 @@ import CardSlider from '../components/common/CardSlider';
 import DashboardChart from '../components/charts/DashboardChart';
 import useIsMobile from '../hooks/useIsMobile';
 import BondsRiskMobilePage from './mobile/BondsRiskMobilePage';
+import { getPriceClass, getSentimentColorClass } from '../utils/formatUtils';
 
 const BOND_SYMBOLS = [
   { symbol: 'US2Y', name: 'US 2Y Treasury' },
@@ -31,25 +32,6 @@ const BOND_REGIONS = [
   { key: 'uk', label: 'United Kingdom', symbols: ['GB2Y', 'GB5Y', 'GB10Y'] },
   { key: 'france', label: 'France', symbols: ['FR2Y', 'FR5Y', 'FR10Y'] },
 ];
-
-const getPriceClass = (changePercent) => {
-  if (typeof changePercent !== 'number') return 'valueNeutral';
-  if (changePercent > 0) return 'valuePositive';
-  if (changePercent < 0) return 'valueNegative';
-  return 'valueNeutral';
-};
-
-const getSentimentColorClass = (sentiment) => {
-  if (!sentiment) return '';
-  switch (sentiment.toLowerCase()) {
-    case 'extreme greed': return 'valueExtremeGreed';
-    case 'greed': return 'valueGreed';
-    case 'neutral': return 'valueNeutralSentiment';
-    case 'fear': return 'valueFear';
-    case 'extreme fear': return 'valueExtremeFear';
-    default: return '';
-  }
-};
 
 const BondsRiskPage = () => {
   const isMobile = useIsMobile();

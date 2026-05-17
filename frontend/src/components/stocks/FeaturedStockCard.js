@@ -3,47 +3,12 @@ import TimeSeriesChart from '../charts/TimeSeriesChart';
 import styles from './Stocks.module.css';
 import pagesStyles from '../../pages/Pages.module.css';
 import stockStyles from './Stocks.module.css';
+import { formatMarketCap, formatVolume, fmt2 } from '../../utils/formatUtils';
 
 function truncateText(text, maxLength = 180) {
   if (!text) return '';
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength).trim() + '...';
-}
-
-// Helper for market cap abbreviation
-function formatMarketCap(val) {
-  if (typeof val === 'number') {
-    if (val >= 1e12) return `$${(val / 1e12).toFixed(2)}T`;
-    if (val >= 1e9) return `$${(val / 1e9).toFixed(2)}B`;
-    if (val >= 1e6) return `$${(val / 1e6).toFixed(2)}M`;
-    return `$${val}`;
-  }
-  if (typeof val === 'string') {
-    const num = parseFloat(val.replace(/[^\d.]/g, ''));
-    if (val.includes('T')) return `$${num.toFixed(2)}T`;
-    if (val.includes('B')) return `$${num.toFixed(2)}B`;
-    if (val.includes('M')) return `$${num.toFixed(2)}M`;
-    if (!isNaN(num)) return formatMarketCap(num);
-    return val;
-  }
-  return val;
-}
-// Helper for volume in millions
-function formatVolume(val) {
-  if (typeof val === 'number') {
-    return `${(val / 1e6).toFixed(2)}M`;
-  }
-  if (typeof val === 'string') {
-    const num = parseFloat(val.replace(/[^\d.]/g, ''));
-    if (!isNaN(num)) return `${(num / 1e6).toFixed(2)}M`;
-    return val;
-  }
-  return val;
-}
-// Helper for truncating to 2 decimals
-function fmt2(val) {
-  const num = typeof val === 'number' ? val : parseFloat(val);
-  return !isNaN(num) ? num.toFixed(2) : val;
 }
 
 const FeaturedStockCard = ({ stock }) => {

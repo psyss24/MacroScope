@@ -8,33 +8,13 @@ import DashboardChart from '../components/charts/DashboardChart';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import useIsMobile from '../hooks/useIsMobile';
 import MarketsMobilePage from './mobile/MarketsMobilePage';
-
-// Helper function to generate dates for charts
-const generateDates = (days) => {
-  const dates = [];
-  const today = new Date();
-  
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    dates.push(date.toISOString().split('T')[0]);
-  }
-  
-  return dates;
-};
+import { generateDates } from '../utils/dateUtils';
+import { getPriceClass } from '../utils/formatUtils';
 
 // Helper for transparent chart backgrounds
 const transparentChartLayout = {
   paper_bgcolor: 'rgba(0,0,0,0)',
   plot_bgcolor: 'rgba(0,0,0,0)'
-};
-
-// Helper for price color (copied from CommoditiesPage)
-const getPriceClass = (changePercent) => {
-  if (typeof changePercent !== 'number') return 'valueNeutral';
-  if (changePercent > 0) return 'valuePositive';
-  if (changePercent < 0) return 'valueNegative';
-  return 'valueNeutral';
 };
 
 const MarketsPage = () => {
