@@ -188,3 +188,9 @@
     color: var(--muted-text);
     font-family: var(--font-mono);
 }
+
+.timestamp {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  font-family: var(--font-mono);
+}

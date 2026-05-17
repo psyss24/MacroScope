@@ -283,6 +283,9 @@ const CommoditiesPage = () => {
         <p className={styles.pageDescription} style={{ fontSize: '1.15rem', color: 'var(--muted-text)', marginBottom: 16, maxWidth: 700 }}>
           Real-time prices for precious metals, energy, and agricultural commodities
         </p>
+        <div className={styles.timestamp}>
+          Last updated: {marketData?.timestamp ? new Date(marketData.timestamp).toLocaleString() : 'Loading...'}
+        </div>
       </header>
       {/* Move Commodity Price Change Comparison to the top */}
       <section style={sectionStyle}>
@@ -401,9 +404,6 @@ const CommoditiesPage = () => {
                 );          })}
         </CardSlider>
       </section>
-      <div style={{ textAlign: 'right', color: 'var(--muted-text)', fontSize: '0.95rem', marginTop: 32 }}>
-        Last updated: {new Date(marketData.timestamp).toLocaleString()}
-      </div>
     </div>
   );
 };

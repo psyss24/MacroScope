@@ -19,21 +19,16 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboard}>
       <div className="container">
+        <div
+          className={styles.timestamp}
+          style={{ marginBottom: 24 }}
+        >
+          Last updated: {lastUpdate.toLocaleTimeString()}
+        </div>
         {/* overview cards */}
         <section className={styles.overviewSection}>
           <OverviewCards key={`overview-${refreshKey}`} />
         </section>
-        {/* last updated info at the bottom */}
-        <div
-          style={{
-            textAlign: "right",
-            color: "var(--muted-text)",
-            fontSize: "0.95rem",
-            marginTop: 32,
-          }}
-        >
-          Last updated: {lastUpdate.toLocaleTimeString()}
-        </div>
       </div>
     </div>
   );

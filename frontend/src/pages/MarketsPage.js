@@ -162,6 +162,9 @@ const MarketsPage = () => {
         <p className={styles.pageDescription}>
           Real-time market data, indices, currencies, and sector performance
         </p>
+        <div className={styles.timestamp}>
+          Last updated: {marketData?.timestamp ? new Date(marketData.timestamp).toLocaleString() : 'Loading...'}
+        </div>
       </header>
 
       {/* Remove test chart */}
