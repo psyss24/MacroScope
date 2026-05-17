@@ -645,6 +645,6 @@ a:hover {
 
 .selectedCard:hover {
   background: var(--hover-bg) !important;
-  transform: translateY(-4px) !important;
+  transform: translateY(-2px) !important;
   box-shadow: var(--shadow-lg) !important;
 }

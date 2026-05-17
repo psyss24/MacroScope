@@ -337,7 +337,7 @@
 }
 
 .featuredCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
   border-color: var(--muted-text);
 }
@@ -749,7 +749,7 @@
 }
 
 .mainPageCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
   /* border-color: var(--muted-text); */
 }
