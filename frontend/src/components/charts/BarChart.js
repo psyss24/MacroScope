@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import Plot from 'react-plotly.js';
 import styles from './Charts.module.css';
 
@@ -29,16 +29,8 @@ const BarChart = ({
   // Optionally pass in a map of commodity prices by name
   prices = {},
 }) => {
-  // Access dark mode state from context
-  const darkMode = true;
-  const [hoveredBar, setHoveredBar] = useState(null);
-  const [cardHovered, setCardHovered] = useState(false);
-
   // Define colors based on theme
   const textColor = '#e0e0e0';
-  const gridColor = 'rgba(255, 255, 255, 0.1)';
-  const paperBgColor = '#1e1e1e';
-  const plotBgColor = '#121212';
 
   // Prepare data for Plotly
   const plotData = data.map((series, index) => ({
@@ -219,24 +211,10 @@ const BarChart = ({
   return (
     <div
       className={styles.dashboardChartCard}
-      onMouseEnter={() => { setCardHovered(true); }}
-      onMouseLeave={() => { setCardHovered(false); setHoveredBar(null); }}
       style={{ position: 'relative' }}
     >
       <div style={{ minHeight: 56, height: 56, display: 'flex', alignItems: 'flex-end', marginBottom: 12, overflow: 'hidden' }}>
-        {hoveredBar ? (
-          <div style={{ color: 'var(--accent-color)', fontWeight: 700, fontSize: '1.25rem', margin: 0, display: 'flex', flexDirection: 'column' }}>
-            <span>{hoveredBar.label}</span>
-            <span style={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>
-              Price Change: {hoveredBar.changePercent != null ? `${hoveredBar.changePercent > 0 ? '+' : ''}${hoveredBar.changePercent.toFixed(2)}%` : 'N/A'}
-            </span>
-            <span style={{ color: '#fff', fontWeight: 500, fontSize: '1.1rem' }}>
-              Current Price: {hoveredBar.currentPrice != null ? `$${hoveredBar.currentPrice.toLocaleString(undefined, { maximumFractionDigits: 2 })}` : 'N/A'}
-            </span>
-          </div>
-        ) : (
-          title && <h2 style={{ color: 'var(--accent-color)', fontWeight: 700, fontSize: '2rem', margin: 0 }}>{title}</h2>
-        )}
+        {title && <h2 style={{ color: 'var(--accent-color)', fontWeight: 700, fontSize: '2rem', margin: 0 }}>{title}</h2>}
       </div>
       {data.length > 0 ? (
         <Plot
@@ -244,28 +222,6 @@ const BarChart = ({
           layout={layout}
           config={mergedConfig}
           className={styles.plotlyChart}
-          onHover={e => {
-            if (e.points && e.points.length > 0) {
-              const pt = e.points[0];
-              const label = orientation === 'v' ? pt.x : pt.y;
-              let changePercent = null;
-              let currentPrice = null;
-              if (data.length === 1 && data[0].changePercentArr && data[0].currentPriceArr) {
-                const idx = (orientation === 'v' ? data[0].x : data[0].y).indexOf(label);
-                if (idx !== -1) {
-                  changePercent = data[0].changePercentArr[idx];
-                  currentPrice = data[0].currentPriceArr[idx];
-                }
-              } else if (data.length === 1 && data[0].changePercent != null && data[0].currentPrice != null) {
-                changePercent = data[0].changePercent;
-                currentPrice = data[0].currentPrice;
-              } else if (prices && prices[label]) {
-                currentPrice = prices[label];
-              }
-              setHoveredBar({ label, changePercent, currentPrice });
-            }
-          }}
-          onUnhover={() => setHoveredBar(null)}
         />
       ) : (
         <div className={styles.noData}>
