@@ -142,9 +142,7 @@ const MarketsPage = () => {
         <p className={styles.pageDescription}>
           Real-time market data, indices, currencies, and sector performance
         </p>
-        <div className={styles.timestamp}>
-          Last updated: {marketData?.timestamp ? new Date(marketData.timestamp).toLocaleString() : 'Loading...'}
-        </div>
+
       </header>
 
       {/* Remove test chart */}
@@ -412,9 +410,7 @@ const MarketsPage = () => {
           {ASIA_INDICES.filter(name => marketData.indices[name]).map(name => getIndexCard(name, marketData.indices[name]))}
         </CardSlider>
       </section>
-      <div style={{ textAlign: 'right', color: 'var(--muted-text)', fontSize: '0.95rem', marginTop: 32 }}>
-        Last updated: {new Date(marketData.timestamp).toLocaleString()}
-      </div>
+
     </div>
   );
 };
