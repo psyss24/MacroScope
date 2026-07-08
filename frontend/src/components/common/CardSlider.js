@@ -10,6 +10,7 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
     align: 'start',
     skipSnaps: false,
     dragFree: true,
+    containScroll: false, // Allows loop even when all slides fit within the container
   });
 
   // Arrow navigation handlers
@@ -42,7 +43,7 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
 
   return (
     <div className={`${styles.sliderContainer} ${className}`} style={style}>
-      {cardCount > 1 && (
+      {cardCount > 3 && (
       <button
         className={`${styles.arrowBtn} ${styles.arrowLeft}`}
         aria-label="Scroll left"
@@ -61,7 +62,7 @@ const CardSlider = ({ children, className = '', style = {}, cardClassName = '' }
           ))}
         </div>
       </div>
-      {cardCount > 1 && (
+      {cardCount > 3 && (
       <button
         className={`${styles.arrowBtn} ${styles.arrowRight}`}
         aria-label="Scroll right"

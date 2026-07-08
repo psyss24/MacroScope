@@ -43,9 +43,6 @@ const MarketOverview = () => {
     <div className={styles.marketOverview}>
       <div className={styles.header}>
         <h2>Market Overview</h2>
-        <span className={styles.timestamp}>
-          Last updated: {new Date(timestamp).toLocaleString()}
-        </span>
       </div>
       
       <div className={styles.grid}>
